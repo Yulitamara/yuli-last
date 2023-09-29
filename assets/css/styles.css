@@ -11,7 +11,7 @@
   --title-color: #122c3b;
   --text-color: #122c3b;
   --text-color-light: #8c94a9;
-  --body-color: #ebecf0;
+  --body-color: #ffffff;
   --container-color: #faf3de;
 
   /*========== Font and typography ==========*/
@@ -293,6 +293,33 @@ body.dark-theme {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.gallery__content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+.gallery__content img {
+  width: 300px;
+}
+
+.img-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.3rem;
+}
+/* .name { */
+  /* color: var(--text-color-light); */
+/* } */
+.size {
+  font-size: 14px;
+}
+.price {
+  font-size: 14px;
 }
 
 /*=============== PROJECTS ===============*/
