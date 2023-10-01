@@ -200,24 +200,27 @@ sr.reveal(`.skills__content:nth-child(2), .contact__content:nth-child(2)`, {
 });
 sr.reveal(`.qualification__content, .services__card`, { interval: 100 });
 
+// GALLERY
 document.addEventListener("DOMContentLoaded", function () {
-  // Show the "prints" gallery content by default when the page loads
   document.getElementById("prints").style.display = "flex";
 
-  // Add click event listeners to the filters
   var filterElements = document.querySelectorAll(".filter");
   filterElements.forEach(function (filterElement) {
     filterElement.addEventListener("click", function () {
       var filter = this.getAttribute("data-filter");
 
-      // Hide all gallery content
       var galleryContentElements =
         document.querySelectorAll(".gallery__content");
       galleryContentElements.forEach(function (galleryContentElement) {
         galleryContentElement.style.display = "none";
       });
 
-      // Show the gallery content corresponding to the clicked filter
+      filterElements.forEach(function (filterElem) {
+        filterElem.classList.remove("active");
+      });
+
+      this.classList.add("active");
+
       document.getElementById(filter).style.display = "flex";
     });
   });

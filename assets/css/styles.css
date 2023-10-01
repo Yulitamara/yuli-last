@@ -296,7 +296,6 @@ body.dark-theme {
 }
 
 .gallery img {
-  margin-top: 1.3rem;
   width: 150px;
 }
 
@@ -356,12 +355,15 @@ body.dark-theme {
 .filters {
   display: flex;
   gap: 2rem;
-  margin: 1.5rem 0 2.5rem 0;
+  margin: 1rem 0 2.5rem 0;
 }
 .filter {
   cursor: pointer;
   color: var(--text-color-light);
   transition: all 0.2s ease-in-out;
+}
+.filter.active {
+  color: var(--text-color);
 }
 .filter:hover {
   color: var(--text-color);
