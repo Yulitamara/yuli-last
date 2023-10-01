@@ -7,11 +7,11 @@
 
   /*========== Colors ==========*/
   /*Color mode HSL(hue, saturation, lightness)*/
-  --first-color: #122c3b;
-  --title-color: #122c3b;
-  --text-color: #122c3b;
-  --text-color-light: #8c94a9;
-  --body-color: #ffffff;
+  --first-color: #252525;
+  --title-color: #252525;
+  --text-color: #252525;
+  --text-color-light: #808185;
+  --body-color: #fff;
   --container-color: #faf3de;
 
   /*========== Font and typography ==========*/
@@ -109,7 +109,7 @@ img {
 body.dark-theme {
   --title-color: hsl(207, 4%, 95%);
   --text-color: hsl(207, 4%, 65%);
-  --text-color-light: hsl(286, 14%, 76%);
+  --text-color-light: hsl(290, 4%, 73%);
   --body-color: hsl(207, 4%, 10%);
   --container-color: hsl(207, 4%, 12%);
 }
@@ -234,10 +234,10 @@ body.dark-theme {
 @media screen and (max-width: 1023px) {
   .nav__menu {
     position: fixed;
-    width: 88%;
+    width: 93%;
     left: 0;
     right: 0;
-    bottom: -60%;
+    bottom: -100%;
     margin: 0 auto;
     background-color: var(--body-color);
     box-shadow: 0 4px 20px hsla(207, 24%, 35%, 0.1);
@@ -248,7 +248,7 @@ body.dark-theme {
 }
 
 .nav__list {
-  grid-template-columns: repeat(3, max-content);
+  grid-template-columns: repeat(1, max-content);
   justify-content: center;
   gap: 2rem 3rem;
 }
