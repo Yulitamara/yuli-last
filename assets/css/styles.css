@@ -296,7 +296,7 @@ body.dark-theme {
 }
 
 .gallery img {
-  width: 150px;
+  width: 250px;
 }
 
 .gallery__content {
@@ -321,7 +321,7 @@ body.dark-theme {
   justify-content: space-between;
   /* align-items: center; */
   gap: 0.2rem;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
   padding: 0 0.4rem;
 }
 .name {
