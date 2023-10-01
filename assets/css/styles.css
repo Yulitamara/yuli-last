@@ -313,13 +313,27 @@ body.dark-theme {
   margin-top: 0.3rem;
 }
 /* .name { */
-  /* color: var(--text-color-light); */
+/* color: var(--text-color-light); */
 /* } */
 .size {
   font-size: 14px;
 }
 .price {
   font-size: 14px;
+}
+
+.filters {
+  display: flex;
+  gap: 2rem;
+  margin: 1.5rem 0 2.5rem 0;
+}
+.filter {
+  cursor: pointer;
+  color: var(--text-color-light);
+  transition: all .2s ease-in-out;
+}
+.filter:hover {
+  color: var(--text-color);
 }
 
 /*=============== PROJECTS ===============*/
