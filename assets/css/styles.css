@@ -300,6 +300,7 @@ body.dark-theme {
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
+  padding: 0;
 }
 .gallery__content img {
   width: 300px;
@@ -743,6 +744,9 @@ body.dark-theme {
   .contact__container {
     justify-content: center;
     column-gap: 8rem;
+  }
+  .gallery__content {
+    padding: 0 1rem;
   }
 }
 
