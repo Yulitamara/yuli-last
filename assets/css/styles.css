@@ -1,5 +1,5 @@
 /*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"); */
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
 /*=============== VARIABLES CSS ===============*/
 :root {
@@ -75,7 +75,7 @@ h1,
 h2,
 h3 {
   color: var(--title-color);
-  font-family: var(--title-font);
+  /* font-family: var(--title-font); */
   font-weight: var(--font-medium);
 }
 
@@ -90,6 +90,10 @@ a {
 img {
   max-width: 100%;
   height: auto;
+}
+
+textarea {
+  font-family: var(--body-font);
 }
 
 /*=============== THEME ===============*/
@@ -223,7 +227,7 @@ body.dark-theme {
 }
 
 .nav__logo {
-  font-family: var(--title-font);
+  /* font-family: var(--title-font); */
   font-weight: var(--font-medium);
 }
 
@@ -508,7 +512,7 @@ body.dark-theme {
 
 .contact__data-info {
   font-size: var(--small-font-size);
-  font-family: var(--title-font);
+  /* font-family: var(--title-font); */
   color: var(--title-color);
 }
 
@@ -565,7 +569,7 @@ body.dark-theme {
   border-radius: 2rem;
   padding: 1.5rem;
   font-size: var(--normal-font-size);
-  font-family: var(--title-font);
+  /* font-family: var(--title-font); */
   color: var(--title-color);
   background: none;
   outline: none;
@@ -597,7 +601,7 @@ body.dark-theme {
   border: none;
   background: none;
   font-size: var(--h2-font-size);
-  font-family: var(--title-font);
+  /* font-family: var(--title-font); */
   font-weight: var(--font-semi-bold);
   cursor: pointer;
   outline: none;
