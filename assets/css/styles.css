@@ -390,7 +390,7 @@ body.dark-theme {
   background-image: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 50%,
-    rgba(255, 0, 140, 0.224) 50%
+    rgba(255, 0, 140, 0.205) 50%
   );
   background-position: -0% 0;
   background-size: 200% 10px;
@@ -407,9 +407,33 @@ body.dark-theme {
   color: var(--text-color);
 }
 
-.filter:hover {
-  color: var(--text-color);
+.filter.active:before {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 60%;
+  position: absolute;
+  z-index: 1;
+  left: 0px;
+  bottom: 22%;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 0, 140, 0.272) 50%
+  );
+  background-position: -0% 0;
+  background-size: 200% 10px;
+  transition: background-position 0.2s ease-out;
+
+  -webkit-transform: skew(0deg, -1.5deg);
+  transform: skew(0deg, -1.5deg);
+  opacity: 0.8;
+  background-position: -99.99% 0;
 }
+
+/* .filter:hover {
+  color: var(--text-color);
+} */
 
 /*=============== PROJECTS ===============*/
 .projects__container {
