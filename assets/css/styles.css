@@ -11,7 +11,7 @@
   --title-color: #252525;
   --text-color: #252525;
   --text-color-light: #808185;
-  --body-color: #f1f1f1;
+  --body-color: #f7f4f4;
   --container-color: #faf3de;
 
   /*========== Font and typography ==========*/
@@ -309,8 +309,7 @@ body.dark-theme {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  padding: 0;
+  gap: 1.4rem;
 
   display: none;
 }
@@ -319,6 +318,7 @@ body.dark-theme {
 }
 .gallery__content img {
   width: 300px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .img-title {
@@ -329,7 +329,7 @@ body.dark-theme {
   gap: 0.2rem;
   margin-top: 0.5rem;
   padding: 0 0.4rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
 }
 .name {
   display: flex;
