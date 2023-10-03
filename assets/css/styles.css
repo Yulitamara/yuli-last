@@ -96,6 +96,13 @@ textarea {
   font-family: var(--body-font);
 }
 
+:focus {
+  outline: none !important;
+}
+::selection {
+  background-color: #cad9ff;
+}
+
 /*=============== THEME ===============*/
 .nav__buttons {
   display: flex;
