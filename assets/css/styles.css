@@ -574,6 +574,10 @@ body.dark-theme {
   display: grid;
 }
 
+.bit {
+  width: 300px;
+}
+
 .contact__info {
   row-gap: 2rem;
 }
