@@ -355,6 +355,10 @@ body.dark-theme {
   align-items: center;
   letter-spacing: 0.2rem;
 }
+.sold-out {
+  color: #e85e4f;
+  letter-spacing: 0.15rem;
+}
 .size {
   font-size: 12px;
 }
@@ -372,7 +376,7 @@ body.dark-theme {
   display: block;
   width: 70px;
   height: 1px;
-  background: rgb(243, 131, 118);
+  background: #f38376;
   right: 0;
   position: absolute;
 }
