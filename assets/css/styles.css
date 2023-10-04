@@ -1037,5 +1037,5 @@ body.dark-theme {
   right: 20px;
   font-size: 30px;
   cursor: pointer;
-  color: #ff4e71;
+  color: var(--text-color);
 }
