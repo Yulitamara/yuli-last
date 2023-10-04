@@ -1016,9 +1016,6 @@ body.dark-theme {
   z-index: 999;
   margin: 0 auto;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .popup img {
