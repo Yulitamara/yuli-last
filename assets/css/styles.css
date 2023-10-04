@@ -911,6 +911,7 @@ body.dark-theme {
 
   .change-theme {
     color: var(--text-color-light);
+    cursor: pointer;
   }
   .change-theme:hover {
     color: var(--title-color);
