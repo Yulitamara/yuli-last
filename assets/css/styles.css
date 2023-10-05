@@ -132,7 +132,7 @@ body.dark-theme {
   --title-color: hsl(207, 4%, 95%);
   --text-color: hsl(207, 4%, 65%);
   --text-color-light: hsl(290, 4%, 73%);
-  --body-color: hsl(207, 4%, 10%);
+  --body-color: #2C2C2C;
   --container-color: hsl(207, 4%, 12%);
 }
 
@@ -1049,3 +1049,4 @@ body.dark-theme {
   cursor: pointer;
   color: var(--text-color);
 }
+
