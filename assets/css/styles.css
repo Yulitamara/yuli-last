@@ -132,7 +132,7 @@ body.dark-theme {
   --title-color: hsl(207, 4%, 95%);
   --text-color: hsl(207, 4%, 65%);
   --text-color-light: hsl(290, 4%, 73%);
-  --body-color: #2C2C2C;
+  --body-color: #2c2c2c;
   --container-color: hsl(207, 4%, 12%);
 }
 
@@ -1040,7 +1040,12 @@ body.dark-theme {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+@media screen and (min-width: 500px) {
+  .popup img {
+    max-width: 75%;
+    max-height: 75%;
+  }
+}
 .close-popup {
   position: absolute;
   top: 20px;
@@ -1049,4 +1054,3 @@ body.dark-theme {
   cursor: pointer;
   color: var(--text-color);
 }
-

@@ -226,6 +226,45 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// // Function to open the popup
+// function openPopup(imageSrc) {
+//   var popup = document.getElementById("popup");
+//   var popupImage = document.getElementById("popup-image");
+
+//   popup.style.display = "block";
+//   popupImage.src = imageSrc;
+
+//   // Close the popup when clicking outside of it
+//   window.onclick = function (event) {
+//     if (event.target == popup) {
+//       closePopup();
+//     }
+//   };
+// }
+
+// // Function to close the popup
+// function closePopup() {
+//   var popup = document.getElementById("popup");
+//   var popupImage = document.getElementById("popup-image");
+
+//   popup.style.display = "none";
+//   popupImage.src = "";
+// }
+
+// // Add click event listeners to each gallery item
+// var galleryItems = document.querySelectorAll(".gallery__content-item img");
+// galleryItems.forEach(function (item) {
+//   item.addEventListener("click", function () {
+//     openPopup(item.src);
+//   });
+// });
+
+// // Add click event listener to close button
+// var closeBtn = document.getElementById("close-popup");
+// closeBtn.addEventListener("click", function () {
+//   closePopup();
+// });
+
 // Function to open the popup
 function openPopup(imageSrc) {
   var popup = document.getElementById("popup");
@@ -240,6 +279,11 @@ function openPopup(imageSrc) {
       closePopup();
     }
   };
+
+  // Add a click event listener to the image within the popup
+  popupImage.addEventListener("click", function () {
+    closePopup();
+  });
 }
 
 // Function to close the popup
