@@ -1040,7 +1040,7 @@ body.dark-theme {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 700px) {
   .popup img {
     max-width: 75%;
     max-height: 75%;
