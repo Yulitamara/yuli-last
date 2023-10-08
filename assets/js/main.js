@@ -363,6 +363,13 @@ const printsData = [
     price: "40₪",
   },
   {
+    src: "/assets/img/900-12.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "סלח לי",
+    price: "35₪",
+  },
+  {
     src: "/assets/img/900-1.png",
     alt: "print",
     size: "13x13",
@@ -439,13 +446,6 @@ const printsData = [
     alt: "print",
     size: "13x13",
     paintingName: "חרא אישיות",
-    price: "35₪",
-  },
-  {
-    src: "/assets/img/900-12.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "סלח לי",
     price: "35₪",
   },
   {
