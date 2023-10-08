@@ -363,6 +363,28 @@ const printsData = [
     price: "40₪",
   },
   {
+    src: "/assets/img/900-3.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "בכיתי",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-8.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "אידיאליזציה",
+    price: "35₪",
+    soldOut: true,
+  },
+  {
+    src: "/assets/img/900-1.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "חוויה טראומתית",
+    price: "35₪",
+  },
+  {
     src: "/assets/img/900-12.png",
     alt: "print",
     size: "13x13",
@@ -370,10 +392,10 @@ const printsData = [
     price: "35₪",
   },
   {
-    src: "/assets/img/900-1.png",
+    src: "/assets/img/900-16.png",
     alt: "print",
     size: "13x13",
-    paintingName: "חוויה טראומתית",
+    paintingName: "טיפול זוגי",
     price: "35₪",
   },
   {
@@ -391,27 +413,13 @@ const printsData = [
     price: "35₪",
   },
   {
-    src: "/assets/img/900-3.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "בכיתי",
-    price: "35₪",
-  },
-  {
     src: "/assets/img/900-6.png",
     alt: "print",
     size: "15x15",
     paintingName: "SAD NOT LAZY",
     price: "35₪",
   },
-  {
-    src: "/assets/img/900-8.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "אידיאליזציה",
-    price: "35₪",
-    soldOut: true,
-  },
+
   {
     src: "/assets/img/900-9.png",
     alt: "print",
@@ -426,7 +434,6 @@ const printsData = [
     paintingName: "מהממת",
     price: "35₪",
   },
-
   {
     src: "/assets/img/900-7.png",
     alt: "print",
@@ -460,13 +467,6 @@ const printsData = [
     alt: "print",
     size: "13x13",
     paintingName: "יפה ומטופחת",
-    price: "35₪",
-  },
-  {
-    src: "/assets/img/900-16.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "טיפול זוגי",
     price: "35₪",
   },
   {
