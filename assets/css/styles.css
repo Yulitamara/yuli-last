@@ -96,7 +96,7 @@ textarea {
   font-family: var(--body-font);
 }
 
-.noSelect {
+.no-select {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -105,7 +105,7 @@ textarea {
   -ms-user-select: none;
   user-select: none;
 }
-.noSelect:focus {
+.no-select:focus {
   outline: none !important;
 }
 

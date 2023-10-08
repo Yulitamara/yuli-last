@@ -226,85 +226,474 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// // Function to open the popup
-// function openPopup(imageSrc) {
-//   var popup = document.getElementById("popup");
-//   var popupImage = document.getElementById("popup-image");
+// const printsData = [
+//   {
+//     src: "/assets/img/900-5.png",
+//     alt: "print",
+//     size: "20x20",
+//     paintingName: "חיבוק ספה",
+//     price: "40₪",
+//   },
+//   {
+//     src: "/assets/img/900-1.png",
+//     alt: "print",
+//     size: "13x13",
+//     paintingName: "חוויה טראומתית",
+//     price: "35₪",
+//   },
+//   {
+//     src: "/assets/img/900-2.png",
+//     alt: "print",
+//     size: "15x15",
+//     paintingName: "ביישנית",
+//     price: "35₪",
+//   },
+//   {
+//     src: "/assets/img/900-3.png",
+//     alt: "print",
+//     size: "13x13",
+//     paintingName: "בכיתי",
+//     price: "35₪",
+//   },
+//   {
+//     src: "/assets/img/900-8.png",
+//     alt: "print",
+//     size: "13x13",
+//     paintingName: "אידיאליזציה",
+//     price: "35₪",
+//     soldOut: true,
+//   },
+//   {
+//     src: "/assets/img/900-9.png",
+//     alt: "print",
+//     size: "15x15",
+//     paintingName: "מסקנה",
+//     price: "35₪",
+//   },
+//   {
+//     src: "/assets/img/900-4.png",
+//     alt: "print",
+//     size: "14x14",
+//     paintingName: "מהממת",
+//     price: "35₪",
+//   },
+//   {
+//     src: "/assets/img/900-6.png",
+//     alt: "print",
+//     size: "15x15",
+//     paintingName: "SAD NOT LAZY",
+//     price: "35₪",
+//   },
+//   {
+//     src: "/assets/img/900-7.png",
+//     alt: "print",
+//     size: "15x15",
+//     paintingName: "לא יכולה לבוא",
+//     price: "35₪",
+//   },
+// ];
 
-//   popup.style.display = "block";
+// const galleryContent = document.getElementById("prints");
+// const popup = document.getElementById("popup");
+// const popupImage = document.getElementById("popup-image");
+// const closePopup = document.getElementById("close-popup");
+
+// printsData.forEach((item) => {
+//   const contentItem = document.createElement("div");
+//   contentItem.className = "gallery__content-item";
+
+//   contentItem.innerHTML = `
+//         <img src="${item.src}" alt="${
+//     item.alt
+//   }" class="no-select" onclick="openPopup('${item.src}', '${
+//     item.paintingName
+//   }')">
+//         <div class="img-title">
+//             <span class="size">${item.size}</span>
+//             <span class="name">
+//                 <span class="painting-name">${item.paintingName}</span>
+//                 ${
+//                   item.soldOut
+//                     ? '<span class="sold-out">סולד אאוט</span>'
+//                     : `<a href="https://wa.me/972542634686/?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%2F%D7%AA%20%D7%9C%D7%94%D7%96%D7%9E%D7%99%D7%9F%20%D7%9E%D7%9E%D7%9A%20%D7%A6%D7%99%D7%95%D7%A8."
+//                         target="_blank" class="img-btn no-select">
+//                         לרכישה
+//                     </a>`
+//                 }
+//             </span>
+//             <span class="price">${item.price}</span>
+//         </div>
+//     `;
+
+//   galleryContent.appendChild(contentItem);
+// });
+
+// function openPopup(imageSrc, paintingName) {
 //   popupImage.src = imageSrc;
+//   popupImage.alt = paintingName;
+//   popup.style.display = "block";
 
-//   // Close the popup when clicking outside of it
-//   window.onclick = function (event) {
-//     if (event.target == popup) {
-//       closePopup();
-//     }
-//   };
+//   // Close popup when clicking anywhere outside of it
+//   window.addEventListener("click", closePopupOnClick);
+
+//   // Close popup when clicking on popup-image
+//   popupImage.addEventListener("click", closePopupOnClick);
 // }
 
-// // Function to close the popup
-// function closePopup() {
-//   var popup = document.getElementById("popup");
-//   var popupImage = document.getElementById("popup-image");
+// function closePopupOnClick(e) {
+//   if (e.target === popup || e.target === popupImage) {
+//     popup.style.display = "none";
+//     window.removeEventListener("click", closePopupOnClick);
+//     popupImage.removeEventListener("click", closePopupOnClick);
+//   }
+// }
 
+// closePopup.addEventListener("click", () => {
 //   popup.style.display = "none";
-//   popupImage.src = "";
-// }
-
-// // Add click event listeners to each gallery item
-// var galleryItems = document.querySelectorAll(".gallery__content-item img");
-// galleryItems.forEach(function (item) {
-//   item.addEventListener("click", function () {
-//     openPopup(item.src);
-//   });
+//   window.removeEventListener("click", closePopupOnClick);
+//   popupImage.removeEventListener("click", closePopupOnClick);
 // });
 
-// // Add click event listener to close button
-// var closeBtn = document.getElementById("close-popup");
-// closeBtn.addEventListener("click", function () {
-//   closePopup();
-// });
+const printsData = [
+  {
+    src: "/assets/img/900-5.png",
+    alt: "print",
+    size: "20x20",
+    paintingName: "חיבוק ספה",
+    price: "40₪",
+  },
+  {
+    src: "/assets/img/900-1.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "חוויה טראומתית",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-14.png",
+    alt: "print",
+    size: "15x15",
+    paintingName: "10 דקות במקלחת",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-2.png",
+    alt: "print",
+    size: "15x15",
+    paintingName: "ביישנית",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-3.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "בכיתי",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-6.png",
+    alt: "print",
+    size: "15x15",
+    paintingName: "SAD NOT LAZY",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-8.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "אידיאליזציה",
+    price: "35₪",
+    soldOut: true,
+  },
+  {
+    src: "/assets/img/900-9.png",
+    alt: "print",
+    size: "15x15",
+    paintingName: "מסקנה",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-4.png",
+    alt: "print",
+    size: "14x14",
+    paintingName: "מהממת",
+    price: "35₪",
+  },
 
-// Function to open the popup
-function openPopup(imageSrc) {
-  var popup = document.getElementById("popup");
-  var popupImage = document.getElementById("popup-image");
+  {
+    src: "/assets/img/900-7.png",
+    alt: "print",
+    size: "15x15",
+    paintingName: "לא יכולה לבוא",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-11.png",
+    alt: "print",
+    size: "14x14",
+    paintingName: "עובר ושב",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-24.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "חרא אישיות",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-12.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "סלח לי",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-23.png",
+    alt: "print",
+    size: "14x14",
+    paintingName: "מאמצת חתול",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-21.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "יפה ומטופחת",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-16.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "טיפול זוגי",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-13.png",
+    alt: "print",
+    size: "15x15",
+    paintingName: "לאהוב את עצמי",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-18.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "כבר גדולה",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-10.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "תאספי אותי",
+    price: "20",
+  },
+  {
+    src: "/assets/img/900-22.png",
+    alt: "print",
+    size: "14x14",
+    paintingName: "הורמונלית",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-25.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "עדיף למות",
+    price: "20",
+  },
+  {
+    src: "/assets/img/900-20.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "כריות",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-17.png",
+    alt: "print",
+    size: "15x15",
+    paintingName: "יומן שבועי",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-19.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "התחממות גלובלית",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-26.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "משעמם",
+    price: "20₪",
+  },
+  {
+    src: "/assets/img/900-27.png",
+    alt: "print",
+    size: "14x14",
+    paintingName: "היית מעולה",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-28.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "עקב",
+    price: "20₪",
+  },
+  {
+    src: "/assets/img/900-29.jpg",
+    alt: "print",
+    size: "13x13",
+    paintingName: "כל הדברים",
+    price: "35₪",
+  },
+];
 
-  popup.style.display = "block";
+const stickersData = [
+  {
+    src: "/assets/img/sticker-900-7.png",
+    alt: "print",
+    size: "7x7",
+    paintingName: "סוף סוף נפרדתם",
+    price: "5₪",
+  },
+  {
+    src: "/assets/img/sticker-900-8.png",
+    alt: "print",
+    size: "7x7",
+    paintingName: "הדברים הרעים",
+    price: "5₪",
+  },
+  {
+    src: "/assets/img/sticker-900-3.png",
+    alt: "print",
+    size: "7x7",
+    paintingName: "קראש",
+    price: "5₪",
+  },
+  {
+    src: "/assets/img/sticker-900-5.png",
+    alt: "print",
+    size: "7x7",
+    paintingName: "אם הוא דוש",
+    price: "5₪",
+  },
+  {
+    src: "/assets/img/sticker-900-9.png",
+    alt: "print",
+    size: "7x7",
+    paintingName: "מחזור קל",
+    price: "5₪",
+  },
+  {
+    src: "/assets/img/sticker-900-4.png",
+    alt: "print",
+    size: "7x7",
+    paintingName: "שיעוף ממך",
+    price: "5₪",
+  },
+  {
+    src: "/assets/img/sticker-900-1.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "לא אכפת",
+    price: "11₪",
+  },
+  {
+    src: "/assets/img/sticker-900-2.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "חסר משמעות",
+    price: "11₪",
+  },
+];
+
+const cardsData = [
+  {
+    src: "/assets/img/card-1.png",
+    alt: "print",
+    size: "15x10",
+    paintingName: "דיקפיק",
+    price: "25₪",
+  },
+];
+
+const galleryContent = {
+  prints: document.getElementById("prints"),
+  stickers: document.getElementById("stickers"),
+  cards: document.getElementById("cards"),
+};
+
+const popup = document.getElementById("popup");
+const popupImage = document.getElementById("popup-image");
+const closePopup = document.getElementById("close-popup");
+
+function populateGallery(data, sectionId) {
+  const section = galleryContent[sectionId];
+
+  data.forEach((item) => {
+    const contentItem = document.createElement("div");
+    contentItem.className = "gallery__content-item";
+
+    contentItem.innerHTML = `
+            <img src="${item.src}" alt="${
+      item.alt
+    }" class="no-select" onclick="openPopup('${item.src}', '${
+      item.paintingName
+    }')">
+            <div class="img-title">
+                <span class="size">${item.size}</span>
+                <span class="name">
+                    <span class="painting-name">${item.paintingName}</span>
+                    ${
+                      item.soldOut
+                        ? '<span class="sold-out">סולד אאוט</span>'
+                        : `<a href="https://wa.me/972542634686/?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%2F%D7%AA%20%D7%9C%D7%94%D7%96%D7%9E%D7%99%D7%9F%20%D7%9E%D7%9E%D7%9A%20%D7%A6%D7%99%D7%95%D7%A8."
+                                target="_blank" class="img-btn no-select">
+                                לרכישה
+                            </a>`
+                    }
+                </span>
+                <span class="price">${item.price}</span>
+            </div>
+        `;
+
+    section.appendChild(contentItem);
+  });
+}
+
+populateGallery(printsData, "prints");
+populateGallery(stickersData, "stickers");
+populateGallery(cardsData, "cards");
+
+function openPopup(imageSrc, paintingName) {
   popupImage.src = imageSrc;
+  popupImage.alt = paintingName;
+  popup.style.display = "block";
 
-  // Close the popup when clicking outside of it
-  window.onclick = function (event) {
-    if (event.target == popup) {
-      closePopup();
-    }
-  };
+  // Close popup when clicking anywhere outside of it
+  window.addEventListener("click", closePopupOnClick);
 
-  // Add a click event listener to the image within the popup
-  popupImage.addEventListener("click", function () {
-    closePopup();
-  });
+  // Close popup when clicking on popup-image
+  popupImage.addEventListener("click", closePopupOnClick);
 }
 
-// Function to close the popup
-function closePopup() {
-  var popup = document.getElementById("popup");
-  var popupImage = document.getElementById("popup-image");
+function closePopupOnClick(e) {
+  if (e.target === popup || e.target === popupImage) {
+    popup.style.display = "none";
+    window.removeEventListener("click", closePopupOnClick);
+    popupImage.removeEventListener("click", closePopupOnClick);
+  }
+}
 
+closePopup.addEventListener("click", () => {
   popup.style.display = "none";
-  popupImage.src = "";
-}
-
-// Add click event listeners to each gallery item
-var galleryItems = document.querySelectorAll(".gallery__content-item img");
-galleryItems.forEach(function (item) {
-  item.addEventListener("click", function () {
-    openPopup(item.src);
-  });
-});
-
-// Add click event listener to close button
-var closeBtn = document.getElementById("close-popup");
-closeBtn.addEventListener("click", function () {
-  closePopup();
+  window.removeEventListener("click", closePopupOnClick);
+  popupImage.removeEventListener("click", closePopupOnClick);
 });
