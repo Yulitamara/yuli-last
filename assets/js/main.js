@@ -488,7 +488,7 @@ const printsData = [
     alt: "print",
     size: "10x10",
     paintingName: "תאספי אותי",
-    price: "20",
+    price: "20₪",
   },
   {
     src: "/assets/img/900-22.png",
@@ -502,7 +502,7 @@ const printsData = [
     alt: "print",
     size: "10x10",
     paintingName: "עדיף למות",
-    price: "20",
+    price: "20₪",
   },
   {
     src: "/assets/img/900-20.png",
@@ -620,6 +620,20 @@ const cardsData = [
     alt: "print",
     size: "15x10",
     paintingName: "דיקפיק",
+    price: "25₪",
+  },
+  {
+    src: "/assets/img/card-2.png",
+    alt: "print",
+    size: "15x10",
+    paintingName: "לצחצח שיניים",
+    price: "25₪",
+  },
+  {
+    src: "/assets/img/card-3.png",
+    alt: "print",
+    size: "15x10",
+    paintingName: "סליחות",
     price: "25₪",
   },
 ];
