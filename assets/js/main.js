@@ -616,6 +616,13 @@ const stickersData = [
 
 const cardsData = [
   {
+    src: "/assets/img/card-0.png",
+    alt: "print",
+    size: "15x10",
+    paintingName: "טיפשה ורע לה",
+    price: "25₪",
+  },
+  {
     src: "/assets/img/card-1.png",
     alt: "print",
     size: "15x10",
