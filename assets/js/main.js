@@ -226,134 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// const printsData = [
-//   {
-//     src: "/assets/img/900-5.png",
-//     alt: "print",
-//     size: "20x20",
-//     paintingName: "חיבוק ספה",
-//     price: "40₪",
-//   },
-//   {
-//     src: "/assets/img/900-1.png",
-//     alt: "print",
-//     size: "13x13",
-//     paintingName: "חוויה טראומתית",
-//     price: "35₪",
-//   },
-//   {
-//     src: "/assets/img/900-2.png",
-//     alt: "print",
-//     size: "15x15",
-//     paintingName: "ביישנית",
-//     price: "35₪",
-//   },
-//   {
-//     src: "/assets/img/900-3.png",
-//     alt: "print",
-//     size: "13x13",
-//     paintingName: "בכיתי",
-//     price: "35₪",
-//   },
-//   {
-//     src: "/assets/img/900-8.png",
-//     alt: "print",
-//     size: "13x13",
-//     paintingName: "אידיאליזציה",
-//     price: "35₪",
-//     soldOut: true,
-//   },
-//   {
-//     src: "/assets/img/900-9.png",
-//     alt: "print",
-//     size: "15x15",
-//     paintingName: "מסקנה",
-//     price: "35₪",
-//   },
-//   {
-//     src: "/assets/img/900-4.png",
-//     alt: "print",
-//     size: "14x14",
-//     paintingName: "מהממת",
-//     price: "35₪",
-//   },
-//   {
-//     src: "/assets/img/900-6.png",
-//     alt: "print",
-//     size: "15x15",
-//     paintingName: "SAD NOT LAZY",
-//     price: "35₪",
-//   },
-//   {
-//     src: "/assets/img/900-7.png",
-//     alt: "print",
-//     size: "15x15",
-//     paintingName: "לא יכולה לבוא",
-//     price: "35₪",
-//   },
-// ];
-
-// const galleryContent = document.getElementById("prints");
-// const popup = document.getElementById("popup");
-// const popupImage = document.getElementById("popup-image");
-// const closePopup = document.getElementById("close-popup");
-
-// printsData.forEach((item) => {
-//   const contentItem = document.createElement("div");
-//   contentItem.className = "gallery__content-item";
-
-//   contentItem.innerHTML = `
-//         <img src="${item.src}" alt="${
-//     item.alt
-//   }" class="no-select" onclick="openPopup('${item.src}', '${
-//     item.paintingName
-//   }')">
-//         <div class="img-title">
-//             <span class="size">${item.size}</span>
-//             <span class="name">
-//                 <span class="painting-name">${item.paintingName}</span>
-//                 ${
-//                   item.soldOut
-//                     ? '<span class="sold-out">סולד אאוט</span>'
-//                     : `<a href="https://wa.me/972542634686/?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%2F%D7%AA%20%D7%9C%D7%94%D7%96%D7%9E%D7%99%D7%9F%20%D7%9E%D7%9E%D7%9A%20%D7%A6%D7%99%D7%95%D7%A8."
-//                         target="_blank" class="img-btn no-select">
-//                         לרכישה
-//                     </a>`
-//                 }
-//             </span>
-//             <span class="price">${item.price}</span>
-//         </div>
-//     `;
-
-//   galleryContent.appendChild(contentItem);
-// });
-
-// function openPopup(imageSrc, paintingName) {
-//   popupImage.src = imageSrc;
-//   popupImage.alt = paintingName;
-//   popup.style.display = "block";
-
-//   // Close popup when clicking anywhere outside of it
-//   window.addEventListener("click", closePopupOnClick);
-
-//   // Close popup when clicking on popup-image
-//   popupImage.addEventListener("click", closePopupOnClick);
-// }
-
-// function closePopupOnClick(e) {
-//   if (e.target === popup || e.target === popupImage) {
-//     popup.style.display = "none";
-//     window.removeEventListener("click", closePopupOnClick);
-//     popupImage.removeEventListener("click", closePopupOnClick);
-//   }
-// }
-
-// closePopup.addEventListener("click", () => {
-//   popup.style.display = "none";
-//   window.removeEventListener("click", closePopupOnClick);
-//   popupImage.removeEventListener("click", closePopupOnClick);
-// });
-
 const printsData = [
   {
     src: "/assets/img/900-5.png",
@@ -670,10 +542,50 @@ const cardsData = [
   },
 ];
 
+const bagsData = [
+  {
+    src: "/assets/img/bag-2.png",
+    alt: "bag",
+    size: "",
+    paintingName: "כל האנשים",
+    price: "65₪",
+  },
+  {
+    src: "/assets/img/bag-1.png",
+    alt: "print",
+    size: "",
+    paintingName: "סלח לי",
+    price: "65₪",
+  },
+  {
+    src: "/assets/img/bag-3.png",
+    alt: "print",
+    size: "",
+    paintingName: "בכיתי",
+    price: "65₪",
+  },
+  {
+    src: "/assets/img/bag-5.png",
+    alt: "print",
+    size: "",
+    paintingName: "מתיחות",
+    price: "65₪",
+  },
+  {
+    src: "/assets/img/bag-4.png",
+    alt: "print",
+    size: "",
+    paintingName: "אחיות",
+    price: "65₪",
+    soldOut: true,
+  },
+];
+
 const galleryContent = {
   prints: document.getElementById("prints"),
   stickers: document.getElementById("stickers"),
   cards: document.getElementById("cards"),
+  bags: document.getElementById("bags"),
 };
 
 const popup = document.getElementById("popup");
@@ -717,6 +629,7 @@ function populateGallery(data, sectionId) {
 populateGallery(printsData, "prints");
 populateGallery(stickersData, "stickers");
 populateGallery(cardsData, "cards");
+populateGallery(bagsData, "bags");
 
 function openPopup(imageSrc, paintingName) {
   popupImage.src = imageSrc;
