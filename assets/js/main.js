@@ -384,20 +384,7 @@ const printsData = [
     paintingName: "חוויה טראומתית",
     price: "35₪",
   },
-  {
-    src: "/assets/img/900-12.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "סלח לי",
-    price: "35₪",
-  },
-  {
-    src: "/assets/img/900-16.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "טיפול זוגי",
-    price: "35₪",
-  },
+
   {
     src: "/assets/img/900-14.png",
     alt: "print",
@@ -496,6 +483,7 @@ const printsData = [
     size: "14x14",
     paintingName: "הורמונלית",
     price: "35₪",
+    soldOut: true,
   },
   {
     src: "/assets/img/900-25.png",
@@ -503,6 +491,7 @@ const printsData = [
     size: "10x10",
     paintingName: "עדיף למות",
     price: "20₪",
+    soldOut: true,
   },
   {
     src: "/assets/img/900-20.png",
@@ -539,13 +528,7 @@ const printsData = [
     paintingName: "היית מעולה",
     price: "35₪",
   },
-  {
-    src: "/assets/img/900-28.png",
-    alt: "print",
-    size: "10x10",
-    paintingName: "עקב",
-    price: "20₪",
-  },
+
   {
     src: "/assets/img/900-29.jpg",
     alt: "print",
@@ -599,18 +582,60 @@ const stickersData = [
     price: "5₪",
   },
   {
+    src: "/assets/img/900-9.png",
+    alt: "sticker",
+    size: "10x10",
+    paintingName: "מסקנה",
+    price: "14₪",
+  },
+  {
+    src: "/assets/img/900-103.png",
+    alt: "sticker",
+    size: "10x10",
+    paintingName: "תוכניות",
+    price: "14₪",
+  },
+  {
+    src: "/assets/img/900-102.png",
+    alt: "sticker",
+    size: "10x10",
+    paintingName: "סלח לי",
+    price: "14₪",
+  },
+  {
+    src: "/assets/img/900-101.png",
+    alt: "sticker",
+    size: "10x10",
+    paintingName: "טיפול זוגי",
+    price: "14₪",
+  },
+  {
+    src: "/assets/img/900-100.png",
+    alt: "sticker",
+    size: "10x10",
+    paintingName: "עסוקה",
+    price: "14₪",
+  },
+  {
+    src: "/assets/img/900-104.png",
+    alt: "sticker",
+    size: "10x10",
+    paintingName: "אידאליזציה",
+    price: "14₪",
+  },
+  {
     src: "/assets/img/sticker-900-1.png",
     alt: "print",
     size: "10x10",
     paintingName: "לא אכפת",
-    price: "11₪",
+    price: "14₪",
   },
   {
     src: "/assets/img/sticker-900-2.png",
     alt: "print",
     size: "10x10",
     paintingName: "חסר משמעות",
-    price: "11₪",
+    price: "14₪",
   },
 ];
 
