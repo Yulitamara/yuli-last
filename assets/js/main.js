@@ -345,7 +345,7 @@ const printsData = [
     alt: "print",
     size: "10x10",
     paintingName: "תאספי אותי",
-    price: "20₪",
+    price: "35₪",
     soldOut: true,
   },
   {
