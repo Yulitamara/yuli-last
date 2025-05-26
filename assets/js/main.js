@@ -562,7 +562,7 @@ const bagsData = [
     alt: "print",
     size: "",
     paintingName: "בכיתי",
-    price: "75",
+    price: "75₪",
     soldOut: true,
   },
   {
