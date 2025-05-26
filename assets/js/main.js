@@ -228,18 +228,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const printsData = [
   {
+    src: "/assets/img/900-13.png",
+    alt: "print",
+    size: "15x15",
+    paintingName: "לאהוב את עצמי",
+    price: "35₪",
+  },
+  {
+    src: "/assets/img/900-1.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "חוויה טראומתית",
+    price: "35₪",
+  },
+  {
     src: "/assets/img/900-5.png",
     alt: "print",
     size: "20x20",
     paintingName: "חיבוק ספה",
     price: "40₪",
-  },
-  {
-    src: "/assets/img/900-3.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "בכיתי",
-    price: "35₪",
   },
   {
     src: "/assets/img/900-8.png",
@@ -249,14 +256,6 @@ const printsData = [
     price: "35₪",
     soldOut: true,
   },
-  {
-    src: "/assets/img/900-1.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "חוויה טראומתית",
-    price: "35₪",
-  },
-
   {
     src: "/assets/img/900-14.png",
     alt: "print",
@@ -278,7 +277,13 @@ const printsData = [
     paintingName: "SAD NOT LAZY",
     price: "35₪",
   },
-
+  {
+    src: "/assets/img/900-3.png",
+    alt: "print",
+    size: "13x13",
+    paintingName: "בכיתי",
+    price: "35₪",
+  },
   {
     src: "/assets/img/900-9.png",
     alt: "print",
@@ -329,13 +334,6 @@ const printsData = [
     price: "35₪",
   },
   {
-    src: "/assets/img/900-13.png",
-    alt: "print",
-    size: "15x15",
-    paintingName: "לאהוב את עצמי",
-    price: "35₪",
-  },
-  {
     src: "/assets/img/900-18.png",
     alt: "print",
     size: "13x13",
@@ -348,6 +346,7 @@ const printsData = [
     size: "10x10",
     paintingName: "תאספי אותי",
     price: "20₪",
+    soldOut: true,
   },
   {
     src: "/assets/img/900-22.png",
@@ -386,13 +385,13 @@ const printsData = [
     paintingName: "התחממות גלובלית",
     price: "35₪",
   },
-  {
-    src: "/assets/img/900-26.png",
-    alt: "print",
-    size: "10x10",
-    paintingName: "משעמם",
-    price: "20₪",
-  },
+  // {
+  //   src: "/assets/img/900-26.png",
+  //   alt: "print",
+  //   size: "10x10",
+  //   paintingName: "משעמם",
+  //   price: "20₪",
+  // },
   {
     src: "/assets/img/900-27.png",
     alt: "print",
@@ -517,28 +516,28 @@ const cardsData = [
     alt: "print",
     size: "15x10",
     paintingName: "טיפשה ורע לה",
-    price: "25₪",
+    price: "35₪",
   },
   {
     src: "/assets/img/card-1.png",
     alt: "print",
     size: "15x10",
     paintingName: "דיקפיק",
-    price: "25₪",
+    price: "35₪",
   },
   {
     src: "/assets/img/card-2.png",
     alt: "print",
     size: "15x10",
     paintingName: "לצחצח שיניים",
-    price: "25₪",
+    price: "35₪",
   },
   {
     src: "/assets/img/card-3.png",
     alt: "print",
     size: "15x10",
     paintingName: "סליחות",
-    price: "25₪",
+    price: "35₪",
   },
 ];
 
