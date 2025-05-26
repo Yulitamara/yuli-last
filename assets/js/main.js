@@ -246,7 +246,7 @@ const printsData = [
     alt: "print",
     size: "20x20",
     paintingName: "חיבוק ספה",
-    price: "40₪",
+    price: "35₪",
   },
   {
     src: "/assets/img/900-8.png",
