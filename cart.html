@@ -166,25 +166,24 @@
             <strong>יש לשלם את הסכום הסופי באפליקציית ביט:</strong><br>
             <span id="bit-amount" style="font-size: 1.3rem; color: #f38376;"></span>
         </p>
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <button onclick="copyToClipboard('0542634686')" class="paybox-button">
+                📋 העתק מספר ושלם בביט
+            </button>
+
+            <p style="margin-top: 1rem; font-size: 0.95rem;">
+                💡 פתחו את אפליקציית <strong>ביט</strong> והדביקו את המספר בחיפוש כדי לשלם.<br>
+                אם יש שאלה, כתבו לי <a href="https://wa.me/972542634686" target="_blank"
+                    style="color:#25D366;">בוואטסאפ</a>.
+            </p>
+        </div>
 
         <div style="text-align: center; margin-top: 2rem;">
-            <a href="https://pay.bit.app/0542634686" class="paybox-button" target="_blank">
-                מעבר לתשלום בביט
-            </a>
-            <button onclick="copyToClipboard('0542634686')" class="paybox-button"
-                style="background-color:#ccc; color:#333; margin-top: 1rem;">
-                העתק מספר ביט
-            </button>
-            <p style="margin-top: 1rem;"><strong>או סרקו את הקוד כדי לשלם בביט:</strong></p>
+            <p style="margin-bottom: 0.5rem;"><strong>או סרקו את הקוד כדי לשלם בביט:</strong></p>
             <img src="assets/img/bit-qr.jpeg" alt="תשלום ביט"
                 style="max-width: 200px; border-radius: 1rem; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
         </div>
 
-        <p style="text-align:center; margin-top: 1rem;">
-            או שלחו לי הודעה אם יש שאלה
-            <a href="https://wa.me/972542634686" style="color: #25D366; text-decoration: underline;"
-                target="_blank">בוואטסאפ</a>
-        </p>
     </main>
 
     <script>
@@ -251,7 +250,7 @@
             total += shippingCost;
             document.getElementById("total").innerText = total;
             document.getElementById("bit-amount").innerText = total + ' ₪';
-
+            bitLink.href = `https://bit-request.com/?phone=0542634686&amount=${total}`;
         }
 
         function changeQuantity(index, delta) {
@@ -273,9 +272,9 @@
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                alert("📋 המספר הועתק בהצלחה");
+                alert("📋 המספר הועתק! עכשיו פתחי את אפליקציית ביט והדביקי אותו.");
             }).catch(() => {
-                alert("שגיאה בהעתקת המספר");
+                alert("שגיאה בהעתקה. נסי שוב.");
             });
         }
 
