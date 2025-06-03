@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>תשלום ביט</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .paybox-button {
+            background-color: #f38376;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>תודה על ההזמנה! עכשיו לתשלום</h2>
+
+    <div class="cart-total">סה"כ: <span id="total">0</span> ₪</div>
+
+    <p style="margin-top: 2rem;">
+        <strong>יש לשלם את הסכום הסופי באפליקציית ביט:</strong><br />
+        <span id="bit-amount" style="font-size: 1.3rem; color: #f38376;"></span>
+    </p>
+
+    <div style="margin-top: 1.5rem;">
+        <button onclick="copyToClipboard('0542634686')" class="paybox-button">
+            📋 העתק מספר ושלם בביט
+        </button>
+
+        <p style="margin-top: 1rem; font-size: 0.95rem;">
+            💡 פתחו את אפליקציית <strong>ביט</strong> והדביקו את המספר בחיפוש כדי לשלם.<br />
+            אם יש שאלה, כתבו לי <a href="https://wa.me/972542634686" target="_blank"
+                style="color:#25D366;">בוואטסאפ</a>.
+        </p>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <p><strong>או סרקו את הקוד לתשלום:</strong></p>
+        <img src="assets/img/bit-qr.jpeg" alt="תשלום ביט"
+            style="max-width: 200px; border-radius: 1rem; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
+    </div>
+
+    <script src="assets/js/payment.js"></script>
+
+    <script>
+        const total = localStorage.getItem("lastTotal") || "0";
+        document.getElementById("total").innerText = total;
+        document.getElementById("bit-amount").innerText = total + ' ₪';
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("📋 המספר הועתק! עכשיו פתחי את אפליקציית ביט והדביקי אותו.");
+            }).catch(() => {
+                alert("שגיאה בהעתקה.");
+            });
+        }
+    </script>
+
+</body>
+
+</html>

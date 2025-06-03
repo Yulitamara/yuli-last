@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script type="module" src="assets/js/firebase.js"></script>
+
     <style>
         .cart-container {
             max-width: 900px;
@@ -139,13 +141,18 @@
         </nav>
     </header>
 
-    <main class="cart-container">
+    <main class="cart-container section">
         <h2 class="section__title">העגלה שלך</h2>
+
         <div id="cart-items"></div>
-        <div class="cart-shipping-info" style="margin-top: 2rem;">
-            <p>אחרי שתשלחו תשלום בביט, תקבלו אישור ונדבר לתאם את המשלוח 💌</p>
+
+        <div class="cart-shipping-info payment-form" style="margin-top: 2rem;">
+            <p class="instructions">
+                לאחר קבלת התשלום, ניצור קשר לתיאום משלוח (אם נבחר), או איסוף עצמי מתל אביב 💌
+            </p>
+
             <label for="city-select">בחרו עיר לצורך חישוב עלות משלוח:</label>
-            <select id="city-select">
+            <select id="city-select" class="form-element">
                 <option value="">-- בחרו עיר --</option>
                 <option value="תל אביב">תל אביב</option>
                 <option value="גבעתיים">גבעתיים</option>
@@ -159,127 +166,29 @@
                 <option value="קרית אונו">קרית אונו</option>
                 <option value="ראשון לציון">ראשון לציון</option>
             </select>
+
             <p id="shipping-cost">עלות משלוח: 0 ש"ח</p>
-        </div>
-        <div class="cart-total">סה"כ לתשלום: <span id="total">0</span> ₪</div>
-        <p style="text-align:center; margin-top: 2rem;">
-            <strong>יש לשלם את הסכום הסופי באפליקציית ביט:</strong><br>
-            <span id="bit-amount" style="font-size: 1.3rem; color: #f38376;"></span>
-        </p>
-        <div style="text-align: center; margin-top: 1.5rem;">
-            <button onclick="copyToClipboard('0542634686')" class="paybox-button">
-                📋 העתק מספר ושלם בביט
-            </button>
 
-            <p style="margin-top: 1rem; font-size: 0.95rem;">
-                💡 פתחו את אפליקציית <strong>ביט</strong> והדביקו את המספר בחיפוש כדי לשלם.<br>
-                אם יש שאלה, כתבו לי <a href="https://wa.me/972542634686" target="_blank"
-                    style="color:#25D366;">בוואטסאפ</a>.
-            </p>
+            <div class="user-info">
+                <label for="user-name">שם מלא:</label>
+                <input type="text" id="user-name" class="form-element" placeholder="הקלד/י את שמך" required>
+
+                <label for="user-phone">מספר טלפון:</label>
+                <input type="tel" id="user-phone" class="form-element" placeholder="הקלד/י את מספר הטלפון" required>
+
+                <div class="cart-total">סה"כ לתשלום: <span id="total">0</span> ₪</div>
+
+                <button id="submit-order" class="paybox-button">בצע/י הזמנה</button>
+            </div>
         </div>
 
-        <div style="text-align: center; margin-top: 2rem;">
-            <p style="margin-bottom: 0.5rem;"><strong>או סרקו את הקוד כדי לשלם בביט:</strong></p>
-            <img src="assets/img/bit-qr.jpeg" alt="תשלום ביט"
-                style="max-width: 200px; border-radius: 1rem; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
-        </div>
-
+        <!--========== SCROLL UP ==========-->
+        <a href="#" class="scrollup no-select" id="scroll-up">
+            <i class="ri-arrow-up-line"></i>
+        </a>
     </main>
 
-    <script>
-        const citySelect = document.getElementById("city-select");
-        const shippingCostDisplay = document.getElementById("shipping-cost");
-        const bitLink = document.getElementById("bit-link");
-        let shippingCost = 0;
-
-        const cityShippingCosts = {
-            "תל אביב": 30,
-            "גבעתיים": 50,
-            "רמת גן": 50,
-            "חולון": 50,
-            "בת ים": 50,
-            "הרצליה": 50,
-            "רמת השרון": 50,
-            "פתח תקווה": 50,
-            "בני ברק": 50,
-            "קרית אונו": 50,
-            "ראשון לציון": 50
-        };
-
-        citySelect?.addEventListener("change", () => {
-            const city = citySelect.value;
-            if (cityShippingCosts[city]) {
-                shippingCost = cityShippingCosts[city];
-                shippingCostDisplay.textContent = `עלות משלוח: ${shippingCost} ש"ח`;
-                localStorage.setItem("shipping", JSON.stringify({ city, cost: shippingCost }));
-            } else {
-                shippingCost = 0;
-                shippingCostDisplay.textContent = "עלות משלוח: 0 ש\"ח";
-                localStorage.removeItem("shipping");
-            }
-            renderCart();
-        });
-
-        function renderCart() {
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const container = document.getElementById("cart-items");
-            container.innerHTML = "";
-            let total = 0;
-
-            cart.forEach((item, index) => {
-                const quantity = item.quantity || 1;
-                const div = document.createElement("div");
-                div.className = "cart-item";
-                div.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}">
-                    <div class="cart-details">
-                        <div>${item.name}</div>
-                        <div>${item.price} ₪ ליחידה</div>
-                        <div class="quantity-controls">
-                            <button onclick="changeQuantity(${index}, -1)">−</button>
-                            <span>${quantity}</span>
-                            <button onclick="changeQuantity(${index}, 1)">+</button>
-                        </div>
-                    </div>
-                    <i class="ri-delete-bin-line" onclick="removeFromCart(${index})" title="הסר פריט"></i>
-                `;
-                container.appendChild(div);
-                total += item.price * quantity;
-            });
-
-            total += shippingCost;
-            document.getElementById("total").innerText = total;
-            document.getElementById("bit-amount").innerText = total + ' ₪';
-            bitLink.href = `https://bit-request.com/?phone=0542634686&amount=${total}`;
-        }
-
-        function changeQuantity(index, delta) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart[index].quantity = (cart[index].quantity || 1) + delta;
-            if (cart[index].quantity < 1) cart[index].quantity = 1;
-            localStorage.setItem("cart", JSON.stringify(cart));
-            renderCart();
-        }
-
-        function removeFromCart(index) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.splice(index, 1);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            renderCart();
-        }
-
-        renderCart();
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert("📋 המספר הועתק! עכשיו פתחי את אפליקציית ביט והדביקי אותו.");
-            }).catch(() => {
-                alert("שגיאה בהעתקה. נסי שוב.");
-            });
-        }
-
-
-    </script>
+    <script src="assets/js/payment.js"></script>
 
     <script src="assets/js/main.js"></script>
 </body>

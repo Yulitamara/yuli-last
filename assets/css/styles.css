@@ -1096,3 +1096,78 @@ body.dark-theme {
 a:visited {
   color: inherit;
 }
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2rem 1.5rem;
+  background-color: var(--container-color);
+  border-radius: 1rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.payment-form label {
+  font-weight: var(--font-medium);
+  font-size: var(--normal-font-size);
+  color: var(--title-color);
+}
+.form-element {
+  direction: rtl;
+  text-align: right;
+}
+.payment-form input,
+.payment-form select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  font-size: var(--normal-font-size);
+  font-family: var(--body-font);
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.payment-form input:focus,
+.payment-form select:focus {
+  border-color: #f38376;
+  outline: none;
+}
+
+.payment-form .cart-total {
+  font-size: 1.3rem;
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+  text-align: center;
+}
+
+.payment-form .paybox-button {
+  width: 100%;
+  margin-top: 1rem;
+}
+.form-element {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  font-size: var(--normal-font-size);
+  font-family: var(--body-font);
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.form-element:focus {
+  border-color: #f38376;
+  outline: none;
+}
+
+.instructions {
+  font-size: var(--small-font-size);
+  text-align: center;
+  color: var(--text-color-light);
+}
+.user-info > * + * {
+  margin-top: 0.4rem;
+}
