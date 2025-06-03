@@ -29,7 +29,7 @@
                 <ul class="nav__list grid" dir="rtl">
                     <li class="nav__item">
                         <a href="#gallery" class="nav__link active-link no-select">
-                            <i class="ri-quill-pen-fill"></i> ציורים למכירה
+                            <i class="ri-quill-pen-fill"></i> חנות
                         </a>
                     </li>
                     <li class="nav__item">
@@ -37,11 +37,20 @@
                             <i class="ri-gift-line"></i> ציורים בהזמנה אישית
                         </a>
                     </li>
+                    <li>
+                        <a href="cart.html" class="nav__link no-select" style="position: relative">
+                            <i class="ri-shopping-cart-line"></i> עגלה
+                            <span id="cart-counter"
+                                style="position: absolute; top: -8px; left: -8px; background-color: #f38376; color: white; border-radius: 50%; font-size: 10px; padding: 2px 6px; display: none;">0</span>
+                        </a>
+
+                    </li>
                     <li class="nav__item">
                         <a href="#contact" class="nav__link no-select">
-                            <i class="ri-chat-3-line"></i> יצירת קשר וקנייה
+                            <i class="ri-chat-3-line"></i> יצירת קשר
                         </a>
                     </li>
+
                 </ul>
 
                 <!-- close button -->
@@ -143,82 +152,23 @@
 
         <!--==================== CONTACT ====================-->
         <section class="contact section" id="contact">
-            <h2 class="section__title">
-                יצירת קשר וקנייה
+            <h2 class="section__title" style="margin-bottom: 1rem;">
+                יצירת קשר
             </h2>
-            <span class="section__subtitle">תכתבו לי מה תרצו להזמין</span>
 
             <div class="contact__container container grid section__border">
                 <div class="contact__content">
-                    <h3 class="contact__title">
-                        <a href="https://wa.me/972542634686/?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%2F%D7%AA%20%D7%9C%D7%94%D7%96%D7%9E%D7%99%D7%9F%20%D7%9E%D7%9E%D7%9A%20%D7%A6%D7%99%D7%95%D7%A8."
-                            target="_blank" class="contact__button">
-                            <i class="ri-chat-2-line"></i> תשלחו לי הודעה
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <a href="https://wa.me/972542634686/?text=היי,%20אני%20מעוניינת%20להזמין%20ציור" target="_blank"
+                            style="background-color: #25D366; color: white; padding: 1rem 2rem; border-radius: 2rem; font-size: 1.1rem; display: inline-block; text-decoration: none; font-weight: bold;">
+                            <i class="ri-whatsapp-line" style="margin-left: 0.5rem;"></i>
+                            שלחו לי הודעה בוואטסאפ
                         </a>
-                    </h3>
-
-                    <div class="contact__info">
-
-                        <div class="contact__data">
-                            <span class="contact__data-title">וואטסאפ</span>
-                            <span class="contact__data-info">054-2634686</span>
-                            <a href="https://wa.me/972542634686/?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%2F%D7%AA%20%D7%9C%D7%94%D7%96%D7%9E%D7%99%D7%9F%20%D7%9E%D7%9E%D7%9A%20%D7%A6%D7%99%D7%95%D7%A8."
-                                target="_blank" class="contact__button">
-                                שלחו הודעה <i class="ri-arrow-left-line"></i>
-                            </a>
-                            <p class="bit">
-                                לאיסוף עצמי מתל אביב
-                                ניתן לשלוח לי את ההזמנה בהודעה למספר 054-2634686 ולשלם בביט.
-                                תעודכנו כשההזמנה תהיה מוכנה לאיסוף.
-                            </p>
-                        </div>
-
-
-                        <ul class="contact__social">
-                            <a href="https://www.facebook.com/leaveyulialone" target="_blank"
-                                class="contact__social-link no-select">
-                                <i class="ri-facebook-box-line"></i>
-                            </a>
-
-                            <a href="https://www.instagram.com/leave_yuli_alone/" target="_blank"
-                                class="contact__social-link no-select">
-                                <i class="ri-instagram-line"></i>
-                            </a>
-                        </ul>
                     </div>
-                </div>
+                </div> <!-- סגירת contact__content -->
+            </div> <!-- סגירת contact__container -->
+        </section> <!-- סגירת contact -->
 
-                <div class="contact__content">
-                    <h3 class="contact__title">
-                        <i class="ri-send-plane-line"></i> או תכתבו לי פה
-                    </h3>
-
-                    <form action="" class="contact__form" id="contact-form">
-                        <div class="contact__form-div">
-                            <label class="contact__form-tag">שם</label>
-                            <input type="text" name="user_name" require class="contact__form-input" id="contact-name" />
-                        </div>
-
-                        <div class="contact__form-div">
-                            <label class="contact__form-tag">מייל</label>
-                            <input type="text" name="user_email" required class="contact__form-input"
-                                id="contact-email" />
-                        </div>
-
-                        <div class="contact__form-div contact__form-area">
-                            <label class="contact__form-tag">כתבו פה מה תרצו להזמין</label>
-                            <textarea name="message" id="contact-message" class="contact__form-input"></textarea>
-                        </div>
-
-                        <p class="contact__error" id="contact-error"></p>
-
-                        <button type="submit" class="contact__button no-select">
-                            שליחה <i class="ri-arrow-left-up-line"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!--==================== FOOTER ====================-->
@@ -273,6 +223,39 @@
 
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>
+
+    <script>
+        function addToCart(name, price, img) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            const existingIndex = cart.findIndex(item => item.name === name && item.price === price);
+
+            if (existingIndex !== -1) {
+                // אם כבר קיים - נוסיף לכמות
+                cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+            } else {
+                // אם חדש - נכניס אותו עם כמות 1
+                cart.push({ name, price, img, quantity: 1 });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const cartCounter = document.getElementById("cart-counter");
+
+            if (cartCounter) {
+                cartCounter.textContent = totalCount;
+                cartCounter.style.display = totalCount > 0 ? "inline-block" : "none";
+            }
+        }
+
+        // עדכון מיידי בטעינה
+        window.addEventListener("DOMContentLoaded", updateCartCount);
+    </script>
 </body>
 
 </html>

@@ -29,79 +29,81 @@ const linkAction = () => {
 navLink.forEach((n) => n.addEventListener("click", linkAction));
 
 /*=============== SWIPER PROJECTS ===============*/
-let swiperProjects = new Swiper(".projects__container", {
-  loop: true,
-  spaceBetween: 24,
+if (typeof Swiper !== "undefined") {
+  let swiperProjects = new Swiper(".projects__container", {
+    loop: true,
+    spaceBetween: 24,
 
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  pagination: {
-    el: ".swiper-pagination",
-  },
-  breakpoints: {
-    1200: {
-      slidesPerView: 2,
-      spaceBetween: -56,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
     },
-  },
-});
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    breakpoints: {
+      1200: {
+        slidesPerView: 2,
+        spaceBetween: -56,
+      },
+    },
+  });
+}
 
 /*=============== EMAIL JS ===============*/
-const contactForm = document.getElementById("contact-form"),
-  contactName = document.getElementById("contact-name"),
-  contactEmail = document.getElementById("contact-email"),
-  contactMessage = document.getElementById("contact-message"),
-  contactError = document.getElementById("contact-error");
+// const contactForm = document.getElementById("contact-form"),
+//   contactName = document.getElementById("contact-name"),
+//   contactEmail = document.getElementById("contact-email"),
+//   contactMessage = document.getElementById("contact-message"),
+//   contactError = document.getElementById("contact-error");
 
-const sendEmail = (e) => {
-  e.preventDefault();
+// const sendEmail = (e) => {
+//   e.preventDefault();
 
-  // Check if the field has a value
-  if (
-    contactName.value === "" ||
-    contactEmail.value === "" ||
-    contactMessage.value === ""
-  ) {
-    // Add and remove color
-    contactError.classList.remove("color-blue");
-    contactError.classList.add("color-red");
+//   // Check if the field has a value
+//   if (
+//     contactName.value === "" ||
+//     contactEmail.value === "" ||
+//     contactMessage.value === ""
+//   ) {
+//     // Add and remove color
+//     contactError.classList.remove("color-blue");
+//     contactError.classList.add("color-red");
 
-    // Show message
-    contactError.textContent = "Write all the input fields 📥";
-  } else {
-    // serviceID - templateID - #form - publickey
-    emailjs
-      .sendForm(
-        "service_pgmvaog",
-        "template_pkem6ld",
-        "#contact-form",
-        "nWkvqRFbu1rCg5bAq"
-      )
-      .then(
-        () => {
-          // Show message and add color
-          contactError.classList.add("color-blue");
-          contactError.textContent = "Message sent ✅";
+//     // Show message
+//     contactError.textContent = "Write all the input fields 📥";
+//   } else {
+//     // serviceID - templateID - #form - publickey
+//     emailjs
+//       .sendForm(
+//         "service_pgmvaog",
+//         "template_pkem6ld",
+//         "#contact-form",
+//         "nWkvqRFbu1rCg5bAq"
+//       )
+//       .then(
+//         () => {
+//           // Show message and add color
+//           contactError.classList.add("color-blue");
+//           contactError.textContent = "Message sent ✅";
 
-          // Remove message after five seconds
-          setTimeout(() => {
-            contactError.textContent = "";
-          }, 5000);
-        },
-        (error) => {
-          alert("OOPS! SOMETHING HAS FAILED...", error);
-        }
-      );
+//           // Remove message after five seconds
+//           setTimeout(() => {
+//             contactError.textContent = "";
+//           }, 5000);
+//         },
+//         (error) => {
+//           alert("OOPS! SOMETHING HAS FAILED...", error);
+//         }
+//       );
 
-    // To clear the input field
-    contactName.value = "";
-    contactEmail.value = "";
-    contactMessage.value = "";
-  }
-};
-contactForm.addEventListener("submit", sendEmail);
+//     // To clear the input field
+//     contactName.value = "";
+//     contactEmail.value = "";
+//     contactMessage.value = "";
+//   }
+// };
+// contactForm.addEventListener("submit", sendEmail);
 
 /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
 const sections = document.querySelectorAll("section[id]");
@@ -182,23 +184,23 @@ const scrollHeader = () => {
 window.addEventListener("scroll", scrollHeader);
 
 /*=============== SCROLL REVEAL ANIMATION ===============*/
-const sr = ScrollReveal({
-  origin: "top",
-  distance: "60px",
-  duration: 2500,
-  delay: 0,
-  // reset: true /* Animation repeat */,
-});
+// const sr = ScrollReveal({
+//   origin: "top",
+//   distance: "60px",
+//   duration: 2500,
+//   delay: 0,
+//   reset: false,
+// });
 
-sr.reveal(`.home__data, .projects__container, .footer__container`);
-sr.reveal(`.home__info div`, { delay: 600, origin: "bottom", interval: 100 });
-sr.reveal(`.skills__content:nth-child(1), .contact__content:nth-child(1)`, {
-  origin: "left",
-});
-sr.reveal(`.skills__content:nth-child(2), .contact__content:nth-child(2)`, {
-  origin: "right",
-});
-sr.reveal(`.qualification__content, .services__card`, { interval: 100 });
+// sr.reveal(`.home__data, .projects__container, .footer__container, #contact`);
+// sr.reveal(`.home__info div`, { delay: 600, origin: "bottom", interval: 100 });
+// sr.reveal(`.skills__content:nth-child(1), .contact__content:nth-child(1)`, {
+//   origin: "left",
+// });
+// sr.reveal(`.skills__content:nth-child(2), .contact__content:nth-child(2)`, {
+//   origin: "right",
+// });
+// sr.reveal(`.qualification__content, .services__card`, { interval: 100 });
 
 // GALLERY
 document.addEventListener("DOMContentLoaded", function () {
@@ -600,27 +602,29 @@ function populateGallery(data, sectionId) {
     contentItem.className = "gallery__content-item";
 
     contentItem.innerHTML = `
-            <img src="${item.src}" alt="${
+  <img src="${item.src}" alt="${
       item.alt
     }" class="no-select" onclick="openPopup('${item.src}', '${
       item.paintingName
     }')">
-            <div class="img-title">
-                <span class="size">${item.size}</span>
-                <span class="name">
-                    <span class="painting-name">${item.paintingName}</span>
-                    ${
-                      item.soldOut
-                        ? '<span class="sold-out">סולד אאוט</span>'
-                        : `<a href="https://wa.me/972542634686/?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%2F%D7%AA%20%D7%9C%D7%94%D7%96%D7%9E%D7%99%D7%9F%20%D7%9E%D7%9E%D7%9A%20%D7%A6%D7%99%D7%95%D7%A8."
-                                target="_blank" class="img-btn no-select">
-                                לרכישה
-                            </a>`
-                    }
-                </span>
-                <span class="price">${item.price}</span>
-            </div>
-        `;
+  <div class="img-title">
+    <span class="size">${item.size}</span>
+    <span class="name">
+      <span class="painting-name">${item.paintingName}</span>
+      ${
+        item.soldOut
+          ? '<span class="img-btn sold-out">סולד אאוט</span>'
+          : `<button class="img-btn no-select" onclick="addToCart('${item.paintingName.replace(
+              /'/g,
+              "\\'"
+            )}', ${parseInt(item.price)}, '${item.src}')">
+              הוספה לעגלה
+            </button>`
+      }
+    </span>
+    <span class="price">${item.price}</span>
+  </div>
+`;
 
     section.appendChild(contentItem);
   });

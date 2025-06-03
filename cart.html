@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>העגלה שלך</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .cart-container {
+            max-width: 900px;
+            margin: 7rem auto 3rem;
+            padding: 1rem;
+        }
+
+        @media screen and (max-width: 1023px) {
+            .cart-container {
+                max-width: 900px;
+                margin: 1rem auto 6rem;
+                padding: 1rem;
+            }
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1rem;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .cart-details {
+            flex-grow: 1;
+        }
+
+        .cart-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .paybox-button {
+            display: block;
+            text-align: center;
+            margin: 2rem auto 0;
+            background-color: #f38376;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            max-width: 250px;
+        }
+
+        .paybox-button:hover {
+            background-color: #e85e4f;
+        }
+
+        .cart-item i.ri-delete-bin-line {
+            font-size: 1.3rem;
+            color: #e85e4f;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .cart-item i.ri-delete-bin-line:hover {
+            color: #a8251b;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .quantity-controls button {
+            background-color: #f38376;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .quantity-controls button:hover {
+            background-color: #e85e4f;
+        }
+
+        .cart-shipping-info {
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            gap: 1rem;
+
+        }
+
+        #city-select {
+            max-width: 110px;
+            padding: .3rem .2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header" dir="ltr">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo">תעזבו את יולי</a>
+            <div class="nav__menu " id="nav-menu">
+                <ul class="nav__list grid" dir="rtl">
+                    <li class="nav__item"><a href="index.html#gallery" class="nav__link no-select"><i
+                                class="ri-quill-pen-fill"></i> חנות</a></li>
+                    <li class="nav__item"><a href="index.html#personal" class="nav__link no-select"><i
+                                class="ri-gift-line"></i> ציורים בהזמנה אישית</a></li>
+
+                    <li class="nav__item"><a href="index.html#contact" class="nav__link no-select"><i
+                                class="ri-chat-3-line"></i> יצירת קשר</a></li>
+                </ul>
+                <div class="nav__close no-select" id="nav-close"><i class="ri-close-line"></i></div>
+            </div>
+            <div class="nav__buttons no-select">
+                <i class="ri-moon-line change-theme" id="theme-button"></i>
+                <div class="nav__toggle" id="nav-toggle"><i class="ri-menu-4-line"></i></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="cart-container">
+        <h2 class="section__title">העגלה שלך</h2>
+        <div id="cart-items"></div>
+        <div class="cart-shipping-info" style="margin-top: 2rem;">
+            <p>אחרי שתשלחו תשלום בביט, תקבלו אישור ונדבר לתאם את המשלוח 💌</p>
+            <label for="city-select">בחרו עיר לצורך חישוב עלות משלוח:</label>
+            <select id="city-select">
+                <option value="">-- בחרו עיר --</option>
+                <option value="תל אביב">תל אביב</option>
+                <option value="גבעתיים">גבעתיים</option>
+                <option value="רמת גן">רמת גן</option>
+                <option value="חולון">חולון</option>
+                <option value="בת ים">בת ים</option>
+                <option value="הרצליה">הרצליה</option>
+                <option value="רמת השרון">רמת השרון</option>
+                <option value="פתח תקווה">פתח תקווה</option>
+                <option value="בני ברק">בני ברק</option>
+                <option value="קרית אונו">קרית אונו</option>
+                <option value="ראשון לציון">ראשון לציון</option>
+            </select>
+            <p id="shipping-cost">עלות משלוח: 0 ש"ח</p>
+        </div>
+        <div class="cart-total">סה"כ לתשלום: <span id="total">0</span> ₪</div>
+        <p style="text-align:center; margin-top: 2rem;">
+            <strong>יש לשלם את הסכום הסופי באפליקציית ביט:</strong><br>
+            <span id="bit-amount" style="font-size: 1.3rem; color: #f38376;"></span>
+        </p>
+        <a id="bit-link" class="paybox-button" target="_blank">מעבר לתשלום בביט</a>
+        <div style="text-align: center; margin-top: 2rem;">
+            <p style="margin-bottom: 0.5rem;"><strong>או סרקו את הקוד כדי לשלם בביט:</strong></p>
+            <img src="assets/img/bit-qr.jpeg" alt="תשלום ביט"
+                style="max-width: 200px; border-radius: 1rem; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
+        </div>
+        <p style="text-align:center; margin-top: 1rem;">
+            או שלחו לי הודעה אם יש שאלה
+            <a href="https://wa.me/972542634686" style="color: #25D366; text-decoration: underline;"
+                target="_blank">בוואטסאפ</a>
+        </p>
+    </main>
+
+    <script>
+        const citySelect = document.getElementById("city-select");
+        const shippingCostDisplay = document.getElementById("shipping-cost");
+        const bitLink = document.getElementById("bit-link");
+        let shippingCost = 0;
+
+        const cityShippingCosts = {
+            "תל אביב": 30,
+            "גבעתיים": 50,
+            "רמת גן": 50,
+            "חולון": 50,
+            "בת ים": 50,
+            "הרצליה": 50,
+            "רמת השרון": 50,
+            "פתח תקווה": 50,
+            "בני ברק": 50,
+            "קרית אונו": 50,
+            "ראשון לציון": 50
+        };
+
+        citySelect?.addEventListener("change", () => {
+            const city = citySelect.value;
+            if (cityShippingCosts[city]) {
+                shippingCost = cityShippingCosts[city];
+                shippingCostDisplay.textContent = `עלות משלוח: ${shippingCost} ש"ח`;
+                localStorage.setItem("shipping", JSON.stringify({ city, cost: shippingCost }));
+            } else {
+                shippingCost = 0;
+                shippingCostDisplay.textContent = "עלות משלוח: 0 ש\"ח";
+                localStorage.removeItem("shipping");
+            }
+            renderCart();
+        });
+
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const container = document.getElementById("cart-items");
+            container.innerHTML = "";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const quantity = item.quantity || 1;
+                const div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="cart-details">
+                        <div>${item.name}</div>
+                        <div>${item.price} ₪ ליחידה</div>
+                        <div class="quantity-controls">
+                            <button onclick="changeQuantity(${index}, -1)">−</button>
+                            <span>${quantity}</span>
+                            <button onclick="changeQuantity(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                    <i class="ri-delete-bin-line" onclick="removeFromCart(${index})" title="הסר פריט"></i>
+                `;
+                container.appendChild(div);
+                total += item.price * quantity;
+            });
+
+            total += shippingCost;
+            document.getElementById("total").innerText = total;
+            document.getElementById("bit-amount").innerText = total + ' ₪';
+            bitLink.href = `https://bit-request.com/?phone=0542634686&amount=${total}`;
+        }
+
+        function changeQuantity(index, delta) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart[index].quantity = (cart[index].quantity || 1) + delta;
+            if (cart[index].quantity < 1) cart[index].quantity = 1;
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+        }
+
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+        }
+
+        renderCart();
+
+
+
+    </script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
