@@ -166,12 +166,20 @@
             <strong>יש לשלם את הסכום הסופי באפליקציית ביט:</strong><br>
             <span id="bit-amount" style="font-size: 1.3rem; color: #f38376;"></span>
         </p>
-        <a id="bit-link" class="paybox-button" target="_blank">מעבר לתשלום בביט</a>
+
         <div style="text-align: center; margin-top: 2rem;">
-            <p style="margin-bottom: 0.5rem;"><strong>או סרקו את הקוד כדי לשלם בביט:</strong></p>
+            <a href="https://pay.bit.app/0542634686" class="paybox-button" target="_blank">
+                מעבר לתשלום בביט
+            </a>
+            <button onclick="copyToClipboard('0542634686')" class="paybox-button"
+                style="background-color:#ccc; color:#333; margin-top: 1rem;">
+                העתק מספר ביט
+            </button>
+            <p style="margin-top: 1rem;"><strong>או סרקו את הקוד כדי לשלם בביט:</strong></p>
             <img src="assets/img/bit-qr.jpeg" alt="תשלום ביט"
                 style="max-width: 200px; border-radius: 1rem; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
         </div>
+
         <p style="text-align:center; margin-top: 1rem;">
             או שלחו לי הודעה אם יש שאלה
             <a href="https://wa.me/972542634686" style="color: #25D366; text-decoration: underline;"
@@ -243,7 +251,7 @@
             total += shippingCost;
             document.getElementById("total").innerText = total;
             document.getElementById("bit-amount").innerText = total + ' ₪';
-            bitLink.href = `https://bit-request.com/?phone=0542634686&amount=${total}`;
+
         }
 
         function changeQuantity(index, delta) {
@@ -263,6 +271,13 @@
 
         renderCart();
 
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("📋 המספר הועתק בהצלחה");
+            }).catch(() => {
+                alert("שגיאה בהעתקת המספר");
+            });
+        }
 
 
     </script>
