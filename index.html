@@ -210,6 +210,8 @@
     <a href="#" class="scrollup no-select" id="scroll-up">
         <i class="ri-arrow-up-line"></i>
     </a>
+    <div id="toast" class="toast">נוסף לעגלה בהצלחה 🎉</div>
+
 
     <!--=============== SCROLLREVEAL ===============-->
     <script src="assets/js/scrollreveal.min.js"></script>
@@ -240,6 +242,8 @@
 
             localStorage.setItem("cart", JSON.stringify(cart));
             updateCartCount();
+            showToast(); // ✨ תוספת
+
         }
 
         function updateCartCount() {
@@ -252,10 +256,22 @@
                 cartCounter.style.display = totalCount > 0 ? "inline-block" : "none";
             }
         }
+        function showToast(message = "נוסף לעגלה בהצלחה 🎉") {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.classList.add("show");
 
+            toast.style.animation = "pop 0.3s ease";
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+                toast.style.animation = "none";
+            }, 2000);
+        }
         // עדכון מיידי בטעינה
         window.addEventListener("DOMContentLoaded", updateCartCount);
     </script>
+
 </body>
 
 </html>
