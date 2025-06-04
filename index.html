@@ -271,6 +271,18 @@
         }
         // עדכון מיידי בטעינה
         window.addEventListener("DOMContentLoaded", updateCartCount);
+        window.addEventListener("load", () => {
+            if (window.location.hash) {
+                const section = document.querySelector(window.location.hash);
+                if (section) {
+                    // עיכוב קטן ליתר ביטחון (אם התמונות עדיין נטענות)
+                    setTimeout(() => {
+                        section.scrollIntoView({ behavior: "smooth" });
+                    }, 300);
+                }
+            }
+        });
+    </script
     </script>
 
 </body>
