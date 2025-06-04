@@ -1,4 +1,3 @@
-// firebase.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
 import {
   getFirestore,
@@ -7,7 +6,6 @@ import {
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
 
-// שימי כאן את הקונפיג שלך
 const firebaseConfig = {
   apiKey: "AIzaSyAEkUW9-aLVI2LV0u5JeiwbpvWMZFrvRR8",
   authDomain: "yuli-store-24998.firebaseapp.com",
@@ -23,11 +21,31 @@ const db = getFirestore(app);
 
 document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("submit-order");
+
   if (submitBtn) {
     submitBtn.addEventListener("click", async (e) => {
       e.preventDefault();
+      clearErrors();
       await saveOrder();
     });
+  }
+
+  function showError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    let errorEl = field.nextElementSibling;
+
+    if (!errorEl || !errorEl.classList.contains("form-error")) {
+      errorEl = document.createElement("div");
+      errorEl.className = "form-error";
+
+      field.parentNode.insertBefore(errorEl, field.nextSibling);
+    }
+
+    errorEl.innerText = message;
+  }
+
+  function clearErrors() {
+    document.querySelectorAll(".form-error").forEach((el) => el.remove());
   }
 
   async function saveOrder() {
@@ -37,10 +55,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const shipping = JSON.parse(localStorage.getItem("shipping")) || null;
     const total = parseInt(document.getElementById("total")?.innerText || 0);
 
-    if (!name || !phone) {
-      alert("אנא מלא/י שם ומספר טלפון.");
+    let hasError = false;
+
+    if (!name) {
+      showError("user-name", "יש להזין שם");
+      hasError = true;
+    }
+
+    if (!/^05\d{8}$/.test(phone)) {
+      showError("user-phone", "מספר טלפון לא תקין (לדוגמה: 0541234567)");
+      hasError = true;
+    }
+
+    if (!cart.length) {
+      alert("העגלה ריקה – הוסיפו פריטים לפני ביצוע ההזמנה.");
       return;
     }
+
+    if (hasError) return;
 
     const orderData = {
       name,
@@ -57,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "payment.html";
     } catch (error) {
       console.error("שגיאה בשמירה:", error);
-      alert("אירעה שגיאה בשמירת ההזמנה.");
+      alert("אירעה שגיאה בשמירת ההזמנה. נסה/י שוב.");
     }
   }
 });

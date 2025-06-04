@@ -1231,3 +1231,11 @@ p,
 .cart-total {
   line-height: 1.6;
 }
+
+.form-error {
+  color: #e85e4f;
+  font-size: 0.8rem;
+  margin-top: -0.6rem;
+  margin-bottom: 1.3rem;
+  margin-right: 0.5rem;
+}
