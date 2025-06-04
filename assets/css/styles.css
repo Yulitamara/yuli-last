@@ -366,6 +366,12 @@ body.dark-theme {
   font-size: 12px;
 }
 .img-btn {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
   background: none;
   border: none;
   padding: 0;
