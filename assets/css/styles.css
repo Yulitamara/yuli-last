@@ -422,7 +422,7 @@ body.dark-theme {
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  margin: 1rem 0 2.5rem 0;
+  margin: 1rem 0.4rem 2.5rem 0.4rem;
 }
 .filter {
   cursor: pointer;
@@ -1173,6 +1173,12 @@ a:visited {
 }
 
 .toast {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
   position: fixed;
   bottom: 6.5rem;
   left: 50%;
@@ -1181,7 +1187,7 @@ a:visited {
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 2rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
