@@ -13,6 +13,7 @@
   --text-color-light: #808185;
   --body-color: #fcfcfc;
   --container-color: #faf3de;
+  --toggle-menu-bg: #f0f0f0;
 
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/
@@ -134,6 +135,7 @@ body.dark-theme {
   --text-color-light: hsl(290, 4%, 73%);
   --body-color: #2c2c2c;
   --container-color: hsl(207, 4%, 12%);
+  --toggle-menu-bg: #3a3a3a;
 }
 
 /*========== 
@@ -1244,4 +1246,21 @@ p,
   margin-top: -0.6rem;
   margin-bottom: 1.3rem;
   margin-right: 0.5rem;
+}
+
+.nav__toggle i {
+  font-size: 1.7rem;
+}
+.nav__buttons {
+  font-size: 1.5rem;
+}
+.nav__logo {
+  font-size: 1rem;
+}
+.nav__toggle,
+.nav__close i {
+  background-color: var(--toggle-menu-bg);
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
