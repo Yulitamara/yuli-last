@@ -660,3 +660,8 @@ closePopup.addEventListener("click", () => {
   window.removeEventListener("click", closePopupOnClick);
   popupImage.removeEventListener("click", closePopupOnClick);
 });
+
+if (window.location.search.includes("fbclid")) {
+  const cleanUrl = window.location.origin + window.location.pathname;
+  window.history.replaceState({}, document.title, cleanUrl);
+}
