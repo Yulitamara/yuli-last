@@ -282,7 +282,7 @@ const printsData = [
   {
     src: "/assets/img/900-3.png",
     alt: "print",
-    size: "13x13",
+    size: "10x10",
     paintingName: "בכיתי",
     price: "35₪",
   },
