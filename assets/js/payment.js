@@ -51,7 +51,7 @@ function renderCart() {
                 <div>${item.price} ₪ ליחידה</div>
                 <div class="quantity-controls">
                     <button onclick="changeQuantity(${index}, -1)">−</button>
-                    <span>${quantity}</span>
+                    <span class="quantity-count">${quantity}</span>
                     <button onclick="changeQuantity(${index}, 1)">+</button>
                 </div>
             </div>
@@ -66,19 +66,75 @@ function renderCart() {
   document.getElementById("bit-amount").innerText = total + " ₪";
 }
 
+// function changeQuantity(index, delta) {
+//   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+//   cart[index].quantity = (cart[index].quantity || 1) + delta;
+
+//   if (cart[index].quantity < 1) {
+//     // אנימציה להסרה
+//     const container = document.getElementById("cart-items");
+//     const itemElement = container.children[index];
+//     itemElement.classList.add("fade-out");
+
+//     setTimeout(() => {
+//       cart.splice(index, 1);
+//       localStorage.setItem("cart", JSON.stringify(cart));
+//       renderCart();
+//     }, 300);
+//   } else {
+//     // עדכון כמות רגיל
+//     localStorage.setItem("cart", JSON.stringify(cart));
+//     renderCart();
+//   }
+// }
+
 function changeQuantity(index, delta) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const container = document.getElementById("cart-items");
+  const itemElement = container.children[index];
+  const quantitySpan = itemElement.querySelector(".quantity-count");
+
   cart[index].quantity = (cart[index].quantity || 1) + delta;
-  if (cart[index].quantity < 1) cart[index].quantity = 1;
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
+
+  if (cart[index].quantity < 1) {
+    // fade-out למחיקה
+    itemElement.classList.add("fade-out");
+    setTimeout(() => {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }, 300);
+  } else {
+    // עדכון localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // אנימציה רק על המספר
+    quantitySpan.classList.add("quantity-bump");
+    quantitySpan.addEventListener(
+      "animationend",
+      () => {
+        quantitySpan.classList.remove("quantity-bump");
+        renderCart();
+      },
+      { once: true }
+    );
+  }
 }
 
 function removeFromCart(index) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
+  const container = document.getElementById("cart-items");
+  const itemElement = container.children[index];
+
+  // הוספת class של fade-out
+  itemElement.classList.add("fade-out");
+
+  // מחיקה אחרי סיום האנימציה (300ms)
+  setTimeout(() => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }, 300);
 }
 
 renderCart();

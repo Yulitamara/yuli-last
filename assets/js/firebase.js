@@ -10,7 +10,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAEkUW9-aLVI2LV0u5JeiwbpvWMZFrvRR8",
   authDomain: "yuli-store-24998.firebaseapp.com",
   projectId: "yuli-store-24998",
-  storageBucket: "yuli-store-24998.firebasestorage.app",
+  storageBucket: "yuli-store-24998.appspot.com",
   messagingSenderId: "831975622912",
   appId: "1:831975622912:web:085160cabf000ecf04cbe5",
   measurementId: "G-P1KF52S3ZK",
@@ -86,6 +86,16 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await addDoc(collection(db, "orders"), orderData);
       localStorage.setItem("lastTotal", total);
+      // 🧼 ניקוי העגלה והמשלוח
+      localStorage.removeItem("cart");
+      localStorage.removeItem("shipping");
+
+      // 🧼 ניקוי שדות הטופס
+      document.getElementById("user-name").value = "";
+      document.getElementById("user-phone").value = "";
+      document.getElementById("city-select").value = "";
+
+      // 🧭 מעבר לעמוד התשלום
       window.location.href = "payment.html";
     } catch (error) {
       console.error("שגיאה בשמירה:", error);
