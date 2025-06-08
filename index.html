@@ -211,7 +211,7 @@
     <a href="#" class="scrollup no-select" id="scroll-up">
         <i class="ri-arrow-up-line"></i>
     </a>
-    <div id="toast" class="toast">נוסף לעגלה בהצלחה 🎉</div>
+    <div id="toast" class="toast" onclick="goToCart()">נוסף לעגלה בהצלחה 🎉</div>
 
 
     <!--=============== SCROLLREVEAL ===============-->
@@ -269,6 +269,10 @@
                 toast.style.animation = "none";
             }, 2000);
         }
+        function goToCart() {
+            window.location.href = "cart.html";
+        }
+
         // עדכון מיידי בטעינה
         window.addEventListener("DOMContentLoaded", updateCartCount);
         window.addEventListener("load", () => {
