@@ -239,7 +239,7 @@ const printsData = [
   {
     src: "/assets/img/900-1.png",
     alt: "print",
-    size: "13x13",
+    size: "10x10",
     paintingName: "חוויה טראומתית",
     price: "35₪",
   },
@@ -348,7 +348,6 @@ const printsData = [
     size: "10x10",
     paintingName: "תאספי אותי",
     price: "35₪",
-    soldOut: true,
   },
   {
     src: "/assets/img/900-22.png",
@@ -372,6 +371,7 @@ const printsData = [
     size: "13x13",
     paintingName: "כריות",
     price: "35₪",
+    soldOut: true,
   },
   {
     src: "/assets/img/900-17.png",
@@ -387,13 +387,7 @@ const printsData = [
     paintingName: "התחממות גלובלית",
     price: "35₪",
   },
-  // {
-  //   src: "/assets/img/900-26.png",
-  //   alt: "print",
-  //   size: "10x10",
-  //   paintingName: "משעמם",
-  //   price: "20₪",
-  // },
+ 
   {
     src: "/assets/img/900-27.png",
     alt: "print",
