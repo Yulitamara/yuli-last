@@ -229,6 +229,20 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const printsData = [
+   {
+    src: "/assets/img/900-4.png",
+    alt: "print",
+    size: "14x14",
+    paintingName: "מהממת",
+    price: "35₪",
+  },
+   {
+    src: "/assets/img/900-10.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "תאספי אותי",
+    price: "35₪",
+  },
   {
     src: "/assets/img/900-13.png",
     alt: "print",
@@ -293,13 +307,7 @@ const printsData = [
     paintingName: "מסקנה",
     price: "35₪",
   },
-  {
-    src: "/assets/img/900-4.png",
-    alt: "print",
-    size: "14x14",
-    paintingName: "מהממת",
-    price: "35₪",
-  },
+ 
   {
     src: "/assets/img/900-7.png",
     alt: "print",
@@ -342,13 +350,7 @@ const printsData = [
     paintingName: "כבר גדולה",
     price: "35₪",
   },
-  {
-    src: "/assets/img/900-10.png",
-    alt: "print",
-    size: "10x10",
-    paintingName: "תאספי אותי",
-    price: "35₪",
-  },
+ 
   {
     src: "/assets/img/900-22.png",
     alt: "print",
