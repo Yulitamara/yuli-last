@@ -1,184 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="assets/img/liii.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/img/liii.png" type="image/x-icon" />
 
     <!--=============== REMIXICONS ===============-->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
 
     <!--=============== SWIPER CSS ===============-->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
 
     <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css" />
 
     <title>תעזבו את יולי | Yuli Tamara</title>
-</head>
+  </head>
 
-<body dir="rtl">
+  <body dir="rtl">
     <!--==================== HEADER ====================-->
     <header class="header" id="header" dir="ltr">
-        <nav class="nav container">
-            <a href="#" class="nav__logo">תעזבו את יולי</a>
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list grid" dir="rtl">
-                    <li class="nav__item">
-                        <a href="#gallery" class="nav__link active-link no-select">
-                            <i class="ri-quill-pen-fill"></i> חנות
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#personal" class="nav__link no-select">
-                            <i class="ri-gift-line"></i> ציורים בהזמנה אישית
-                        </a>
-                    </li>
-                    <li>
-                        <a href="cart.html" class="nav__link no-select" style="position: relative">
-                            <i class="ri-shopping-cart-line"></i> עגלה
-                            <span id="cart-counter"
-                                style="position: absolute; top: -8px; left: -8px; background-color: #f38376; color: white; border-radius: 50%; font-size: 10px; padding: 2px 6px; display: none;">0</span>
-                        </a>
+      <nav class="nav container">
+        <a href="#" class="nav__logo">תעזבו את יולי</a>
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list grid" dir="rtl">
+            <li class="nav__item">
+              <a href="#gallery" class="nav__link active-link no-select">
+                <i class="ri-quill-pen-fill"></i> חנות
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#personal" class="nav__link no-select">
+                <i class="ri-gift-line"></i> ציורים בהזמנה אישית
+              </a>
+            </li>
+            <li>
+              <a
+                href="cart.html"
+                class="nav__link no-select"
+                style="position: relative"
+              >
+                <i class="ri-shopping-cart-line"></i> עגלה
+                <span
+                  id="cart-counter"
+                  style="
+                    position: absolute;
+                    top: -8px;
+                    left: -8px;
+                    background-color: #f38376;
+                    color: white;
+                    border-radius: 50%;
+                    font-size: 10px;
+                    padding: 2px 6px;
+                    display: none;
+                  "
+                  >0</span
+                >
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#contact" class="nav__link no-select">
+                <i class="ri-chat-3-line"></i> יצירת קשר
+              </a>
+            </li>
+          </ul>
 
-                    </li>
-                    <li class="nav__item">
-                        <a href="#contact" class="nav__link no-select">
-                            <i class="ri-chat-3-line"></i> יצירת קשר
-                        </a>
-                    </li>
+          <!-- close button -->
+          <div class="nav__close no-select" id="nav-close">
+            <i class="ri-close-line"></i>
+          </div>
+        </div>
 
-                </ul>
+        <div class="nav__buttons no-select">
+          <!-- Theme change button -->
+          <i class="ri-moon-line change-theme" id="theme-button"></i>
 
-                <!-- close button -->
-                <div class="nav__close no-select" id="nav-close">
-                    <i class="ri-close-line"></i>
-                </div>
-
-            </div>
-
-            <div class="nav__buttons no-select">
-                <!-- Theme change button -->
-                <i class="ri-moon-line change-theme" id="theme-button"></i>
-
-                <!-- Toggle button -->
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="ri-menu-4-line"></i>
-                </div>
-            </div>
-        </nav>
+          <!-- Toggle button -->
+          <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-menu-4-line"></i>
+          </div>
+        </div>
+      </nav>
     </header>
-
 
     <!--==================== MAIN ====================-->
     <main class="main">
+      <!--==================== Gallery ====================-->
+      <section class="gallery section" id="gallery">
+        <h2 class="section__title">תעזבו את יולי - חנות</h2>
 
-        <!--==================== Gallery ====================-->
-        <section class="gallery section" id="gallery">
-            <h2 class="section__title">תעזבו את יולי - חנות</h2>
+        <img src="/assets/img/logo.png" alt="gif" />
 
-            <img src="/assets/img/logo.png" alt="gif">
+        <div class="filters">
+          <div class="filter prints active no-select" data-filter="prints">
+            הדפסים
+          </div>
+          <div class="filter stickers no-select" data-filter="stickers">
+            מדבקות
+          </div>
+          <div class="filter cards no-select" data-filter="cards">גלויות</div>
+          <div class="filter magnets no-select" data-filter="magnets">
+            מגנטים
+          </div>
+          <div class="filter bags no-select" data-filter="bags">
+            <nobr> תיקי בד </nobr>
+          </div>
+        </div>
 
+        <div class="container section__border">
+          <div class="gallery__content" id="prints"></div>
+          <div class="gallery__content" id="stickers"></div>
+          <div class="gallery__content" id="cards"></div>
+          <div class="gallery__content" id="bags"></div>
+          <div class="gallery__content" id="magnets"></div>
+        </div>
+        <div class="popup" id="popup">
+          <img id="popup-image" src="" alt="" />
+          <span class="close-popup" id="close-popup">&times;</span>
+        </div>
+      </section>
 
-            <div class="filters">
-                <div class="filter prints active no-select" data-filter="prints">הדפסים</div>
-                <div class="filter stickers no-select" data-filter="stickers">מדבקות</div>
-                <div class="filter cards no-select" data-filter="cards">גלויות</div>
-                <div class="filter bags no-select" data-filter="bags">
-                    <nobr>
-                        תיקי בד
-                    </nobr>
-                </div>
+      <!--==================== PROJECTS ====================-->
+      <section class="projects section" id="personal" dir="ltr">
+        <h2 class="section__title">ציורים בהזמנה אישית</h2>
+        <span class="section__subtitle">על פי תמונה שלכם</span>
 
+        <div class="container">
+          <div class="projects__container swiper">
+            <div class="swiper-wrapper">
+              <div class="projects__content swiper-slide">
+                <img
+                  src="assets/img/personal-100.png"
+                  alt="project image"
+                  class="projects__img"
+                />
+              </div>
+              <div class="projects__content swiper-slide">
+                <img
+                  src="assets/img/personal-101.png"
+                  alt="project image"
+                  class="projects__img"
+                />
+              </div>
+              <div class="projects__content swiper-slide">
+                <img
+                  src="assets/img/personal-102.png"
+                  alt="project image"
+                  class="projects__img"
+                />
+              </div>
+              <div class="projects__content swiper-slide">
+                <img
+                  src="assets/img/personal-103.png"
+                  alt="project image"
+                  class="projects__img"
+                />
+              </div>
+              <div class="projects__content swiper-slide">
+                <img
+                  src="assets/img/personal-104.png"
+                  alt="project image"
+                  class="projects__img"
+                />
+              </div>
+              <div class="projects__content swiper-slide">
+                <img
+                  src="assets/img/personal-105.png"
+                  alt="project image"
+                  class="projects__img"
+                />
+              </div>
+              <div class="projects__content swiper-slide">
+                <img
+                  src="assets/img/personal-106.png"
+                  alt="project image"
+                  class="projects__img"
+                />
+              </div>
             </div>
 
-            <div class="container section__border">
-                <div class="gallery__content" id="prints">
-                </div>
-                <div class="gallery__content" id="stickers">
-                </div>
-                <div class="gallery__content" id="cards">
-                </div>
-                <div class="gallery__content" id="bags">
-                </div>
+            <div class="swiper-button-next no-select">
+              <i class="ri-arrow-right-s-line"></i>
             </div>
-            <div class="popup" id="popup">
-                <img id="popup-image" src="" alt="">
-                <span class="close-popup" id="close-popup">&times;</span>
+            <div class="swiper-button-prev no-select">
+              <i class="ri-arrow-left-s-line"></i>
             </div>
-        </section>
 
-        <!--==================== PROJECTS ====================-->
-        <section class="projects section" id="personal" dir="ltr">
-            <h2 class="section__title">ציורים בהזמנה אישית</h2>
-            <span class="section__subtitle">על פי תמונה שלכם</span>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
 
-            <div class="container">
-                <div class="projects__container swiper">
-                    <div class="swiper-wrapper">
-                        <div class="projects__content swiper-slide">
-                            <img src="assets/img/personal-100.png" alt="project image" class="projects__img" />
-                        </div>
-                        <div class="projects__content swiper-slide">
-                            <img src="assets/img/personal-101.png" alt="project image" class="projects__img" />
-                        </div>
-                        <div class="projects__content swiper-slide">
-                            <img src="assets/img/personal-102.png" alt="project image" class="projects__img" />
-                        </div>
-                        <div class="projects__content swiper-slide">
-                            <img src="assets/img/personal-103.png" alt="project image" class="projects__img" />
-                        </div>
-                        <div class="projects__content swiper-slide">
-                            <img src="assets/img/personal-104.png" alt="project image" class="projects__img" />
-                        </div>
-                        <div class="projects__content swiper-slide">
-                            <img src="assets/img/personal-105.png" alt="project image" class="projects__img" />
-                        </div>
-                        <div class="projects__content swiper-slide">
-                            <img src="assets/img/personal-106.png" alt="project image" class="projects__img" />
-                        </div>
-                    </div>
-
-                    <div class="swiper-button-next no-select">
-                        <i class="ri-arrow-right-s-line"></i>
-                    </div>
-                    <div class="swiper-button-prev no-select">
-                        <i class="ri-arrow-left-s-line"></i>
-                    </div>
-
-                    <div class="swiper-pagination"></div>
-                </div>
+      <!--==================== CONTACT ====================-->
+      <section class="contact section" id="contact">
+        <div class="contact__container container grid">
+          <div class="contact__content">
+            <div style="text-align: center; margin-bottom: 2rem">
+              <a
+                href="https://wa.me/972542634686/?text=היי,%20אני%20מעוניינת%20להזמין%20ציור"
+                target="_blank"
+                style="
+                  background-color: #25d366;
+                  color: white;
+                  padding: 1rem 2rem;
+                  border-radius: 2rem;
+                  font-size: 1.1rem;
+                  display: inline-block;
+                  text-decoration: none;
+                  font-weight: bold;
+                "
+              >
+                <i class="ri-whatsapp-line" style="margin-left: 0.5rem"></i>
+                שלחו לי הודעה בוואטסאפ
+              </a>
             </div>
-        </section>
-
-        <!--==================== CONTACT ====================-->
-        <section class="contact section" id="contact">
-
-            <div class="contact__container container grid">
-                <div class="contact__content">
-                    <div style="text-align: center; margin-bottom: 2rem;">
-                        <a href="https://wa.me/972542634686/?text=היי,%20אני%20מעוניינת%20להזמין%20ציור" target="_blank"
-                            style="background-color: #25D366; color: white; padding: 1rem 2rem; border-radius: 2rem; font-size: 1.1rem; display: inline-block; text-decoration: none; font-weight: bold;">
-                            <i class="ri-whatsapp-line" style="margin-left: 0.5rem;"></i>
-                            שלחו לי הודעה בוואטסאפ
-                        </a>
-                    </div>
-                </div> <!-- סגירת contact__content -->
-            </div> <!-- סגירת contact__container -->
-        </section> <!-- סגירת contact -->
-
+          </div>
+          <!-- סגירת contact__content -->
+        </div>
+        <!-- סגירת contact__container -->
+      </section>
+      <!-- סגירת contact -->
     </main>
 
     <!--==================== FOOTER ====================-->
     <footer class="footer">
-        <div class="footer__container container">
-            <div class="footer__img">
-                <img src="/assets/img/logo.png" alt="logo" width="200">
-            </div>
-            <!-- <ul class="footer__list">
+      <div class="footer__container container">
+        <div class="footer__img">
+          <img src="/assets/img/logo.png" alt="logo" width="200" />
+        </div>
+        <!-- <ul class="footer__list">
                 <li>
                     <a href="#gallery" class="footer__link">ציורים</a>
                 </li>
@@ -188,31 +243,37 @@
                 </li>
             </ul> -->
 
-            <ul class="footer__social">
-                <a href="https://www.facebook.com/leaveyulialone" target="_blank" class="footer__social-link no-select">
-                    <i class="ri-facebook-box-line"></i>
-                </a>
+        <ul class="footer__social">
+          <a
+            href="https://www.facebook.com/leaveyulialone"
+            target="_blank"
+            class="footer__social-link no-select"
+          >
+            <i class="ri-facebook-box-line"></i>
+          </a>
 
+          <a
+            href="https://www.instagram.com/leave_yuli_alone/"
+            target="_blank"
+            class="footer__social-link no-select"
+          >
+            <i class="ri-instagram-line"></i>
+          </a>
+        </ul>
 
-                <a href="https://www.instagram.com/leave_yuli_alone/" target="_blank"
-                    class="footer__social-link no-select">
-                    <i class="ri-instagram-line"></i>
-                </a>
-            </ul>
-
-            <span class="footer__copy">
-                &#169; Copyright Yuli Tamara. All rights reserved
-            </span>
-        </div>
+        <span class="footer__copy">
+          &#169; Copyright Yuli Tamara. All rights reserved
+        </span>
+      </div>
     </footer>
-
 
     <!--========== SCROLL UP ==========-->
     <a href="#" class="scrollup no-select" id="scroll-up">
-        <i class="ri-arrow-up-line"></i>
+      <i class="ri-arrow-up-line"></i>
     </a>
-    <div id="toast" class="toast" onclick="goToCart()">נוסף לעגלה בהצלחה 🎉</div>
-
+    <div id="toast" class="toast" onclick="goToCart()">
+      נוסף לעגלה בהצלחה 🎉
+    </div>
 
     <!--=============== SCROLLREVEAL ===============-->
     <script src="assets/js/scrollreveal.min.js"></script>
@@ -221,73 +282,78 @@
     <script src="assets/js/swiper-bundle.min.js"></script>
 
     <!--=============== EMAIL JS ===============-->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
 
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>
 
     <script>
-        function addToCart(name, price, img) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      function addToCart(name, price, img) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-            const existingIndex = cart.findIndex(item => item.name === name && item.price === price);
+        const existingIndex = cart.findIndex(
+          (item) => item.name === name && item.price === price
+        );
 
-            if (existingIndex !== -1) {
-                // אם כבר קיים - נוסיף לכמות
-                cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
-            } else {
-                // אם חדש - נכניס אותו עם כמות 1
-                cart.push({ name, price, img, quantity: 1 });
-            }
-
-            localStorage.setItem("cart", JSON.stringify(cart));
-            updateCartCount();
-            showToast(); // ✨ תוספת
-
+        if (existingIndex !== -1) {
+          // אם כבר קיים - נוסיף לכמות
+          cart[existingIndex].quantity =
+            (cart[existingIndex].quantity || 1) + 1;
+        } else {
+          // אם חדש - נכניס אותו עם כמות 1
+          cart.push({ name, price, img, quantity: 1 });
         }
 
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-            const cartCounter = document.getElementById("cart-counter");
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+        showToast(); // ✨ תוספת
+      }
 
-            if (cartCounter) {
-                cartCounter.textContent = totalCount;
-                cartCounter.style.display = totalCount > 0 ? "inline-block" : "none";
-            }
+      function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const totalCount = cart.reduce(
+          (sum, item) => sum + (item.quantity || 1),
+          0
+        );
+        const cartCounter = document.getElementById("cart-counter");
+
+        if (cartCounter) {
+          cartCounter.textContent = totalCount;
+          cartCounter.style.display = totalCount > 0 ? "inline-block" : "none";
         }
-        function showToast(message = "נוסף לעגלה בהצלחה 🎉") {
-            const toast = document.getElementById("toast");
-            toast.textContent = message;
-            toast.classList.add("show");
+      }
+      function showToast(message = "נוסף לעגלה בהצלחה 🎉") {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
 
-            toast.style.animation = "pop 0.3s ease";
+        toast.style.animation = "pop 0.3s ease";
 
+        setTimeout(() => {
+          toast.classList.remove("show");
+          toast.style.animation = "none";
+        }, 2000);
+      }
+      function goToCart() {
+        window.location.href = "cart.html";
+      }
+
+      // עדכון מיידי בטעינה
+      window.addEventListener("DOMContentLoaded", updateCartCount);
+      window.addEventListener("load", () => {
+        if (window.location.hash) {
+          const section = document.querySelector(window.location.hash);
+          if (section) {
+            // עיכוב קטן ליתר ביטחון (אם התמונות עדיין נטענות)
             setTimeout(() => {
-                toast.classList.remove("show");
-                toast.style.animation = "none";
-            }, 2000);
+              section.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+          }
         }
-        function goToCart() {
-            window.location.href = "cart.html";
-        }
-
-        // עדכון מיידי בטעינה
-        window.addEventListener("DOMContentLoaded", updateCartCount);
-        window.addEventListener("load", () => {
-            if (window.location.hash) {
-                const section = document.querySelector(window.location.hash);
-                if (section) {
-                    // עיכוב קטן ליתר ביטחון (אם התמונות עדיין נטענות)
-                    setTimeout(() => {
-                        section.scrollIntoView({ behavior: "smooth" });
-                    }, 300);
-                }
-            }
-        });
+      });
     </script>
-
-</body>
-
+  </body>
 </html>

@@ -229,47 +229,47 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const printsData = [
-   {
+  {
     src: "/assets/img/900-4.png",
     alt: "print",
     size: "14x14",
     paintingName: "מהממת",
-    price: "35₪",
+    price: "30₪",
   },
-   {
+  {
     src: "/assets/img/900-10.png",
     alt: "print",
     size: "10x10",
     paintingName: "תאספי אותי",
-    price: "35₪",
+    price: "30₪",
   },
   {
     src: "/assets/img/900-13.png",
     alt: "print",
     size: "15x15",
     paintingName: "לאהוב את עצמי",
-    price: "35₪",
+    price: "30₪",
   },
   {
     src: "/assets/img/900-1.png",
     alt: "print",
     size: "10x10",
     paintingName: "חוויה טראומתית",
-    price: "35₪",
+    price: "30₪",
   },
   {
     src: "/assets/img/900-5.png",
     alt: "print",
     size: "20x20",
     paintingName: "חיבוק ספה",
-    price: "35₪",
+    price: "30₪",
   },
   {
     src: "/assets/img/900-8.png",
     alt: "print",
     size: "13x13",
     paintingName: "אידיאליזציה",
-    price: "35₪",
+    price: "30₪",
     soldOut: true,
   },
   {
@@ -277,88 +277,61 @@ const printsData = [
     alt: "print",
     size: "15x15",
     paintingName: "10 דקות במקלחת",
-    price: "35₪",
+    price: "30₪",
   },
-  {
-    src: "/assets/img/900-2.png",
-    alt: "print",
-    size: "15x15",
-    paintingName: "ביישנית",
-    price: "35₪",
-  },
+
   {
     src: "/assets/img/900-6.png",
     alt: "print",
     size: "15x15",
     paintingName: "SAD NOT LAZY",
-    price: "35₪",
+    price: "30₪",
   },
   {
     src: "/assets/img/900-3.png",
     alt: "print",
     size: "10x10",
     paintingName: "בכיתי",
-    price: "35₪",
+    price: "30₪",
   },
-  {
-    src: "/assets/img/900-9.png",
-    alt: "print",
-    size: "15x15",
-    paintingName: "מסקנה",
-    price: "35₪",
-  },
- 
+
   {
     src: "/assets/img/900-7.png",
     alt: "print",
     size: "15x15",
     paintingName: "לא יכולה לבוא",
-    price: "35₪",
+    price: "30₪",
   },
-  {
-    src: "/assets/img/900-11.png",
-    alt: "print",
-    size: "14x14",
-    paintingName: "עובר ושב",
-    price: "35₪",
-  },
+
   {
     src: "/assets/img/900-24.png",
     alt: "print",
     size: "13x13",
     paintingName: "חרא אישיות",
-    price: "35₪",
+    price: "30₪",
   },
   {
     src: "/assets/img/900-23.png",
     alt: "print",
     size: "14x14",
     paintingName: "מאמצת חתול",
-    price: "35₪",
+    price: "30₪",
   },
   {
     src: "/assets/img/900-21.png",
     alt: "print",
     size: "13x13",
     paintingName: "יפה ומטופחת",
-    price: "35₪",
+    price: "30₪",
   },
   {
     src: "/assets/img/900-18.png",
     alt: "print",
-    size: "13x13",
+    size: "10x10",
     paintingName: "כבר גדולה",
-    price: "35₪",
+    price: "30₪",
   },
- 
-  {
-    src: "/assets/img/900-22.png",
-    alt: "print",
-    size: "14x14",
-    paintingName: "הורמונלית",
-    price: "35₪",
-    soldOut: true,
-  },
+
   {
     src: "/assets/img/900-25.png",
     alt: "print",
@@ -370,40 +343,25 @@ const printsData = [
   {
     src: "/assets/img/900-20.png",
     alt: "print",
-    size: "13x13",
+    size: "10x10",
     paintingName: "כריות",
-    price: "35₪",
-    soldOut: true,
+    price: "30₪",
   },
-  {
-    src: "/assets/img/900-17.png",
-    alt: "print",
-    size: "15x15",
-    paintingName: "יומן שבועי",
-    price: "35₪",
-  },
+
   {
     src: "/assets/img/900-19.png",
     alt: "print",
-    size: "13x13",
+    size: "10x10",
     paintingName: "התחממות גלובלית",
-    price: "35₪",
+    price: "30₪",
   },
- 
+
   {
     src: "/assets/img/900-27.png",
     alt: "print",
     size: "14x14",
     paintingName: "היית מעולה",
-    price: "35₪",
-  },
-
-  {
-    src: "/assets/img/900-29.jpg",
-    alt: "print",
-    size: "13x13",
-    paintingName: "כל הדברים",
-    price: "35₪",
+    price: "30₪",
   },
 ];
 
@@ -455,57 +413,57 @@ const stickersData = [
     alt: "sticker",
     size: "10x10",
     paintingName: "מסקנה",
-    price: "14₪",
+    price: "10₪",
   },
   {
     src: "/assets/img/900-103.png",
     alt: "sticker",
     size: "10x10",
     paintingName: "תוכניות",
-    price: "14₪",
+    price: "10₪",
   },
   {
     src: "/assets/img/900-102.png",
     alt: "sticker",
     size: "10x10",
     paintingName: "סלח לי",
-    price: "14₪",
+    price: "10₪",
   },
   {
     src: "/assets/img/900-101.png",
     alt: "sticker",
     size: "10x10",
     paintingName: "טיפול זוגי",
-    price: "14₪",
+    price: "10₪",
   },
   {
     src: "/assets/img/900-100.png",
     alt: "sticker",
     size: "10x10",
     paintingName: "עסוקה",
-    price: "14₪",
+    price: "10₪",
   },
   {
     src: "/assets/img/900-104.png",
     alt: "sticker",
     size: "10x10",
     paintingName: "אידאליזציה",
-    price: "14₪",
+    price: "10₪",
   },
   {
     src: "/assets/img/sticker-900-1.png",
     alt: "print",
     size: "10x10",
     paintingName: "לא אכפת",
-    price: "14₪",
+    price: "10₪",
   },
-  {
-    src: "/assets/img/sticker-900-2.png",
-    alt: "print",
-    size: "10x10",
-    paintingName: "חסר משמעות",
-    price: "14₪",
-  },
+  // {
+  //   src: "/assets/img/sticker-900-2.png",
+  //   alt: "print",
+  //   size: "10x10",
+  //   paintingName: "חסר משמעות",
+  //   price: "14₪",
+  // },
 ];
 
 const cardsData = [
@@ -514,28 +472,45 @@ const cardsData = [
     alt: "print",
     size: "15x10",
     paintingName: "טיפשה ורע לה",
-    price: "35₪",
+    price: "25₪",
   },
   {
     src: "/assets/img/card-1.png",
     alt: "print",
     size: "15x10",
     paintingName: "דיקפיק",
-    price: "35₪",
+    price: "25₪",
   },
   {
     src: "/assets/img/card-2.png",
     alt: "print",
     size: "15x10",
     paintingName: "לצחצח שיניים",
-    price: "35₪",
+    price: "25₪",
   },
   {
     src: "/assets/img/card-3.png",
     alt: "print",
     size: "15x10",
     paintingName: "סליחות",
-    price: "35₪",
+    price: "25₪",
+  },
+];
+
+const magnetsData = [
+  {
+    src: "/assets/img/900-2.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "ביישנית",
+    price: "20₪",
+  },
+  {
+    src: "/assets/img/900-11.png",
+    alt: "print",
+    size: "10x10",
+    paintingName: "עובר ושב",
+    price: "20₪",
   },
 ];
 
@@ -560,7 +535,6 @@ const bagsData = [
     size: "",
     paintingName: "בכיתי",
     price: "80₪",
-    soldOut: true,
   },
   {
     src: "/assets/img/bag-5.png",
@@ -568,6 +542,7 @@ const bagsData = [
     size: "",
     paintingName: "מתיחות",
     price: "80₪",
+    soldOut: true,
   },
   {
     src: "/assets/img/bag-4.png",
@@ -583,6 +558,7 @@ const galleryContent = {
   prints: document.getElementById("prints"),
   stickers: document.getElementById("stickers"),
   cards: document.getElementById("cards"),
+  magnets: document.getElementById("magnets"),
   bags: document.getElementById("bags"),
 };
 
@@ -630,6 +606,7 @@ populateGallery(printsData, "prints");
 populateGallery(stickersData, "stickers");
 populateGallery(cardsData, "cards");
 populateGallery(bagsData, "bags");
+populateGallery(magnetsData, "magnets");
 
 function openPopup(imageSrc, paintingName) {
   popupImage.src = imageSrc;
