@@ -230,6 +230,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const printsData = [
   {
+    src: "/assets/img/600-focus.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "שליטה",
+    price: "30₪",
+  },
+  {
+    src: "/assets/img/600-plants.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "צמחים",
+    price: "30₪",
+  },
+  {
+    src: "/assets/img/600-dog-ok.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "בסדר מצדך",
+    price: "30₪",
+  },
+
+  {
     src: "/assets/img/900-4.png",
     alt: "print",
     size: "14x14",
@@ -264,14 +286,7 @@ const printsData = [
     paintingName: "חיבוק ספה",
     price: "30₪",
   },
-  {
-    src: "/assets/img/900-8.png",
-    alt: "print",
-    size: "13x13",
-    paintingName: "אידיאליזציה",
-    price: "30₪",
-    soldOut: true,
-  },
+
   {
     src: "/assets/img/900-14.png",
     alt: "print",
@@ -298,16 +313,22 @@ const printsData = [
   {
     src: "/assets/img/900-7.png",
     alt: "print",
-    size: "15x15",
+    size: "10x10",
     paintingName: "לא יכולה לבוא",
     price: "30₪",
   },
-
   {
-    src: "/assets/img/900-24.png",
+    src: "/assets/img/600-marry.webp",
     alt: "print",
-    size: "13x13",
-    paintingName: "חרא אישיות",
+    size: "10x10",
+    paintingName: "הורים נשואים",
+    price: "30₪",
+  },
+  {
+    src: "/assets/img/600-people.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "הודעות",
     price: "30₪",
   },
   {
@@ -353,14 +374,6 @@ const printsData = [
     alt: "print",
     size: "10x10",
     paintingName: "התחממות גלובלית",
-    price: "30₪",
-  },
-
-  {
-    src: "/assets/img/900-27.png",
-    alt: "print",
-    size: "14x14",
-    paintingName: "היית מעולה",
     price: "30₪",
   },
 ];
@@ -442,6 +455,7 @@ const stickersData = [
     size: "10x10",
     paintingName: "עסוקה",
     price: "10₪",
+    soldOut: true,
   },
   {
     src: "/assets/img/900-104.png",
@@ -457,13 +471,34 @@ const stickersData = [
     paintingName: "לא אכפת",
     price: "10₪",
   },
-  // {
-  //   src: "/assets/img/sticker-900-2.png",
-  //   alt: "print",
-  //   size: "10x10",
-  //   paintingName: "חסר משמעות",
-  //   price: "14₪",
-  // },
+  {
+    src: "/assets/img/600-shirt.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "הכל קורס",
+    price: "10₪",
+  },
+  {
+    src: "/assets/img/600-computer.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "עבודה מול מחשב",
+    price: "10₪",
+  },
+  {
+    src: "/assets/img/600-tierd.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "נראית עייפה",
+    price: "10₪",
+  },
+  {
+    src: "/assets/img/600-mode.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "מדהים איך קצת",
+    price: "10₪",
+  },
 ];
 
 const cardsData = [
@@ -499,6 +534,28 @@ const cardsData = [
 
 const magnetsData = [
   {
+    src: "/assets/img/600-how-to-no.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "איך להגיד לא",
+    price: "20₪",
+  },
+
+  {
+    src: "/assets/img/600-dad.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "האבא הכי",
+    price: "20₪",
+  },
+  {
+    src: "/assets/img/600-coffee.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "קפה",
+    price: "20₪",
+  },
+  {
     src: "/assets/img/900-2.png",
     alt: "print",
     size: "10x10",
@@ -506,10 +563,24 @@ const magnetsData = [
     price: "20₪",
   },
   {
-    src: "/assets/img/900-11.png",
+    src: "/assets/img/600-yael.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "מרגישה מצוין",
+    price: "20₪",
+  },
+  {
+    src: "/assets/img/600-find.webp",
     alt: "print",
     size: "10x10",
     paintingName: "עובר ושב",
+    price: "20₪",
+  },
+  {
+    src: "/assets/img/600-tut.webp",
+    alt: "print",
+    size: "10x10",
+    paintingName: "סיטואציות לא נעימות",
     price: "20₪",
   },
 ];
