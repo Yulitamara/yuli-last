@@ -664,6 +664,9 @@ function populateGallery(data, sectionId) {
   data.forEach((item) => {
     const contentItem = document.createElement("div");
     contentItem.className = "gallery__content-item";
+    if (sectionId === "bags") {
+      contentItem.classList.add("gallery__content-item--bag");
+    }
 
     const image = document.createElement("img");
     image.src = item.src;
