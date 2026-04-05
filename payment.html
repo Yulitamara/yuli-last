@@ -6,14 +6,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>תשלום ביט</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+        rel="stylesheet"
+    />
     <style>
         body {
             font-family: 'Varela Round', sans-serif;
-            text-align: center;
-            padding: 2rem;
+            background: var(--body-color);
+            color: var(--text-color);
+            margin: 0;
+            min-height: 100vh;
         }
 
-        .paybox-button {
+        .payment-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .payment-header {
+            padding: 1.25rem 1rem 0;
+        }
+
+        .payment-header__inner {
+            width: min(100%, 1120px);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .payment-brand {
+            color: var(--title-color);
+            font-size: 1.1rem;
+            font-weight: var(--font-medium);
+            text-decoration: none;
+        }
+
+        .payment-back {
+            color: var(--text-color);
+            text-decoration: none;
+            border: 1px solid rgba(37, 37, 37, 0.1);
+            border-radius: 999px;
+            padding: 0.65rem 1rem;
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        .payment-main {
+            flex: 1;
+            display: grid;
+            place-items: center;
+            padding: 1.5rem 1rem 2rem;
+        }
+
+        .payment-card {
+            width: min(100%, 460px);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(37, 37, 37, 0.08);
+            border-radius: 1.75rem;
+            padding: 2rem 1.25rem 1.5rem;
+            box-shadow: 0 20px 50px rgba(37, 37, 37, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .payment-title {
+            margin-bottom: 0.6rem;
+        }
+
+        .payment-subtitle {
+            margin-top: 0;
+            font-size: 1.02rem;
+        }
+
+        .payment-amount {
+            margin: 1.5rem 0 0;
+        }
+
+        .payment-amount strong {
+            display: block;
+            margin-bottom: 0.35rem;
+        }
+
+        #bit-amount {
+            font-size: 1.55rem;
+            color: #f38376;
+            font-weight: 700;
+        }
+
+        .payment-actions {
+            margin-top: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            align-items: center;
+        }
+
+        .payment-button {
             background-color: #f38376;
             color: white;
             padding: 0.75rem 2rem;
@@ -21,40 +113,164 @@
             border-radius: 1.5rem;
             font-size: 1rem;
             cursor: pointer;
+            text-decoration: none;
+            width: min(100%, 290px);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .payment-button:hover {
+            background-color: #e85e4f;
+            transform: translateY(-1px);
+        }
+
+        .payment-button--ghost {
+            background: transparent;
+            color: var(--title-color);
+            border: 1px solid rgba(37, 37, 37, 0.12);
+        }
+
+        .payment-button--ghost:hover {
+            background: rgba(37, 37, 37, 0.04);
+        }
+
+        .payment-help {
             margin-top: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .payment-help a {
+            color: #25D366;
+        }
+
+        .payment-qr {
+            margin-top: 1.75rem;
+        }
+
+        .payment-qr img {
+            max-width: 200px;
+            border-radius: 1rem;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-footer {
+            padding: 0 1rem 2rem;
+        }
+
+        .payment-footer__inner {
+            width: min(100%, 1120px);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .payment-footer__social {
+            display: flex;
+            justify-content: center;
+            gap: 0.85rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .payment-footer__social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.65rem;
+            height: 2.65rem;
+            border-radius: 50%;
+            color: var(--title-color);
+            border: 1px solid rgba(37, 37, 37, 0.08);
+            background: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+        }
+
+        .payment-footer__copy {
+            font-size: var(--small-font-size);
+            color: var(--text-color-light);
+        }
+
+        body.dark-theme .payment-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+        }
+
+        body.dark-theme .payment-back,
+        body.dark-theme .payment-footer__social a {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-theme .payment-button--ghost {
+            color: var(--title-color);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        body.dark-theme .payment-button--ghost:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        @media screen and (max-width: 576px) {
+            .payment-header__inner {
+                flex-direction: column;
+            }
+
+            .payment-card {
+                padding: 1.75rem 1rem 1.25rem;
+            }
         }
     </style>
 </head>
 
 <body>
+    <div class="payment-page">
+        <header class="payment-header">
+            <div class="payment-header__inner">
+                <a href="index.html" class="payment-brand">תעזבו את יולי</a>
+                <a href="index.html#gallery" class="payment-back">חזרה לחנות</a>
+            </div>
+        </header>
 
-    <h2>ההזמנה התקבלה</h2>
-    <p style="margin-top: 0.75rem; font-size: 1.05rem;">
-        נשאר רק לבצע את התשלום בביט.
-    </p>
+        <main class="payment-main">
+            <section class="payment-card">
+                <h2 class="payment-title">ההזמנה התקבלה</h2>
+                <p class="payment-subtitle">נשאר רק לבצע את התשלום בביט.</p>
 
-    <p style="margin-top: 1.5rem;">
-        <strong>לתשלום:</strong><br />
-        <span id="bit-amount" style="font-size: 1.3rem; color: #f38376;"></span>
-    </p>
+                <p class="payment-amount">
+                    <strong>לתשלום</strong>
+                    <span id="bit-amount"></span>
+                </p>
 
-    <div>
-        <button onclick="copyToClipboard('0542634686')" class="paybox-button">
-            📋 העתק מספר לתשלום בביט
-        </button>
+                <div class="payment-actions">
+                    <button onclick="copyToClipboard('0542634686')" class="payment-button">
+                        העתקת מספר לתשלום בביט
+                    </button>
+                </div>
 
-        <p style="margin-top: 1rem; font-size: 0.95rem;">
-            פתחו את אפליקציית <strong>ביט</strong>, הדביקו את המספר ובצעו את התשלום.<br />
-            לשאלות אפשר לכתוב לי <a href="https://wa.me/972542634686" target="_blank"
-                style="color:#25D366;">בוואטסאפ</a>.
-        </p>
-    </div>
+                <p class="payment-help">
+                    פתחו את אפליקציית <strong>ביט</strong>, הדביקו את המספר ובצעו את התשלום.<br />
+                    לשאלות אפשר לכתוב לי <a href="https://wa.me/972542634686" target="_blank">בוואטסאפ</a>.
+                </p>
 
+                <div class="payment-qr">
+                    <p><strong>או סרקו את הקוד לתשלום</strong></p>
+                    <img src="assets/img/bit-qr.jpeg" alt="תשלום ביט" />
+                </div>
+            </section>
+        </main>
 
-    <div style="margin-top: 2rem;">
-        <p><strong>או סרקו את הקוד לתשלום:</strong></p>
-        <img src="assets/img/bit-qr.jpeg" alt="תשלום ביט"
-            style="max-width: 200px; border-radius: 1rem; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
+        <footer class="payment-footer">
+            <div class="payment-footer__inner">
+                <div class="payment-footer__social">
+                    <a href="https://www.facebook.com/leaveyulialone" target="_blank" aria-label="Facebook">
+                        <i class="ri-facebook-box-line"></i>
+                    </a>
+                    <a href="https://www.instagram.com/leave_yuli_alone/" target="_blank" aria-label="Instagram">
+                        <i class="ri-instagram-line"></i>
+                    </a>
+                </div>
+                <div class="payment-footer__copy">Yuli Tamara</div>
+            </div>
+        </footer>
     </div>
 
     <script>
