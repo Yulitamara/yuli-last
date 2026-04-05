@@ -48,6 +48,10 @@ function normalizeText(value = "") {
 function findMatchingCity(city) {
   const normalizedCity = normalizeText(city);
 
+  if (!normalizedCity) {
+    return null;
+  }
+
   return Object.keys(cityShippingCosts).find((city) =>
     normalizedCity === city || normalizedCity.includes(city) || city.includes(normalizedCity)
   );
