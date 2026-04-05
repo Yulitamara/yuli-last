@@ -28,27 +28,24 @@
 
 <body>
 
-    <h2>תודה על ההזמנה! עכשיו לתשלום</h2>
-
-
-    <div class="cart-total" style="color: #f38376;">סה"כ: <span id="total">0</span> ₪</div>
-    <p style="margin-top: 1rem; font-size: 0.95rem; ">
-        לאחר התשלום, תקבלו ממני הודעת אישור בוואטסאפ. אם זה לא קורה מיד – אל תדאגו, לפעמים זה לוקח עד יומיים 💕
+    <h2>ההזמנה התקבלה</h2>
+    <p style="margin-top: 0.75rem; font-size: 1.05rem;">
+        נשאר רק לבצע את התשלום בביט.
     </p>
 
-    <p style="margin-top: 2rem;">
-        <strong>יש לשלם את הסכום הסופי באפליקציית ביט:</strong><br />
-        <!-- <span id="bit-amount" style="font-size: 1.3rem; color: #f38376;"></span> -->
+    <p style="margin-top: 1.5rem;">
+        <strong>לתשלום:</strong><br />
+        <span id="bit-amount" style="font-size: 1.3rem; color: #f38376;"></span>
     </p>
 
     <div>
         <button onclick="copyToClipboard('0542634686')" class="paybox-button">
-            📋 העתק מספר ושלם בביט
+            📋 העתק מספר לתשלום בביט
         </button>
 
         <p style="margin-top: 1rem; font-size: 0.95rem;">
-            💡 פתחו את אפליקציית <strong>ביט</strong> והדביקו את המספר בחיפוש כדי לשלם.<br />
-            אם יש שאלה, כתבו לי <a href="https://wa.me/972542634686" target="_blank"
+            פתחו את אפליקציית <strong>ביט</strong>, הדביקו את המספר ובצעו את התשלום.<br />
+            לשאלות אפשר לכתוב לי <a href="https://wa.me/972542634686" target="_blank"
                 style="color:#25D366;">בוואטסאפ</a>.
         </p>
     </div>
@@ -60,11 +57,8 @@
             style="max-width: 200px; border-radius: 1rem; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
     </div>
 
-    <script src="assets/js/payment.js"></script>
-
     <script>
         const total = localStorage.getItem("lastTotal") || "0";
-        document.getElementById("total").innerText = total;
         document.getElementById("bit-amount").innerText = total + ' ₪';
 
         function copyToClipboard(text) {

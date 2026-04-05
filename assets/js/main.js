@@ -21,12 +21,31 @@ if (navClose) {
 /*=============== REMOVE MENU MOBILE ===============*/
 const navLink = document.querySelectorAll(".nav__link");
 
-const linkAction = () => {
-  const navMenu = document.getElementById("nav-menu");
-  navMenu.classList.remove("show-menu");
+const blurAfterClick = (element) => {
+  if (!element) return;
+
+  element.addEventListener("mouseup", () => {
+    element.blur();
+  });
+
+  element.addEventListener("touchend", () => {
+    element.blur();
+  });
 };
 
-navLink.forEach((n) => n.addEventListener("click", linkAction));
+const linkAction = (event) => {
+  const navMenu = document.getElementById("nav-menu");
+  navMenu.classList.remove("show-menu");
+  event.currentTarget.blur();
+};
+
+navLink.forEach((n) => {
+  n.addEventListener("click", linkAction);
+  blurAfterClick(n);
+});
+
+blurAfterClick(navToggle);
+blurAfterClick(navClose);
 
 /*=============== SWIPER PROJECTS ===============*/
 if (typeof Swiper !== "undefined") {
@@ -114,10 +133,12 @@ const scrollActive = () => {
   sections.forEach((current) => {
     const sectionHeight = current.offsetHeight,
       sectionTop = current.offsetTop - 58,
-      sectionId = current.getAttribute("id"),
-      sectionClass = document.querySelector(
-        ".nav__menu a[href*=" + sectionId + "]"
-      );
+      sectionId = current.getAttribute("id");
+    const sectionClass = document.querySelector(
+      `.nav__menu a[href="#${sectionId}"], .nav__menu a[href="index.html#${sectionId}"]`
+    );
+
+    if (!sectionClass) return;
 
     if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
       sectionClass.classList.add("active-link");
@@ -644,30 +665,54 @@ function populateGallery(data, sectionId) {
     const contentItem = document.createElement("div");
     contentItem.className = "gallery__content-item";
 
-    contentItem.innerHTML = `
-  <img src="${item.src}" alt="${
-      item.alt
-    }" class="no-select" onclick="openPopup('${item.src}', '${
-      item.paintingName
-    }')">
-  <div class="img-title">
-    <span class="size">${item.size}</span>
-    <span class="name">
-      <span class="painting-name">${item.paintingName}</span>
-      ${
-        item.soldOut
-          ? '<span class="img-btn sold-out">סולד אאוט</span>'
-          : `<button class="img-btn no-select" onclick="addToCart('${item.paintingName.replace(
-              /'/g,
-              "\\'"
-            )}', ${parseInt(item.price)}, '${item.src}')">
-              הוספה לעגלה
-            </button>`
-      }
-    </span>
-    <span class="price">${item.price}</span>
-  </div>
-`;
+    const image = document.createElement("img");
+    image.src = item.src;
+    image.alt = item.alt;
+    image.className = "no-select";
+    image.addEventListener("click", () => openPopup(item.src, item.paintingName));
+
+    const titleWrapper = document.createElement("div");
+    titleWrapper.className = "img-title";
+
+    const size = document.createElement("span");
+    size.className = "size";
+    size.textContent = item.size;
+
+    const nameWrapper = document.createElement("span");
+    nameWrapper.className = "name";
+
+    const paintingName = document.createElement("span");
+    paintingName.className = "painting-name";
+    paintingName.textContent = item.paintingName;
+
+    nameWrapper.appendChild(paintingName);
+
+    if (item.soldOut) {
+      const soldOutLabel = document.createElement("span");
+      soldOutLabel.className = "img-btn sold-out";
+      soldOutLabel.textContent = "סולד אאוט";
+      nameWrapper.appendChild(soldOutLabel);
+    } else {
+      const addButton = document.createElement("button");
+      addButton.className = "img-btn no-select";
+      addButton.type = "button";
+      addButton.textContent = "הוספה לעגלה";
+      addButton.addEventListener("click", () => {
+        addToCart(item.paintingName, parseInt(item.price, 10), item.src);
+      });
+      nameWrapper.appendChild(addButton);
+    }
+
+    const price = document.createElement("span");
+    price.className = "price";
+    price.textContent = item.price;
+
+    titleWrapper.appendChild(size);
+    titleWrapper.appendChild(nameWrapper);
+    titleWrapper.appendChild(price);
+
+    contentItem.appendChild(image);
+    contentItem.appendChild(titleWrapper);
 
     section.appendChild(contentItem);
   });
@@ -703,6 +748,66 @@ closePopup.addEventListener("click", () => {
   popup.style.display = "none";
   window.removeEventListener("click", closePopupOnClick);
   popupImage.removeEventListener("click", closePopupOnClick);
+});
+
+function addToCart(name, price, img) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const existingIndex = cart.findIndex(
+    (item) => item.name === name && item.price === price
+  );
+
+  if (existingIndex !== -1) {
+    cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+  } else {
+    cart.push({ name, price, img, quantity: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+  showToast();
+}
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const cartCounter = document.getElementById("cart-counter");
+
+  if (cartCounter) {
+    cartCounter.textContent = totalCount;
+    cartCounter.style.display = totalCount > 0 ? "inline-block" : "none";
+  }
+}
+
+function showToast(message = "נוסף לעגלה בהצלחה 🎉") {
+  const toast = document.getElementById("toast");
+
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.classList.add("show");
+  toast.style.animation = "pop 0.3s ease";
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.style.animation = "none";
+  }, 2000);
+}
+
+function goToCart() {
+  window.location.href = "cart.html";
+}
+
+window.addEventListener("DOMContentLoaded", updateCartCount);
+window.addEventListener("load", () => {
+  if (window.location.hash) {
+    const section = document.querySelector(window.location.hash);
+    if (section) {
+      setTimeout(() => {
+        section.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+  }
 });
 
 if (window.location.search.includes("fbclid")) {

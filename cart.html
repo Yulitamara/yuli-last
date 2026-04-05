@@ -1,196 +1,400 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>העגלה שלך</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
     <script type="module" src="assets/js/firebase.js"></script>
 
     <style>
+      .cart-container {
+        max-width: 900px;
+        margin: 7rem auto 3rem;
+        padding: 1rem;
+      }
+
+      @media screen and (max-width: 1023px) {
         .cart-container {
-            max-width: 900px;
-            margin: 7rem auto 3rem;
-            padding: 1rem;
+          max-width: 900px;
+          margin: 1rem auto 6rem;
+          padding: 1rem;
+        }
+      }
+
+      .cart-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 1rem;
+      }
+
+      .cart-item img {
+        width: 80px;
+        height: auto;
+        border-radius: 0.5rem;
+      }
+
+      .cart-details {
+        flex-grow: 1;
+      }
+
+      .cart-total {
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      .cart-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        padding: 3rem 1rem 1rem;
+      }
+
+      .cart-empty p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .paybox-button {
+        display: block;
+        text-align: center;
+        margin: 2rem auto 0;
+        background-color: #f38376;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        max-width: 250px;
+      }
+
+      .paybox-button:hover {
+        background-color: #e85e4f;
+      }
+
+      .cart-item i.ri-delete-bin-line {
+        font-size: 1.3rem;
+        color: #e85e4f;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .cart-item i.ri-delete-bin-line:hover {
+        color: #a8251b;
+      }
+
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .quantity-controls button {
+        background-color: #f38376;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .quantity-controls button:hover {
+        background-color: #e85e4f;
+      }
+
+      .cart-shipping-info {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        gap: 1rem;
+      }
+
+      .delivery-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .delivery-options label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        cursor: pointer;
+        padding: 0.85rem 1rem;
+        border: 1px solid rgba(37, 37, 37, 0.12);
+        border-radius: 999px;
+        background: #fff;
+        transition:
+          border-color 0.2s ease,
+          background-color 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .delivery-options label:hover {
+        border-color: rgba(243, 131, 118, 0.55);
+        transform: translateY(-1px);
+      }
+
+      .delivery-options input[type="radio"] {
+        accent-color: #f38376;
+        margin: 0;
+      }
+
+      .delivery-options label:has(input[type="radio"]:checked) {
+        border-color: #f38376;
+        background: rgba(243, 131, 118, 0.1);
+      }
+
+      .delivery-address {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: rgba(243, 131, 118, 0.06);
+        border: 1px solid rgba(243, 131, 118, 0.18);
+        border-radius: 1rem;
+      }
+
+      .address-grid {
+        display: grid;
+        gap: 0.75rem;
+        grid-template-columns: 2fr 1fr;
+      }
+
+      .address-grid .address-full {
+        grid-column: 1 / -1;
+      }
+
+      .delivery-address .instructions {
+        text-align: right;
+        margin: 0;
+      }
+
+      .delivery-address textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+
+      #street-input,
+      #house-number-input,
+      #apartment-input,
+      #city-input {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+      }
+
+      @media screen and (max-width: 576px) {
+        .address-grid {
+          grid-template-columns: 1fr;
         }
 
-        @media screen and (max-width: 1023px) {
-            .cart-container {
-                max-width: 900px;
-                margin: 1rem auto 6rem;
-                padding: 1rem;
-            }
+        .address-grid .address-full {
+          grid-column: auto;
         }
-
-        .cart-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 1rem;
-        }
-
-        .cart-item img {
-            width: 80px;
-            height: auto;
-            border-radius: 0.5rem;
-        }
-
-        .cart-details {
-            flex-grow: 1;
-        }
-
-        .cart-total {
-            font-weight: bold;
-            font-size: 1.2rem;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .paybox-button {
-            display: block;
-            text-align: center;
-            margin: 2rem auto 0;
-            background-color: #f38376;
-            color: white;
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 1.5rem;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-            max-width: 250px;
-        }
-
-        .paybox-button:hover {
-            background-color: #e85e4f;
-        }
-
-        .cart-item i.ri-delete-bin-line {
-            font-size: 1.3rem;
-            color: #e85e4f;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .cart-item i.ri-delete-bin-line:hover {
-            color: #a8251b;
-        }
-
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .quantity-controls button {
-            background-color: #f38376;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .quantity-controls button:hover {
-            background-color: #e85e4f;
-        }
-
-        .cart-shipping-info {
-            display: flex;
-            flex-direction: column;
-            /* align-items: center; */
-            gap: 1rem;
-
-        }
-
-        #city-select {
-            max-width: 110px;
-            padding: .3rem .2rem;
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header class="header" id="header" dir="ltr">
-        <nav class="nav container">
-            <a href="index.html" class="nav__logo">תעזבו את יולי</a>
-            <div class="nav__menu " id="nav-menu">
-                <ul class="nav__list grid" dir="rtl">
-                    <li class="nav__item"><a href="index.html#gallery" class="nav__link no-select"><i
-                                class="ri-quill-pen-fill"></i> חנות</a></li>
-                    <li class="nav__item"><a href="index.html#personal" class="nav__link no-select"><i
-                                class="ri-gift-line"></i> ציורים בהזמנה אישית</a></li>
+      <nav class="nav container">
+        <a href="index.html" class="nav__logo">תעזבו את יולי</a>
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list grid" dir="rtl">
+            <li class="nav__item">
+              <a href="index.html#gallery" class="nav__link no-select"
+                ><i class="ri-quill-pen-fill"></i> חנות</a
+              >
+            </li>
+            <li class="nav__item">
+              <a href="index.html#personal" class="nav__link no-select"
+                ><i class="ri-gift-line"></i> ציורים בהזמנה אישית</a
+              >
+            </li>
 
-                    <li class="nav__item"><a href="index.html#contact" class="nav__link no-select"><i
-                                class="ri-chat-3-line"></i> יצירת קשר</a></li>
-                </ul>
-                <div class="nav__close no-select" id="nav-close"><i class="ri-close-line"></i></div>
-            </div>
-            <div class="nav__buttons no-select">
-                <i class="ri-moon-line change-theme" id="theme-button"></i>
-                <div class="nav__toggle" id="nav-toggle"><i class="ri-menu-4-line"></i></div>
-            </div>
-        </nav>
+            <li class="nav__item">
+              <a href="index.html#contact" class="nav__link no-select"
+                ><i class="ri-chat-3-line"></i> יצירת קשר</a
+              >
+            </li>
+          </ul>
+          <div class="nav__close no-select" id="nav-close">
+            <i class="ri-close-line"></i>
+          </div>
+        </div>
+        <div class="nav__buttons no-select">
+          <i class="ri-moon-line change-theme" id="theme-button"></i>
+          <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-menu-4-line"></i>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main class="cart-container section">
-        <h2 class="section__title">העגלה שלך</h2>
+      <h2 class="section__title">העגלה שלך</h2>
 
-        <div id="cart-items"></div>
+      <div id="cart-items"></div>
 
-        <div class="cart-shipping-info payment-form" style="margin-top: 2rem;">
+      <div
+        id="cart-shipping-section"
+        class="cart-shipping-info payment-form"
+        style="margin-top: 2rem"
+      >
+        <p class="instructions">
+          אחרי קבלת ההזמנה ניצור קשר לתיאום משלוח, או איסוף עצמי מתל אביב 💌
+        </p>
+
+        <div class="user-info">
+          <label for="user-name">שם מלא:</label>
+          <input
+            type="text"
+            id="user-name"
+            class="form-element"
+            placeholder="הקלד/י את שמך"
+            required
+          />
+
+          <label for="user-phone">מספר טלפון:</label>
+          <input
+            type="tel"
+            id="user-phone"
+            class="form-element"
+            placeholder="הקלד/י את מספר הטלפון"
+            required
+          />
+
+          <label>איך נוח לכם לקבל את ההזמנה?</label>
+          <div class="delivery-options">
+            <label for="delivery-method-shipping">
+              <input
+                type="radio"
+                id="delivery-method-shipping"
+                name="delivery-method"
+                value="shipping"
+                checked
+              />
+              משלוח
+            </label>
+            <label for="delivery-method-pickup">
+              <input
+                type="radio"
+                id="delivery-method-pickup"
+                name="delivery-method"
+                value="pickup"
+              />
+              איסוף עצמי
+            </label>
+          </div>
+
+          <div id="delivery-address-section" class="delivery-address">
+            <label for="street-input">כתובת למשלוח:</label>
+            <div class="address-grid">
+              <input
+                type="text"
+                id="street-input"
+                class="form-element address-full"
+                placeholder="רחוב"
+                autocomplete="address-line1"
+              />
+              <input
+                type="text"
+                id="house-number-input"
+                class="form-element"
+                placeholder="מספר בית"
+                inputmode="numeric"
+              />
+              <input
+                type="text"
+                id="apartment-input"
+                class="form-element"
+                placeholder="דירה"
+                autocomplete="address-line2"
+              />
+              <input
+                type="text"
+                id="city-input"
+                class="form-element address-full"
+                placeholder="עיר"
+                list="city-options"
+                autocomplete="address-level2"
+              />
+            </div>
+            <datalist id="city-options">
+              <option value="תל אביב"></option>
+              <option value="גבעתיים"></option>
+              <option value="רמת גן"></option>
+              <option value="בני ברק"></option>
+              <option value="חולון"></option>
+              <option value="בת ים"></option>
+              <option value="אזור"></option>
+              <option value="ראשון לציון"></option>
+              <option value="אור יהודה"></option>
+              <option value="יהוד-מונוסון"></option>
+              <option value="קרית אונו"></option>
+              <option value="גני תקווה"></option>
+              <option value="סביון"></option>
+              <option value="פתח תקווה"></option>
+              <option value="רמת השרון"></option>
+              <option value="הרצליה"></option>
+              <option value="רעננה"></option>
+              <option value="הוד השרון"></option>
+              <option value="כפר סבא"></option>
+              <option value="נס ציונה"></option>
+              <option value="רחובות"></option>
+              <option value="רמלה"></option>
+              <option value="לוד"></option>
+              <option value="שוהם"></option>
+              <option value="מודיעין-מכבים-רעות"></option>
+            </datalist>
+            <p class="instructions" style="margin-top: -0.5rem">
+              התחילו להקליד את שם העיר ובחרו מהרשימה כדי לחשב את המשלוח.
+            </p>
             <p class="instructions">
-                לאחר קבלת התשלום, ניצור קשר לתיאום משלוח (אם נבחר), או איסוף עצמי מתל אביב 💌
+              נבדוק את הכתובת סופית מולכם לפני תיאום המשלוח.
             </p>
 
-            <label for="city-select">בחרו עיר לצורך חישוב עלות משלוח:</label>
-            <select id="city-select" class="form-element">
-                <option value="">-- בחרו עיר --</option>
-                <option value="תל אביב">תל אביב</option>
-                <option value="גבעתיים">גבעתיים</option>
-                <option value="רמת גן">רמת גן</option>
-                <option value="חולון">חולון</option>
-                <option value="בת ים">בת ים</option>
-                <option value="הרצליה">הרצליה</option>
-                <option value="רמת השרון">רמת השרון</option>
-                <option value="פתח תקווה">פתח תקווה</option>
-                <option value="בני ברק">בני ברק</option>
-                <option value="קרית אונו">קרית אונו</option>
-                <option value="ראשון לציון">ראשון לציון</option>
-            </select>
+            <label for="delivery-notes-input">הערות למשלוח:</label>
+            <textarea id="delivery-notes-input" class="form-element"></textarea>
 
             <p id="shipping-cost">עלות משלוח: 0 ש"ח</p>
+          </div>
 
-            <div class="user-info">
-                <label for="user-name">שם מלא:</label>
-                <input type="text" id="user-name" class="form-element" placeholder="הקלד/י את שמך" required>
+          <div class="cart-total">סה"כ לתשלום: <span id="total">0</span> ₪</div>
 
-                <label for="user-phone">מספר טלפון:</label>
-                <input type="tel" id="user-phone" class="form-element" placeholder="הקלד/י את מספר הטלפון" required>
-
-                <div class="cart-total">סה"כ לתשלום: <span id="total">0</span> ₪</div>
-
-                <button id="submit-order" class="paybox-button">בצע/י הזמנה</button>
-            </div>
+          <button id="submit-order" class="paybox-button">אישור הזמנה</button>
         </div>
+      </div>
 
-        <!--========== SCROLL UP ==========-->
-        <a href="#" class="scrollup no-select" id="scroll-up">
-            <i class="ri-arrow-up-line"></i>
-        </a>
+      <!--========== SCROLL UP ==========-->
+      <a href="#" class="scrollup no-select" id="scroll-up">
+        <i class="ri-arrow-up-line"></i>
+      </a>
     </main>
 
     <script src="assets/js/payment.js"></script>
 
     <script src="assets/js/main.js"></script>
-</body>
-
+  </body>
 </html>

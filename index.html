@@ -30,7 +30,7 @@
         <div class="nav__menu" id="nav-menu">
           <ul class="nav__list grid" dir="rtl">
             <li class="nav__item">
-              <a href="#gallery" class="nav__link active-link no-select">
+              <a href="#gallery" class="nav__link no-select">
                 <i class="ri-quill-pen-fill"></i> חנות
               </a>
             </li>
@@ -290,70 +290,5 @@
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>
 
-    <script>
-      function addToCart(name, price, img) {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        const existingIndex = cart.findIndex(
-          (item) => item.name === name && item.price === price
-        );
-
-        if (existingIndex !== -1) {
-          // אם כבר קיים - נוסיף לכמות
-          cart[existingIndex].quantity =
-            (cart[existingIndex].quantity || 1) + 1;
-        } else {
-          // אם חדש - נכניס אותו עם כמות 1
-          cart.push({ name, price, img, quantity: 1 });
-        }
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-        updateCartCount();
-        showToast(); // ✨ תוספת
-      }
-
-      function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const totalCount = cart.reduce(
-          (sum, item) => sum + (item.quantity || 1),
-          0
-        );
-        const cartCounter = document.getElementById("cart-counter");
-
-        if (cartCounter) {
-          cartCounter.textContent = totalCount;
-          cartCounter.style.display = totalCount > 0 ? "inline-block" : "none";
-        }
-      }
-      function showToast(message = "נוסף לעגלה בהצלחה 🎉") {
-        const toast = document.getElementById("toast");
-        toast.textContent = message;
-        toast.classList.add("show");
-
-        toast.style.animation = "pop 0.3s ease";
-
-        setTimeout(() => {
-          toast.classList.remove("show");
-          toast.style.animation = "none";
-        }, 2000);
-      }
-      function goToCart() {
-        window.location.href = "cart.html";
-      }
-
-      // עדכון מיידי בטעינה
-      window.addEventListener("DOMContentLoaded", updateCartCount);
-      window.addEventListener("load", () => {
-        if (window.location.hash) {
-          const section = document.querySelector(window.location.hash);
-          if (section) {
-            // עיכוב קטן ליתר ביטחון (אם התמונות עדיין נטענות)
-            setTimeout(() => {
-              section.scrollIntoView({ behavior: "smooth" });
-            }, 300);
-          }
-        }
-      });
-    </script>
   </body>
 </html>

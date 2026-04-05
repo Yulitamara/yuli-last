@@ -53,6 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const phone = document.getElementById("user-phone")?.value.trim();
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const shipping = JSON.parse(localStorage.getItem("shipping")) || null;
+    const deliveryMethod =
+      document.querySelector('input[name="delivery-method"]:checked')?.value ||
+      "shipping";
+    const street = document.getElementById("street-input")?.value.trim();
+    const houseNumber = document
+      .getElementById("house-number-input")
+      ?.value.trim();
+    const city = document.getElementById("city-input")?.value.trim();
     const total = parseInt(document.getElementById("total")?.innerText || 0);
 
     let hasError = false;
@@ -64,6 +72,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!/^05\d{8}$/.test(phone)) {
       showError("user-phone", "מספר טלפון לא תקין (לדוגמה: 0541234567)");
+      hasError = true;
+    }
+
+    if (deliveryMethod === "shipping" && !street) {
+      showError("street-input", "יש להזין רחוב");
+      hasError = true;
+    }
+
+    if (deliveryMethod === "shipping" && street && street.length < 2) {
+      showError("street-input", "אנא הזינו שם רחוב מלא");
+      hasError = true;
+    }
+
+    if (deliveryMethod === "shipping" && !houseNumber) {
+      showError("house-number-input", "יש להזין מספר בית");
+      hasError = true;
+    }
+
+    if (
+      deliveryMethod === "shipping" &&
+      houseNumber &&
+      !/^[0-9א-ת/-]{1,10}$/.test(houseNumber)
+    ) {
+      showError("house-number-input", "אנא הזינו מספר בית תקין");
+      hasError = true;
+    }
+
+    if (
+      deliveryMethod === "shipping" &&
+      (!city || !shipping || shipping.method !== "shipping")
+    ) {
+      showError("city-input", "יש להזין עיר למשלוח");
+      hasError = true;
+    }
+
+    if (
+      deliveryMethod === "shipping" &&
+      city &&
+      (!shipping || shipping.method !== "shipping" || !shipping.city)
+    ) {
+      showError("city-input", "אנא בחרו עיר מזוהה לצורך חישוב משלוח");
       hasError = true;
     }
 
@@ -93,7 +142,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // 🧼 ניקוי שדות הטופס
       document.getElementById("user-name").value = "";
       document.getElementById("user-phone").value = "";
-      document.getElementById("city-select").value = "";
+      document.getElementById("street-input").value = "";
+      document.getElementById("house-number-input").value = "";
+      document.getElementById("apartment-input").value = "";
+      document.getElementById("city-input").value = "";
+      document.getElementById("delivery-notes-input").value = "";
+      document.getElementById("delivery-method-shipping").checked = true;
 
       // 🧭 מעבר לעמוד התשלום
       window.location.href = "payment.html";
