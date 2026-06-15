@@ -206,13 +206,17 @@ function renderCart() {
   cart.forEach((item, index) => {
     const quantity = item.quantity || 1;
     const itemTotal = item.price * quantity;
+    const priceText =
+      quantity > 1
+        ? `${item.price} ₪ ליחידה · ${itemTotal} ₪ יחד`
+        : `${item.price} ₪ ליחידה`;
     const div = document.createElement("div");
     div.className = "cart-item";
     div.innerHTML = `
             <img src="${item.img}" alt="${item.name}" loading="lazy">
             <div class="cart-details">
                 <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">${item.price} ₪ ליחידה · ${itemTotal} ₪ יחד</div>
+                <div class="cart-item-price">${priceText}</div>
                 <div class="quantity-controls">
                     <button type="button" data-quantity-decrease="${index}" aria-label="הפחתת כמות עבור ${item.name}">−</button>
                     <span class="quantity-count">${quantity}</span>
