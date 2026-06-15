@@ -142,6 +142,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await addDoc(collection(db, "orders"), orderData);
       localStorage.setItem("lastTotal", total);
+      localStorage.setItem(
+        "lastOrderSummary",
+        JSON.stringify({
+          name,
+          phone,
+          cart,
+          shipping,
+          total,
+        })
+      );
       // 🧼 ניקוי העגלה והמשלוח
       localStorage.removeItem("cart");
       localStorage.removeItem("shipping");

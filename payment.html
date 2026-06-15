@@ -241,13 +241,23 @@
                 </p>
 
                 <div class="payment-actions">
-                    <button onclick="copyToClipboard('0542634686')" class="payment-button">
+                    <button id="copy-bit-number" class="payment-button" type="button">
                         העתקת מספר לתשלום בביט
                     </button>
+                    <a
+                        id="send-payment-summary"
+                        class="payment-button payment-button--ghost"
+                        href="https://wa.me/972542634686"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        שילמתי בביט
+                    </a>
                 </div>
 
                 <p class="payment-help">
                     פתחו את אפליקציית <strong>ביט</strong>, הדביקו את המספר ובצעו את התשלום.<br />
+                    אחרי התשלום לחצו על <strong>שילמתי בביט</strong> כדי לשלוח לי הודעה עם סיכום ההזמנה.<br />
                     לשאלות אפשר לכתוב לי <a href="https://wa.me/972542634686" target="_blank">בוואטסאפ</a>.
                 </p>
 
@@ -276,6 +286,50 @@
     <script>
         const total = localStorage.getItem("lastTotal") || "0";
         document.getElementById("bit-amount").innerText = total + ' ₪';
+
+        function formatOrderSummary() {
+            const summary = JSON.parse(localStorage.getItem("lastOrderSummary") || "null");
+
+            if (!summary) {
+                return `היי, שילמתי בביט על הזמנה מהחנות.\nסה"כ: ${total} ₪`;
+            }
+
+            const items = (summary.cart || [])
+                .map((item) => {
+                    const quantity = item.quantity || 1;
+                    return `- ${item.name} × ${quantity} (${item.price} ₪ ליחידה)`;
+                })
+                .join("\n");
+
+            const address = summary.shipping?.address;
+            const addressLine = address
+                ? `${address.street || ""} ${address.houseNumber || ""}${address.apartment ? `, דירה ${address.apartment}` : ""}, ${address.city || ""}`.trim()
+                : "";
+
+            return [
+                "היי, שילמתי בביט על ההזמנה שלי.",
+                `שם: ${summary.name}`,
+                `טלפון: ${summary.phone}`,
+                "",
+                "פריטים:",
+                items,
+                "",
+                addressLine ? `כתובת למשלוח: ${addressLine}` : "",
+                summary.shipping?.cost ? `משלוח: ${summary.shipping.cost} ₪` : "",
+                `סה"כ: ${summary.total} ₪`,
+            ]
+                .filter(Boolean)
+                .join("\n");
+        }
+
+        document.getElementById("copy-bit-number")?.addEventListener("click", () => {
+            copyToClipboard("0542634686");
+        });
+
+        const summaryLink = document.getElementById("send-payment-summary");
+        if (summaryLink) {
+            summaryLink.href = `https://wa.me/972542634686?text=${encodeURIComponent(formatOrderSummary())}`;
+        }
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
