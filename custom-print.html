@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>תבנו את הפרינט שלכם</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="header" id="header" dir="ltr">
+      <nav class="nav container">
+        <a href="index.html" class="nav__logo">תעזבו את יולי</a>
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list grid" dir="rtl">
+            <li class="nav__item">
+              <a href="index.html#gallery" class="nav__link no-select">
+                <i class="ri-quill-pen-fill"></i> חנות
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="custom-print.html" class="nav__link no-select">
+                <i class="ri-magic-line"></i> תבנו את הפרינט
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="index.html#personal" class="nav__link no-select">
+                <i class="ri-gift-line"></i> ציורים בהזמנה אישית
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="index.html#contact" class="nav__link no-select">
+                <i class="ri-chat-3-line"></i> יצירת קשר
+              </a>
+            </li>
+          </ul>
+          <div class="nav__close no-select" id="nav-close">
+            <i class="ri-close-line"></i>
+          </div>
+        </div>
+        <div class="nav__buttons no-select">
+          <i class="ri-moon-line change-theme" id="theme-button"></i>
+          <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-menu-4-line"></i>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="custom-print section" id="custom-print">
+        <h2 class="section__title">תבנו את הפרינט שלכם</h2>
+        <span class="section__subtitle"
+          >בחרו דמות אחת או שתיים, התאימו להן לוק וכיתוב, או שלחו לי רעיון
+          לקומיקס אישי</span
+        >
+
+        <div class="custom-print__container container">
+          <div class="custom-print__preview">
+            <div class="custom-print__paper" id="custom-print-preview"></div>
+            <p class="custom-print__hint">
+              זו הדמיה ראשונית כדי להבין את הכיוון של הפרינט.
+            </p>
+          </div>
+
+          <div class="custom-print__controls">
+            <div class="custom-print__card">
+              <h3 class="custom-print__card-title">בחרו קומפוזיציה</h3>
+
+              <div class="custom-print__toggle" role="radiogroup">
+                <label>
+                  <input
+                    type="radio"
+                    name="character-count"
+                    value="1"
+                    checked
+                  />
+                  דמות אחת
+                </label>
+                <label>
+                  <input type="radio" name="character-count" value="2" />
+                  שתי דמויות
+                </label>
+              </div>
+
+              <div class="custom-print__character-grid">
+                <div class="custom-print__character-card" data-character-card="0">
+                  <h4>דמות 1</h4>
+                  <label for="gender-0">בן / בת</label>
+                  <select id="gender-0" class="custom-print__select">
+                    <option value="female">בת</option>
+                    <option value="male">בן</option>
+                  </select>
+
+                  <label for="hairstyle-0">תסרוקת</label>
+                  <select id="hairstyle-0" class="custom-print__select">
+                    <option value="updo">אסוף</option>
+                    <option value="short">קצר</option>
+                    <option value="long">ארוך</option>
+                    <option value="weird">מוזר</option>
+                  </select>
+
+                  <label for="hair-color-0">צבע שיער</label>
+                  <select id="hair-color-0" class="custom-print__select">
+                    <option value="dark">כהה</option>
+                    <option value="brown">חום</option>
+                    <option value="ginger">ג'ינג'י</option>
+                    <option value="blonde">בלונד</option>
+                    <option value="fantasy">צבעוני</option>
+                  </select>
+
+                  <label for="mood-0">מצב רוח</label>
+                  <select id="mood-0" class="custom-print__select">
+                    <option value="happy">שמח</option>
+                    <option value="neutral">ניטרלי</option>
+                    <option value="sad">עצוב</option>
+                    <option value="worried">מודאג</option>
+                    <option value="judgy">שופט</option>
+                  </select>
+
+                  <label for="outfit-0">לבוש</label>
+                  <select id="outfit-0" class="custom-print__select">
+                    <option value="comfy">נוח</option>
+                    <option value="less-comfy">פחות נוח</option>
+                    <option value="strawberries">סוודר עם תותים</option>
+                    <option value="overall">אוברול</option>
+                    <option value="dress">שמלה</option>
+                  </select>
+
+                  <label for="speech-0">מה הדמות אומרת</label>
+                  <input
+                    type="text"
+                    id="speech-0"
+                    class="custom-print__input"
+                    placeholder="מה הדמות אומרת?"
+                  />
+                </div>
+
+                <div class="custom-print__character-card" data-character-card="1">
+                  <h4>דמות 2</h4>
+                  <label for="gender-1">בן / בת</label>
+                  <select id="gender-1" class="custom-print__select">
+                    <option value="female">בת</option>
+                    <option value="male">בן</option>
+                  </select>
+
+                  <label for="hairstyle-1">תסרוקת</label>
+                  <select id="hairstyle-1" class="custom-print__select">
+                    <option value="updo">אסוף</option>
+                    <option value="short">קצר</option>
+                    <option value="long">ארוך</option>
+                    <option value="weird">מוזר</option>
+                  </select>
+
+                  <label for="hair-color-1">צבע שיער</label>
+                  <select id="hair-color-1" class="custom-print__select">
+                    <option value="brown">חום</option>
+                    <option value="dark">כהה</option>
+                    <option value="ginger">ג'ינג'י</option>
+                    <option value="blonde">בלונד</option>
+                    <option value="fantasy">צבעוני</option>
+                  </select>
+
+                  <label for="mood-1">מצב רוח</label>
+                  <select id="mood-1" class="custom-print__select">
+                    <option value="happy">שמח</option>
+                    <option value="neutral">ניטרלי</option>
+                    <option value="sad">עצוב</option>
+                    <option value="worried">מודאג</option>
+                    <option value="judgy">שופט</option>
+                  </select>
+
+                  <label for="outfit-1">לבוש</label>
+                  <select id="outfit-1" class="custom-print__select">
+                    <option value="comfy">נוח</option>
+                    <option value="less-comfy">פחות נוח</option>
+                    <option value="strawberries">סוודר עם תותים</option>
+                    <option value="overall">אוברול</option>
+                    <option value="dress">שמלה</option>
+                  </select>
+
+                  <label for="speech-1">מה הדמות אומרת</label>
+                  <input
+                    type="text"
+                    id="speech-1"
+                    class="custom-print__input"
+                    placeholder="מה הדמות אומרת?"
+                  />
+                </div>
+              </div>
+
+              <a
+                id="custom-print-submit"
+                class="custom-print__submit"
+                href="https://wa.me/972542634686"
+                target="_blank"
+              >
+                שלחו לי את הפרינט שבניתם
+              </a>
+            </div>
+
+            <div class="custom-print__card custom-print__card--secondary">
+              <h3 class="custom-print__card-title">או כתבו לי רעיון לקומיקס אישי</h3>
+              <label for="comic-theme">מה הנושא?</label>
+              <textarea
+                id="comic-theme"
+                class="custom-print__textarea"
+                placeholder="אפשר לכתוב כאן סיטואציה, בדיחה פנימית, מי הדמויות ומה חשוב שיופיע בקומיקס"
+              ></textarea>
+              <a
+                id="comic-theme-submit"
+                class="custom-print__submit custom-print__submit--ghost"
+                href="https://wa.me/972542634686"
+                target="_blank"
+              >
+                שלחו לי רעיון לקומיקס
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__container container">
+        <div class="footer__img">
+          <img src="/assets/img/logo.png" alt="logo" width="200" />
+        </div>
+        <ul class="footer__social">
+          <a
+            href="https://www.facebook.com/leaveyulialone"
+            target="_blank"
+            class="footer__social-link no-select"
+          >
+            <i class="ri-facebook-box-line"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/leave_yuli_alone/"
+            target="_blank"
+            class="footer__social-link no-select"
+          >
+            <i class="ri-instagram-line"></i>
+          </a>
+        </ul>
+        <span class="footer__copy">
+          &#169; Copyright Yuli Tamara. All rights reserved
+        </span>
+      </div>
+    </footer>
+
+    <a href="#" class="scrollup no-select" id="scroll-up">
+      <i class="ri-arrow-up-line"></i>
+    </a>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

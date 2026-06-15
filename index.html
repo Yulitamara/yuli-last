@@ -94,22 +94,184 @@
       <section class="gallery section" id="gallery">
         <h2 class="section__title">תעזבו את החנות של יולי</h2>
 
-        <img src="/assets/img/logo.png" alt="gif" />
+        <div class="featured-shirt" aria-label="מוצר חדש">
+          <p class="featured-shirt__label">חדש</p>
+          <img
+            class="featured-shirt__image no-select"
+            src="/assets/img/y-shirt.png"
+            alt="חולצה"
+            loading="lazy"
+          />
+          <button
+            class="img-btn featured-shirt__button no-select"
+            type="button"
+            id="featured-shirt-add"
+          >
+            הוספה לעגלה
+          </button>
+        </div>
+
+        <div class="featured-products container" aria-label="חדש ומומלץ">
+          <div class="featured-products__header">
+            <h3>הכי נמכרים</h3>
+          </div>
+
+          <div class="featured-products__grid">
+            <article
+              class="featured-products__item"
+              data-featured-product
+              data-name="חולצה"
+              data-type="חולצה"
+              data-price="80"
+              data-size=""
+              data-img="/assets/img/y-shirt.png"
+            >
+              <img src="/assets/img/y-shirt.png" alt="חולצה מאוירת" loading="lazy" />
+              <div>
+                <span class="featured-products__type">חולצה</span>
+                <h4>חולצה</h4>
+                <p>80₪</p>
+              </div>
+              <button
+                class="featured-products__button no-select"
+                type="button"
+                data-featured-add
+                data-name="חולצה"
+                data-price="80"
+                data-img="/assets/img/y-shirt.png"
+              >
+                הוספה לעגלה
+              </button>
+            </article>
+
+            <article
+              class="featured-products__item"
+              data-featured-product
+              data-name="בכיתי"
+              data-type="הדפס"
+              data-price="30"
+              data-size="10x10"
+              data-img="/assets/img/900-3.png"
+            >
+              <img src="/assets/img/900-3.png" alt="הדפס בכיתי" loading="lazy" />
+              <div>
+                <span class="featured-products__type">הדפס</span>
+                <h4>בכיתי</h4>
+                <p>30₪</p>
+              </div>
+              <button
+                class="featured-products__button no-select"
+                type="button"
+                data-featured-add
+                data-name="בכיתי"
+                data-price="30"
+                data-img="/assets/img/900-3.png"
+              >
+                הוספה לעגלה
+              </button>
+            </article>
+
+            <article
+              class="featured-products__item"
+              data-featured-product
+              data-name="איך להגיד לא"
+              data-type="מגנט"
+              data-price="20"
+              data-size="10x10"
+              data-img="/assets/img/600-how-to-no.webp"
+            >
+              <img
+                src="/assets/img/600-how-to-no.webp"
+                alt="מגנט איך להגיד לא"
+                loading="lazy"
+              />
+              <div>
+                <span class="featured-products__type">מגנט</span>
+                <h4>איך להגיד לא</h4>
+                <p>20₪</p>
+              </div>
+              <button
+                class="featured-products__button no-select"
+                type="button"
+                data-featured-add
+                data-name="איך להגיד לא"
+                data-price="20"
+                data-img="/assets/img/600-how-to-no.webp"
+              >
+                הוספה לעגלה
+              </button>
+            </article>
+
+            <article
+              class="featured-products__item"
+              data-featured-product
+              data-name="כל האנשים"
+              data-type="תיק בד"
+              data-price="80"
+              data-size=""
+              data-img="/assets/img/bag-2.png"
+            >
+              <img src="/assets/img/bag-2.png" alt="תיק בד כל האנשים" loading="lazy" />
+              <div>
+                <span class="featured-products__type">תיק בד</span>
+                <h4>כל האנשים</h4>
+                <p>80₪</p>
+              </div>
+              <button
+                class="featured-products__button no-select"
+                type="button"
+                data-featured-add
+                data-name="כל האנשים"
+                data-price="80"
+                data-img="/assets/img/bag-2.png"
+              >
+                הוספה לעגלה
+              </button>
+            </article>
+          </div>
+        </div>
 
         <div class="filters">
-          <div class="filter prints active no-select" data-filter="prints">
+          <button
+            class="filter prints active no-select"
+            type="button"
+            data-filter="prints"
+          >
+            <i class="ri-image-line"></i>
             הדפסים
-          </div>
-          <div class="filter stickers no-select" data-filter="stickers">
+          </button>
+          <button
+            class="filter stickers no-select"
+            type="button"
+            data-filter="stickers"
+          >
+            <i class="ri-price-tag-3-line"></i>
             מדבקות
-          </div>
-          <div class="filter cards no-select" data-filter="cards">גלויות</div>
-          <div class="filter magnets no-select" data-filter="magnets">
+          </button>
+          <button
+            class="filter cards no-select"
+            type="button"
+            data-filter="cards"
+          >
+            <i class="ri-mail-line"></i>
+            גלויות
+          </button>
+          <button
+            class="filter magnets no-select"
+            type="button"
+            data-filter="magnets"
+          >
+            <i class="ri-pushpin-line"></i>
             מגנטים
-          </div>
-          <div class="filter bags no-select" data-filter="bags">
+          </button>
+          <button
+            class="filter bags no-select"
+            type="button"
+            data-filter="bags"
+          >
+            <i class="ri-shopping-bag-line"></i>
             <nobr> תיקי בד </nobr>
-          </div>
+          </button>
         </div>
 
         <div class="container section__border">
@@ -120,8 +282,28 @@
           <div class="gallery__content" id="magnets"></div>
         </div>
         <div class="popup" id="popup">
-          <img id="popup-image" src="" alt="" />
-          <span class="close-popup" id="close-popup">&times;</span>
+          <div class="popup__card" role="dialog" aria-modal="true" aria-label="פרטי מוצר">
+            <button
+              class="close-popup no-select"
+              id="close-popup"
+              type="button"
+              aria-label="סגירת חלון מוצר"
+            >
+              &times;
+            </button>
+            <img id="popup-image" class="popup__image" src="" alt="" />
+            <div class="popup__details">
+              <h3 class="popup__title" id="popup-title"></h3>
+              <p class="popup__meta" id="popup-meta"></p>
+              <button
+                class="custom-print__submit popup__button no-select"
+                type="button"
+                id="popup-add"
+              >
+                הוספה לעגלה
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -136,50 +318,57 @@
               <div class="projects__content swiper-slide">
                 <img
                   src="assets/img/personal-100.png"
-                  alt="project image"
+                  alt="דוגמה לציור אישי בהזמנה"
                   class="projects__img"
+                  loading="lazy"
                 />
               </div>
               <div class="projects__content swiper-slide">
                 <img
                   src="assets/img/personal-101.png"
-                  alt="project image"
+                  alt="דוגמה נוספת לציור אישי בהזמנה"
                   class="projects__img"
+                  loading="lazy"
                 />
               </div>
               <div class="projects__content swiper-slide">
                 <img
                   src="assets/img/personal-102.png"
-                  alt="project image"
+                  alt="ציור אישי לפי תמונה"
                   class="projects__img"
+                  loading="lazy"
                 />
               </div>
               <div class="projects__content swiper-slide">
                 <img
                   src="assets/img/personal-103.png"
-                  alt="project image"
+                  alt="איור זוגי אישי"
                   class="projects__img"
+                  loading="lazy"
                 />
               </div>
               <div class="projects__content swiper-slide">
                 <img
                   src="assets/img/personal-104.png"
-                  alt="project image"
+                  alt="איור אישי צבעוני"
                   class="projects__img"
+                  loading="lazy"
                 />
               </div>
               <div class="projects__content swiper-slide">
                 <img
                   src="assets/img/personal-105.png"
-                  alt="project image"
+                  alt="איור אישי כמתנה"
                   class="projects__img"
+                  loading="lazy"
                 />
               </div>
               <div class="projects__content swiper-slide">
                 <img
                   src="assets/img/personal-106.png"
-                  alt="project image"
+                  alt="דוגמה לאיור אישי בהזמנה"
                   class="projects__img"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -192,6 +381,21 @@
             </div>
 
             <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="custom-print custom-print--teaser section" hidden>
+        <div class="custom-print__container container">
+          <div class="custom-print__card custom-print__card--secondary">
+            <h2 class="section__title">תבנו את הפרינט שלכם</h2>
+            <p class="custom-print__hint">
+              בחרו דמות אחת או שתיים, התאימו שיער, בגדים ובועות דיבור, או
+              שלחו לי רעיון לקומיקס אישי.
+            </p>
+            <a href="custom-print.html" class="custom-print__submit">
+              מעבר לבניית הפרינט
+            </a>
           </div>
         </div>
       </section>
@@ -231,7 +435,7 @@
     <footer class="footer">
       <div class="footer__container container">
         <div class="footer__img">
-          <img src="/assets/img/logo.png" alt="logo" width="200" />
+          <img src="/assets/img/logo.png" alt="לוגו תעזבו את יולי" width="200" loading="lazy" />
         </div>
         <!-- <ul class="footer__list">
                 <li>
@@ -271,9 +475,9 @@
     <a href="#" class="scrollup no-select" id="scroll-up">
       <i class="ri-arrow-up-line"></i>
     </a>
-    <div id="toast" class="toast" onclick="goToCart()">
+    <button id="toast" class="toast" type="button">
       נוסף לעגלה בהצלחה 🎉
-    </div>
+    </button>
 
     <!--=============== SCROLLREVEAL ===============-->
     <script src="assets/js/scrollreveal.min.js"></script>

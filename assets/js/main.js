@@ -237,7 +237,10 @@ window.addEventListener("scroll", scrollHeader);
 
 // GALLERY
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("prints").style.display = "flex";
+  const printsSection = document.getElementById("prints");
+  if (!printsSection) return;
+
+  printsSection.style.display = "flex";
 
   var filterElements = document.querySelectorAll(".filter");
   filterElements.forEach(function (filterElement) {
@@ -668,10 +671,15 @@ const galleryContent = {
 
 const popup = document.getElementById("popup");
 const popupImage = document.getElementById("popup-image");
+const popupTitle = document.getElementById("popup-title");
+const popupMeta = document.getElementById("popup-meta");
+const popupAddButton = document.getElementById("popup-add");
 const closePopup = document.getElementById("close-popup");
+let activePopupItem = null;
 
 function populateGallery(data, sectionId) {
   const section = galleryContent[sectionId];
+  if (!section) return;
 
   data.forEach((item) => {
     const contentItem = document.createElement("div");
@@ -682,9 +690,10 @@ function populateGallery(data, sectionId) {
 
     const image = document.createElement("img");
     image.src = item.src;
-    image.alt = item.alt;
+    image.alt = `${item.alt || "מוצר"} ${item.paintingName}`;
     image.className = "no-select";
-    image.addEventListener("click", () => openPopup(item.src, item.paintingName));
+    image.loading = "lazy";
+    image.addEventListener("click", () => openPopup(item));
 
     const titleWrapper = document.createElement("div");
     titleWrapper.className = "img-title";
@@ -739,31 +748,55 @@ populateGallery(cardsData, "cards");
 populateGallery(bagsData, "bags");
 populateGallery(magnetsData, "magnets");
 
-function openPopup(imageSrc, paintingName) {
-  popupImage.src = imageSrc;
-  popupImage.alt = paintingName;
+function openPopup(item) {
+  if (!popup || !popupImage || !popupTitle || !popupMeta || !popupAddButton) {
+    return;
+  }
+
+  activePopupItem = item;
+  popupImage.src = item.src;
+  popupImage.alt = item.paintingName;
+  popupTitle.textContent = item.paintingName;
+  popupMeta.textContent = [item.type, item.size, item.price]
+    .filter(Boolean)
+    .join(" · ");
+  popupAddButton.disabled = Boolean(item.soldOut);
+  popupAddButton.textContent = item.soldOut ? "סולד אאוט" : "הוספה לעגלה";
   popup.style.display = "block";
 
   // Close popup when clicking anywhere outside of it
   window.addEventListener("click", closePopupOnClick);
-
-  // Close popup when clicking on popup-image
-  popupImage.addEventListener("click", closePopupOnClick);
 }
 
 function closePopupOnClick(e) {
-  if (e.target === popup || e.target === popupImage) {
-    popup.style.display = "none";
-    window.removeEventListener("click", closePopupOnClick);
-    popupImage.removeEventListener("click", closePopupOnClick);
-  }
+  if (!popup || !popupImage) return;
+  if (e.target === popup) closeProductPopup();
 }
 
-closePopup.addEventListener("click", () => {
+function closeProductPopup() {
+  if (!popup) return;
+
   popup.style.display = "none";
+  activePopupItem = null;
   window.removeEventListener("click", closePopupOnClick);
-  popupImage.removeEventListener("click", closePopupOnClick);
-});
+}
+
+if (closePopup) {
+  closePopup.addEventListener("click", closeProductPopup);
+}
+
+if (popupAddButton) {
+  popupAddButton.addEventListener("click", () => {
+    if (!activePopupItem || activePopupItem.soldOut) return;
+
+    addToCart(
+      activePopupItem.paintingName,
+      parseInt(activePopupItem.price, 10),
+      activePopupItem.src
+    );
+    closeProductPopup();
+  });
+}
 
 function addToCart(name, price, img) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -782,6 +815,51 @@ function addToCart(name, price, img) {
   updateCartCount();
   showToast();
 }
+
+const featuredShirtAddButton = document.getElementById("featured-shirt-add");
+
+if (featuredShirtAddButton) {
+  featuredShirtAddButton.addEventListener("click", () => {
+    addToCart("חולצה", 80, "/assets/img/y-shirt.png");
+  });
+}
+
+document.querySelectorAll("[data-featured-add]").forEach((button) => {
+  button.addEventListener("click", () => {
+    addToCart(
+      button.dataset.name,
+      parseInt(button.dataset.price, 10),
+      button.dataset.img
+    );
+  });
+});
+
+document.querySelectorAll("[data-featured-product]").forEach((product) => {
+  const openFeaturedProduct = () => {
+    openPopup({
+      src: product.dataset.img,
+      paintingName: product.dataset.name,
+      size: product.dataset.size,
+      type: product.dataset.type,
+      price: `${product.dataset.price}₪`,
+    });
+  };
+
+  product.tabIndex = 0;
+  product.setAttribute("role", "button");
+  product.setAttribute("aria-label", `פתיחת פרטי מוצר ${product.dataset.name}`);
+
+  product.addEventListener("click", (event) => {
+    if (event.target.closest("button")) return;
+    openFeaturedProduct();
+  });
+
+  product.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openFeaturedProduct();
+  });
+});
 
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -813,6 +891,8 @@ function goToCart() {
   window.location.href = "cart.html";
 }
 
+document.getElementById("toast")?.addEventListener("click", goToCart);
+
 window.addEventListener("DOMContentLoaded", updateCartCount);
 window.addEventListener("load", () => {
   if (window.location.hash) {
@@ -823,6 +903,201 @@ window.addEventListener("load", () => {
       }, 300);
     }
   }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const preview = document.getElementById("custom-print-preview");
+  const countInputs = document.querySelectorAll('input[name="character-count"]');
+  const characterCards = document.querySelectorAll("[data-character-card]");
+  const printSubmit = document.getElementById("custom-print-submit");
+  const comicThemeInput = document.getElementById("comic-theme");
+  const comicThemeSubmit = document.getElementById("comic-theme-submit");
+
+  if (!preview || !countInputs.length || !printSubmit || !comicThemeSubmit) {
+    return;
+  }
+
+  const characterDefaults = [
+    {
+      gender: "female",
+      hairstyle: "updo",
+      hairColor: "dark",
+      mood: "happy",
+      outfit: "comfy",
+      speech: "יאללה, בואו נתחיל",
+    },
+    {
+      gender: "male",
+      hairstyle: "short",
+      hairColor: "brown",
+      mood: "neutral",
+      outfit: "overall",
+      speech: "זה הכי אנחנו",
+    },
+  ];
+
+  const labels = {
+    gender: {
+      female: "בת",
+      male: "בן",
+    },
+    hairstyle: {
+      updo: "אסוף",
+      short: "קצר",
+      long: "ארוך",
+      weird: "מוזר",
+    },
+    hairColor: {
+      dark: "כהה",
+      brown: "חום",
+      ginger: "ג'ינג'י",
+      blonde: "בלונד",
+      fantasy: "צבעוני",
+    },
+    mood: {
+      happy: "שמח",
+      neutral: "ניטרלי",
+      sad: "עצוב",
+      worried: "מודאג",
+      judgy: "שופט",
+    },
+    outfit: {
+      comfy: "נוח",
+      "less-comfy": "פחות נוח",
+      strawberries: "סוודר עם תותים",
+      overall: "אוברול",
+      dress: "שמלה",
+    },
+  };
+
+  function getCharacterState(index) {
+    return {
+      gender:
+        document.getElementById(`gender-${index}`)?.value ||
+        characterDefaults[index].gender,
+      hairstyle:
+        document.getElementById(`hairstyle-${index}`)?.value ||
+        characterDefaults[index].hairstyle,
+      hairColor:
+        document.getElementById(`hair-color-${index}`)?.value ||
+        characterDefaults[index].hairColor,
+      mood:
+        document.getElementById(`mood-${index}`)?.value ||
+        characterDefaults[index].mood,
+      outfit:
+        document.getElementById(`outfit-${index}`)?.value ||
+        characterDefaults[index].outfit,
+      speech:
+        document.getElementById(`speech-${index}`)?.value.trim() ||
+        characterDefaults[index].speech,
+    };
+  }
+
+  function getCharacterCount() {
+    return (
+      document.querySelector('input[name="character-count"]:checked')?.value ||
+      "1"
+    );
+  }
+
+  function renderPreview() {
+    const count = Number(getCharacterCount());
+    const characters = [getCharacterState(0), getCharacterState(1)].slice(
+      0,
+      count
+    );
+
+    preview.innerHTML = "";
+    characters.forEach((character, index) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "custom-print__character";
+
+      const bubble = document.createElement("div");
+      bubble.className = "custom-print__bubble";
+      bubble.textContent = character.speech || "כיתוב כאן";
+
+      const figure = document.createElement("div");
+      figure.className = `custom-print__figure ${
+        count === 1 ? "custom-print__figure--single" : ""
+      }`;
+
+      const hair = document.createElement("div");
+      hair.className = `custom-print__hair custom-print__hair--${character.gender} custom-print__hair--${character.hairstyle} custom-print__hair--${character.hairColor}`;
+
+      const head = document.createElement("div");
+      head.className = `custom-print__head custom-print__head--${character.mood}`;
+
+      const body = document.createElement("div");
+      body.className = `custom-print__body custom-print__body--${character.outfit}`;
+
+      figure.appendChild(hair);
+      figure.appendChild(head);
+      figure.appendChild(body);
+      wrapper.appendChild(bubble);
+      wrapper.appendChild(figure);
+      preview.appendChild(wrapper);
+    });
+  }
+
+  function updateVisibility() {
+    const count = Number(getCharacterCount());
+    characterCards.forEach((card, index) => {
+      card.hidden = index >= count;
+    });
+  }
+
+  function updatePrintLink() {
+    const count = Number(getCharacterCount());
+    const characters = [getCharacterState(0), getCharacterState(1)].slice(
+      0,
+      count
+    );
+
+    const lines = [
+      "היי, אני רוצה לבנות פרינט אישי",
+      `מספר דמויות: ${count}`,
+      ...characters.map((character, index) =>
+        `דמות ${index + 1}: ${labels.gender[character.gender]}, תסרוקת ${labels.hairstyle[character.hairstyle]}, צבע שיער ${labels.hairColor[character.hairColor]}, מצב רוח ${labels.mood[character.mood]}, לבוש ${labels.outfit[character.outfit]}, בועה "${character.speech}"`
+      ),
+    ];
+
+    printSubmit.href = `https://wa.me/972542634686?text=${encodeURIComponent(
+      lines.join("\n")
+    )}`;
+  }
+
+  function updateComicLink() {
+    const theme = comicThemeInput?.value.trim();
+    const text = theme
+      ? `היי, יש לי רעיון לקומיקס אישי:\n${theme}`
+      : "היי, אני רוצה להזמין קומיקס אישי";
+
+    comicThemeSubmit.href = `https://wa.me/972542634686?text=${encodeURIComponent(
+      text
+    )}`;
+  }
+
+  function syncCustomizer() {
+    updateVisibility();
+    renderPreview();
+    updatePrintLink();
+    updateComicLink();
+  }
+
+  countInputs.forEach((input) => input.addEventListener("change", syncCustomizer));
+  [0, 1].forEach((index) => {
+    ["gender", "hairstyle", "hair-color", "mood", "outfit", "speech"].forEach((field) => {
+      document
+        .getElementById(`${field}-${index}`)
+        ?.addEventListener("input", syncCustomizer);
+      document
+        .getElementById(`${field}-${index}`)
+        ?.addEventListener("change", syncCustomizer);
+    });
+  });
+  comicThemeInput?.addEventListener("input", updateComicLink);
+
+  syncCustomizer();
 });
 
 if (window.location.search.includes("fbclid")) {

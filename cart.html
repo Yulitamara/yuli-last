@@ -17,7 +17,7 @@
 
     <style>
       .cart-container {
-        max-width: 900px;
+        max-width: 980px;
         margin: 7rem auto 3rem;
         padding: 1rem;
       }
@@ -31,29 +31,71 @@
       }
 
       .cart-item {
-        display: flex;
+        display: grid;
+        grid-template-columns: 90px 1fr auto;
         align-items: center;
         gap: 1rem;
-        margin-bottom: 1.5rem;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(37, 37, 37, 0.08);
+        border-radius: 1rem;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.65);
+        box-shadow: 0 10px 24px rgba(37, 37, 37, 0.06);
       }
 
       .cart-item img {
-        width: 80px;
-        height: auto;
-        border-radius: 0.5rem;
+        width: 90px;
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+        border-radius: 0.75rem;
+        background: #fff;
       }
 
       .cart-details {
-        flex-grow: 1;
+        display: grid;
+        gap: 0.25rem;
+        min-width: 0;
+      }
+
+      .cart-item-name {
+        font-size: 1.05rem;
+        font-weight: bold;
+      }
+
+      .cart-item-price {
+        color: var(--text-color-light);
+        font-size: 0.9rem;
+      }
+
+      .cart-summary {
+        display: grid;
+        gap: 0.55rem;
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(37, 37, 37, 0.08);
+      }
+
+      .cart-summary__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        color: var(--text-color-light);
+      }
+
+      .cart-summary__row--total {
+        color: var(--title-color);
+        font-size: 1.15rem;
+        font-weight: bold;
+        padding-top: 0.55rem;
+        border-top: 1px solid rgba(37, 37, 37, 0.08);
       }
 
       .cart-total {
         font-weight: bold;
         font-size: 1.2rem;
-        text-align: center;
-        margin-top: 2rem;
       }
 
       .cart-empty {
@@ -74,7 +116,7 @@
       .paybox-button {
         display: block;
         text-align: center;
-        margin: 2rem auto 0;
+        margin: 1rem auto 0;
         background-color: #f38376;
         color: white;
         padding: 0.75rem 2rem;
@@ -86,18 +128,55 @@
         max-width: 250px;
       }
 
+      .cart-actions {
+        display: grid;
+        gap: 0.75rem;
+        justify-items: center;
+        margin-top: 1rem;
+      }
+
+      .cart-whatsapp {
+        color: var(--title-color);
+        font-size: 0.95rem;
+        text-decoration: underline;
+        text-underline-offset: 0.25rem;
+      }
+
+      .order-status {
+        min-height: 1.4rem;
+        color: #e85e4f;
+        font-size: 0.95rem;
+        text-align: center;
+      }
+
       .paybox-button:hover {
         background-color: #e85e4f;
       }
 
-      .cart-item i.ri-delete-bin-line {
+      .paybox-button:disabled {
+        opacity: 0.72;
+        cursor: progress;
+      }
+
+      .cart-remove {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.4rem;
+        height: 2.4rem;
+        border: none;
+        border-radius: 50%;
+        background: rgba(232, 94, 79, 0.08);
+        cursor: pointer;
+      }
+
+      .cart-remove i {
         font-size: 1.3rem;
         color: #e85e4f;
-        cursor: pointer;
         transition: color 0.3s;
       }
 
-      .cart-item i.ri-delete-bin-line:hover {
+      .cart-remove:hover i {
         color: #a8251b;
       }
 
@@ -218,6 +297,12 @@
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
       }
 
+      body.dark-theme .cart-item,
+      body.dark-theme .cart-summary {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
       body.dark-theme .user-info .form-element {
         background: rgba(255, 255, 255, 0.05);
         border-color: rgba(255, 255, 255, 0.12);
@@ -246,6 +331,27 @@
       }
 
       @media screen and (max-width: 576px) {
+        .cart-item {
+          grid-template-columns: 72px 1fr auto;
+          gap: 0.75rem;
+        }
+
+        .cart-item img {
+          width: 72px;
+        }
+
+        .cart-item-name {
+          font-size: 0.98rem;
+        }
+
+        .cart-item-price {
+          font-size: 0.82rem;
+        }
+
+        .quantity-controls {
+          gap: 0.4rem;
+        }
+
         .address-grid {
           grid-template-columns: 1fr;
         }
@@ -304,7 +410,7 @@
         style="margin-top: 2rem"
       >
         <p class="instructions">
-          אחרי קבלת ההזמנה ניצור קשר לתיאום משלוח, או איסוף עצמי מתל אביב 💌
+          אחרי קבלת ההזמנה ניצור קשר לתיאום המשלוח 💌
         </p>
 
         <div class="user-info">
@@ -325,29 +431,6 @@
             placeholder="הקלד/י את מספר הטלפון"
             required
           />
-
-          <label>איך נוח לכם לקבל את ההזמנה?</label>
-          <div class="delivery-options">
-            <label for="delivery-method-shipping">
-              <input
-                type="radio"
-                id="delivery-method-shipping"
-                name="delivery-method"
-                value="shipping"
-                checked
-              />
-              משלוח
-            </label>
-            <label for="delivery-method-pickup">
-              <input
-                type="radio"
-                id="delivery-method-pickup"
-                name="delivery-method"
-                value="pickup"
-              />
-              איסוף עצמי
-            </label>
-          </div>
 
           <div id="delivery-address-section" class="delivery-address">
             <label for="street-input">כתובת למשלוח:</label>
@@ -422,9 +505,35 @@
             <p id="shipping-cost">עלות משלוח: 0 ש"ח</p>
           </div>
 
-          <div class="cart-total">סה"כ לתשלום: <span id="total">0</span> ₪</div>
+          <div class="cart-summary" aria-label="סיכום הזמנה">
+            <div class="cart-summary__row">
+              <span>מוצרים</span>
+              <strong><span id="subtotal">0</span> ₪</strong>
+            </div>
+            <div class="cart-summary__row">
+              <span>משלוח</span>
+              <strong><span id="shipping-total">0</span> ₪</strong>
+            </div>
+            <div class="cart-summary__row cart-summary__row--total">
+              <span>סה"כ לתשלום</span>
+              <strong><span id="total">0</span> ₪</strong>
+            </div>
+          </div>
 
-          <button id="submit-order" class="paybox-button">אישור הזמנה</button>
+          <div class="cart-actions">
+            <button id="submit-order" class="paybox-button">
+              אישור ומעבר לתשלום
+            </button>
+            <p id="order-status" class="order-status" aria-live="polite"></p>
+            <a
+              class="cart-whatsapp"
+              href="https://wa.me/972542634686/?text=היי,%20יש%20לי%20שאלה%20על%20הזמנה%20מהחנות"
+              target="_blank"
+              rel="noopener"
+            >
+              יש שאלה? שלחו לי הודעה בוואטסאפ
+            </a>
+          </div>
         </div>
       </div>
 

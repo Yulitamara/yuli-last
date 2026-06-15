@@ -5,12 +5,6 @@ const cityInput = document.getElementById("city-input");
 const deliveryNotesInput = document.getElementById("delivery-notes-input");
 const shippingCostDisplay = document.getElementById("shipping-cost");
 const shippingSection = document.getElementById("cart-shipping-section");
-const deliveryAddressSection = document.getElementById(
-  "delivery-address-section"
-);
-const deliveryMethodInputs = document.querySelectorAll(
-  'input[name="delivery-method"]'
-);
 let shippingCost = 0;
 
 const cityShippingCosts = {
@@ -57,40 +51,8 @@ function findMatchingCity(city) {
   );
 }
 
-function getSelectedDeliveryMethod() {
-  const selectedInput = document.querySelector(
-    'input[name="delivery-method"]:checked'
-  );
-
-  return selectedInput?.value || "shipping";
-}
-
-function updateDeliveryMethodUI() {
-  const isPickup = getSelectedDeliveryMethod() === "pickup";
-
-  if (deliveryAddressSection) {
-    deliveryAddressSection.style.display = isPickup ? "none" : "flex";
-  }
-}
-
 const updateShippingCost = () => {
   if (!cityInput || !shippingCostDisplay) return;
-
-  if (getSelectedDeliveryMethod() === "pickup") {
-    shippingCost = 0;
-    shippingCostDisplay.textContent = "איסוף עצמי מתל אביב";
-    localStorage.setItem(
-      "shipping",
-      JSON.stringify({
-        method: "pickup",
-        address: null,
-        city: null,
-        cost: 0,
-      })
-    );
-    renderCart();
-    return;
-  }
 
   const street = normalizeText(streetInput?.value);
   const houseNumber = normalizeText(houseNumberInput?.value);
@@ -148,19 +110,14 @@ const updateShippingCost = () => {
   input?.addEventListener("change", updateShippingCost);
   input?.addEventListener("input", updateShippingCost);
 });
-deliveryMethodInputs.forEach((input) => {
-  input.addEventListener("change", () => {
-    updateDeliveryMethodUI();
-    updateShippingCost();
-  });
-});
 
 function initializeShipping() {
   const savedShipping = JSON.parse(localStorage.getItem("shipping")) || null;
 
-  if (!savedShipping) {
-    document.getElementById("delivery-method-shipping").checked = true;
-    updateDeliveryMethodUI();
+  if (!savedShipping || savedShipping.method === "pickup") {
+    if (savedShipping?.method === "pickup") {
+      localStorage.removeItem("shipping");
+    }
     if (streetInput) streetInput.value = "";
     if (houseNumberInput) houseNumberInput.value = "";
     if (apartmentInput) apartmentInput.value = "";
@@ -172,15 +129,6 @@ function initializeShipping() {
     shippingCost = 0;
     return;
   }
-
-  const isPickup = savedShipping.method === "pickup";
-  const selectedDeliveryMethod = document.getElementById(
-    isPickup ? "delivery-method-pickup" : "delivery-method-shipping"
-  );
-  if (selectedDeliveryMethod) {
-    selectedDeliveryMethod.checked = true;
-  }
-  updateDeliveryMethodUI();
 
   shippingCost = savedShipping.cost || 0;
 
@@ -203,9 +151,7 @@ function initializeShipping() {
   }
 
   if (shippingCostDisplay) {
-    shippingCostDisplay.textContent = isPickup
-      ? "איסוף עצמי מתל אביב"
-      : savedShipping.city
+    shippingCostDisplay.textContent = savedShipping.city
       ? `עלות משלוח: ${shippingCost} ש"ח`
       : "לא זיהינו עיר במרכז מהכתובת, ניצור איתך קשר לגבי עלות משלוח";
   }
@@ -214,6 +160,8 @@ function initializeShipping() {
 function renderCart() {
   const container = document.getElementById("cart-items");
   const totalElement = document.getElementById("total");
+  const subtotalElement = document.getElementById("subtotal");
+  const shippingTotalElement = document.getElementById("shipping-total");
   const bitAmount = document.getElementById("bit-amount");
 
   if (!container) {
@@ -239,6 +187,12 @@ function renderCart() {
     if (totalElement) {
       totalElement.innerText = "0";
     }
+    if (subtotalElement) {
+      subtotalElement.innerText = "0";
+    }
+    if (shippingTotalElement) {
+      shippingTotalElement.innerText = "0";
+    }
     if (bitAmount) {
       bitAmount.innerText = "0 ₪";
     }
@@ -251,24 +205,52 @@ function renderCart() {
 
   cart.forEach((item, index) => {
     const quantity = item.quantity || 1;
+    const itemTotal = item.price * quantity;
     const div = document.createElement("div");
     div.className = "cart-item";
     div.innerHTML = `
-            <img src="${item.img}" alt="${item.name}">
+            <img src="${item.img}" alt="${item.name}" loading="lazy">
             <div class="cart-details">
-                <div>${item.name}</div>
-                <div>${item.price} ₪ ליחידה</div>
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">${item.price} ₪ ליחידה · ${itemTotal} ₪ יחד</div>
                 <div class="quantity-controls">
-                    <button onclick="changeQuantity(${index}, -1)">−</button>
+                    <button type="button" data-quantity-decrease="${index}" aria-label="הפחתת כמות עבור ${item.name}">−</button>
                     <span class="quantity-count">${quantity}</span>
-                    <button onclick="changeQuantity(${index}, 1)">+</button>
+                    <button type="button" data-quantity-increase="${index}" aria-label="הוספת כמות עבור ${item.name}">+</button>
                 </div>
             </div>
-            <i class="ri-delete-bin-line" onclick="removeFromCart(${index})" title="הסר פריט"></i>
+            <button type="button" class="cart-remove" data-remove-item="${index}" aria-label="הסרת ${item.name} מהעגלה">
+              <i class="ri-delete-bin-line" aria-hidden="true"></i>
+            </button>
         `;
     container.appendChild(div);
-    total += item.price * quantity;
+    total += itemTotal;
   });
+
+  container.querySelectorAll("[data-quantity-decrease]").forEach((button) => {
+    button.addEventListener("click", () => {
+      changeQuantity(Number(button.dataset.quantityDecrease), -1);
+    });
+  });
+
+  container.querySelectorAll("[data-quantity-increase]").forEach((button) => {
+    button.addEventListener("click", () => {
+      changeQuantity(Number(button.dataset.quantityIncrease), 1);
+    });
+  });
+
+  container.querySelectorAll("[data-remove-item]").forEach((button) => {
+    button.addEventListener("click", () => {
+      removeFromCart(Number(button.dataset.removeItem));
+    });
+  });
+
+  if (subtotalElement) {
+    subtotalElement.innerText = total;
+  }
+  if (shippingTotalElement) {
+    shippingTotalElement.innerText = shippingCost;
+  }
 
   total += shippingCost;
   if (totalElement) {

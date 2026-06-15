@@ -49,13 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function saveOrder() {
+    const submitBtn = document.getElementById("submit-order");
+    const orderStatus = document.getElementById("order-status");
     const name = document.getElementById("user-name")?.value.trim();
     const phone = document.getElementById("user-phone")?.value.trim();
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const shipping = JSON.parse(localStorage.getItem("shipping")) || null;
-    const deliveryMethod =
-      document.querySelector('input[name="delivery-method"]:checked')?.value ||
-      "shipping";
     const street = document.getElementById("street-input")?.value.trim();
     const houseNumber = document
       .getElementById("house-number-input")
@@ -75,23 +74,22 @@ document.addEventListener("DOMContentLoaded", () => {
       hasError = true;
     }
 
-    if (deliveryMethod === "shipping" && !street) {
+    if (!street) {
       showError("street-input", "יש להזין רחוב");
       hasError = true;
     }
 
-    if (deliveryMethod === "shipping" && street && street.length < 2) {
+    if (street && street.length < 2) {
       showError("street-input", "אנא הזינו שם רחוב מלא");
       hasError = true;
     }
 
-    if (deliveryMethod === "shipping" && !houseNumber) {
+    if (!houseNumber) {
       showError("house-number-input", "יש להזין מספר בית");
       hasError = true;
     }
 
     if (
-      deliveryMethod === "shipping" &&
       houseNumber &&
       !/^[0-9א-ת/-]{1,10}$/.test(houseNumber)
     ) {
@@ -99,16 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
       hasError = true;
     }
 
-    if (
-      deliveryMethod === "shipping" &&
-      (!city || !shipping || shipping.method !== "shipping")
-    ) {
+    if (!city || !shipping || shipping.method !== "shipping") {
       showError("city-input", "יש להזין עיר למשלוח");
       hasError = true;
     }
 
     if (
-      deliveryMethod === "shipping" &&
       city &&
       (!shipping || shipping.method !== "shipping" || !shipping.city)
     ) {
@@ -121,7 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (hasError) return;
+    if (hasError) {
+      if (orderStatus) {
+        orderStatus.textContent = "כמעט שם - צריך להשלים את השדות המסומנים.";
+      }
+      return;
+    }
 
     const orderData = {
       name,
@@ -133,6 +132,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "שומרת את ההזמנה...";
+      }
+      if (orderStatus) {
+        orderStatus.textContent = "ההזמנה נקלטת, מיד עוברים לתשלום.";
+      }
+
       await addDoc(collection(db, "orders"), orderData);
       localStorage.setItem("lastTotal", total);
       // 🧼 ניקוי העגלה והמשלוח
@@ -147,12 +154,18 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("apartment-input").value = "";
       document.getElementById("city-input").value = "";
       document.getElementById("delivery-notes-input").value = "";
-      document.getElementById("delivery-method-shipping").checked = true;
 
       // 🧭 מעבר לעמוד התשלום
       window.location.href = "payment.html";
     } catch (error) {
       console.error("שגיאה בשמירה:", error);
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "אישור ומעבר לתשלום";
+      }
+      if (orderStatus) {
+        orderStatus.textContent = "";
+      }
       alert("אירעה שגיאה בשמירת ההזמנה. נסה/י שוב.");
     }
   }
