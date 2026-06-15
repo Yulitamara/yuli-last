@@ -291,25 +291,35 @@ body.dark-theme {
 
 @media screen and (max-width: 1023px) {
   .nav {
-    border: 1px solid rgba(37, 37, 37, 0.08);
+    width: calc(100% - 2rem);
+    height: 4rem;
+    border: 1px solid rgba(37, 37, 37, 0.06);
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 14px 36px rgba(37, 37, 37, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
   .nav__menu {
     position: fixed;
-    width: 93%;
+    width: min(88%, 360px);
     left: 0;
     right: 0;
-    bottom: -100%;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
     margin: 0 auto;
-    background-color: var(--body-color);
-    box-shadow: 0 4px 20px hsla(207, 24%, 35%, 0.1);
-    padding: 2rem 1.5rem 5rem;
-    border-radius: 2rem;
-    border: 1px solid rgba(37, 37, 37, 0.08);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 18px 48px rgba(37, 37, 37, 0.14);
+    padding: 3.25rem 1rem 1.25rem;
+    border-radius: 1.75rem;
+    border: 1px solid rgba(37, 37, 37, 0.06);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(calc(100% + 2rem));
     transition:
-      bottom 0.3s,
+      opacity 0.25s,
+      transform 0.3s,
       border-color 0.3s,
       box-shadow 0.3s;
   }
@@ -325,19 +335,24 @@ body.dark-theme {
 
   .nav__list {
     justify-items: center;
+    gap: 0.75rem;
   }
 
   .nav__item,
   .nav__list > li {
-    width: min(100%, 260px);
+    width: min(100%, 210px);
   }
 
   .nav__link {
     width: 100%;
-    padding: 0.85rem 1rem;
-    border-radius: 1.25rem;
-    background: rgba(37, 37, 37, 0.03);
+    min-height: 4.15rem;
+    justify-content: center;
+    padding: 0.75rem 0.85rem;
+    border-radius: 1rem;
+    background: rgba(37, 37, 37, 0.035);
     border: 1px solid transparent;
+    color: var(--title-color);
+    font-size: 0.95rem;
     transition:
       color 0.3s,
       background-color 0.3s,
@@ -347,17 +362,26 @@ body.dark-theme {
 
   .nav__link:hover,
   .active-link {
-    background: rgba(243, 131, 118, 0.1);
+    background: rgba(243, 131, 118, 0.12);
     border-color: rgba(243, 131, 118, 0.28);
   }
 
+  .nav__toggle,
+  .nav__close i {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(37, 37, 37, 0.06);
+    box-shadow: 0 8px 22px rgba(37, 37, 37, 0.1);
+  }
+
   .dark-theme .nav__menu {
+    background: rgba(44, 44, 44, 0.92);
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
   }
 
   .dark-theme .nav {
     border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(44, 44, 44, 0.88);
   }
 
   .dark-theme .nav__menu::before {
@@ -384,7 +408,7 @@ body.dark-theme {
 .nav__list {
   grid-template-columns: repeat(1, max-content);
   justify-content: center;
-  gap: 2rem 3rem;
+  gap: 1.25rem 3rem;
 }
 
 .nav__link {
@@ -406,14 +430,16 @@ body.dark-theme {
 
 .nav__close {
   position: absolute;
-  right: 1.5rem;
-  bottom: 0.7rem;
+  right: 1rem;
+  top: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
 }
 /* Show menu */
-.show-menu {
-  bottom: 2rem;
+.nav__menu.show-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 /* Active link */
@@ -1582,24 +1608,38 @@ body.dark-theme .custom-print__card--secondary {
   position: fixed;
   right: 1rem;
   bottom: -30%;
-  background-color: var(--body-color);
-  box-shadow: 0 4px 12px hsl(207, 24%, 35%, 0.15);
+  width: 2.45rem;
+  height: 2.45rem;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 26px rgba(37, 37, 37, 0.12);
   display: inline-flex;
-  padding: 0.35rem;
-  border-radius: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(37, 37, 37, 0.06);
   font-size: 1.1rem;
   color: var(--title-color);
   z-index: var(--z-tooltip);
-  transition: bottom 0.3s, transform 0.3s;
+  transition:
+    bottom 0.3s,
+    transform 0.3s,
+    background-color 0.3s;
 }
 
 .scrollup:hover {
   transform: translateY(-0.25rem);
 }
 
+.dark-theme .scrollup {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
 /* Show Scroll Up*/
 .show-scroll {
-  bottom: 7.5rem;
+  bottom: 7.25rem;
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -1662,13 +1702,17 @@ body.dark-theme .custom-print__card--secondary {
   }
 
   .filters {
-    width: 100%;
+    width: calc(100% - 2rem);
+    max-width: calc(100vw - 2rem);
     flex-wrap: nowrap;
     justify-content: flex-start;
     gap: 0.5rem;
     overflow-x: auto;
-    padding: 0 1rem 0.4rem;
+    margin-inline: auto;
+    padding: 0.15rem 0.25rem 0.5rem;
+    direction: rtl;
     scroll-snap-type: x proximity;
+    scroll-padding-inline: 0.25rem;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -2120,10 +2164,20 @@ p,
 }
 .nav__toggle,
 .nav__close i {
-  background-color: var(--toggle-menu-bg);
+  background: rgba(255, 255, 255, 0.88);
   padding: 0.5rem;
   border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(37, 37, 37, 0.06);
+  box-shadow: 0 8px 22px rgba(37, 37, 37, 0.1);
+}
+
+.nav__close i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
 }
 
 .cart-item.fade-out {
