@@ -492,6 +492,12 @@ body.dark-theme {
   transform-origin: 50% 70%;
 }
 
+.featured-shirt__size {
+  color: var(--text-color-light);
+  font-size: var(--small-font-size);
+  line-height: 1.4;
+}
+
 .featured-shirt__button {
   margin-top: 0.2rem;
 }
