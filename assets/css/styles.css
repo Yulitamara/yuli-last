@@ -850,6 +850,15 @@ body.dark-theme {
 } */
 
 /*=============== PROJECTS ===============*/
+.personal__description {
+  width: min(100% - 2rem, 620px);
+  margin: -0.35rem auto 2rem;
+  color: var(--text-color);
+  font-size: var(--normal-font-size);
+  line-height: 1.8;
+  text-align: center;
+}
+
 .projects__container {
   overflow: initial;
 }
