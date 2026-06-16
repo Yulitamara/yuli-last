@@ -464,6 +464,22 @@ const stickersData = [
     cutout: true,
   },
   {
+    src: "/assets/img/sticker-cut-7.webp",
+    alt: "sticker",
+    size: "9x9",
+    paintingName: "אחיות להורים שונים",
+    price: "10₪",
+    cutout: true,
+  },
+  {
+    src: "/assets/img/sticker-cut-8.webp",
+    alt: "sticker",
+    size: "9x9",
+    paintingName: "אני אקח את זה כחוויה...",
+    price: "10₪",
+    cutout: true,
+  },
+  {
     src: "/assets/img/sticker-900-7.png",
     alt: "print",
     size: "7x7",
