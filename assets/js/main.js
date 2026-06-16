@@ -776,8 +776,13 @@ function populateGallery(data, sectionId) {
       addButton.className = "img-btn no-select";
       addButton.type = "button";
       addButton.textContent = "הוספה לעגלה";
-      addButton.addEventListener("click", () => {
-        addToCart(item.paintingName, parseInt(item.price, 10), item.src);
+      addButton.addEventListener("click", (event) => {
+        addToCart(
+          item.paintingName,
+          parseInt(item.price, 10),
+          item.src,
+          event.currentTarget,
+        );
       });
       nameWrapper.appendChild(addButton);
     }
@@ -849,12 +854,28 @@ if (popupAddButton) {
       activePopupItem.paintingName,
       parseInt(activePopupItem.price, 10),
       activePopupItem.src,
+      popupAddButton,
     );
     closeProductPopup();
   });
 }
 
-function addToCart(name, price, img) {
+function animateButton(button) {
+  if (!button) return;
+
+  button.classList.remove("button-pop");
+  void button.offsetWidth;
+  button.classList.add("button-pop");
+  button.addEventListener(
+    "animationend",
+    () => {
+      button.classList.remove("button-pop");
+    },
+    { once: true },
+  );
+}
+
+function addToCart(name, price, img, triggerButton = null) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   const existingIndex = cart.findIndex(
@@ -868,16 +889,9 @@ function addToCart(name, price, img) {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
+  animateButton(triggerButton);
+  updateCartCount(true);
   showToast();
-}
-
-const featuredShirtAddButton = document.getElementById("featured-shirt-add");
-
-if (featuredShirtAddButton) {
-  featuredShirtAddButton.addEventListener("click", () => {
-    addToCart("חולצה", 80, "/assets/img/y-shirt.png");
-  });
 }
 
 document.querySelectorAll("[data-featured-add]").forEach((button) => {
@@ -886,6 +900,7 @@ document.querySelectorAll("[data-featured-add]").forEach((button) => {
       button.dataset.name,
       parseInt(button.dataset.price, 10),
       button.dataset.img,
+      button,
     );
   });
 });
@@ -917,7 +932,7 @@ document.querySelectorAll("[data-featured-product]").forEach((product) => {
   });
 });
 
-function updateCartCount() {
+function updateCartCount(animate = false) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
   const cartCounter = document.getElementById("cart-counter");
@@ -925,6 +940,19 @@ function updateCartCount() {
   if (cartCounter) {
     cartCounter.textContent = totalCount;
     cartCounter.style.display = totalCount > 0 ? "inline-block" : "none";
+
+    if (animate && totalCount > 0) {
+      cartCounter.classList.remove("cart-counter-bump");
+      void cartCounter.offsetWidth;
+      cartCounter.classList.add("cart-counter-bump");
+      cartCounter.addEventListener(
+        "animationend",
+        () => {
+          cartCounter.classList.remove("cart-counter-bump");
+        },
+        { once: true },
+      );
+    }
   }
 }
 
