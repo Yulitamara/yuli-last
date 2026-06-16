@@ -390,14 +390,6 @@ const printsData = [
   },
 
   {
-    src: "/assets/img/900-25.png",
-    alt: "print",
-    size: "10x10",
-    paintingName: "עדיף למות",
-    price: "20₪",
-    soldOut: true,
-  },
-  {
     src: "/assets/img/900-20.png",
     alt: "print",
     size: "10x10",
@@ -633,6 +625,20 @@ const cardsData = [
 ];
 
 const magnetsData = [
+  {
+    src: "/assets/img/magnet-fight.webp",
+    alt: "magnet",
+    size: "10x10",
+    paintingName: "טובים בלריב",
+    price: "20₪",
+  },
+  {
+    src: "/assets/img/magnet-miss.webp",
+    alt: "magnet",
+    size: "10x10",
+    paintingName: "בואי נפגש!",
+    price: "20₪",
+  },
   {
     src: "/assets/img/600-how-to-no.webp",
     alt: "print",
