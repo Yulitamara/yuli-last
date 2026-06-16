@@ -147,7 +147,7 @@ const scrollActive = () => {
       sectionTop = current.offsetTop - 58,
       sectionId = current.getAttribute("id");
     const sectionClass = document.querySelector(
-      `.nav__menu a[href="#${sectionId}"], .nav__menu a[href="index.html#${sectionId}"]`
+      `.nav__menu a[href="#${sectionId}"], .nav__menu a[href="index.html#${sectionId}"]`,
     );
 
     if (!sectionClass) return;
@@ -190,10 +190,10 @@ const getCurrentIcon = () =>
 if (selectedTheme) {
   // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
   document.body.classList[selectedTheme === "dark" ? "add" : "remove"](
-    darkTheme
+    darkTheme,
   );
   themeButton.classList[selectedIcon === "ri-moon-line" ? "add" : "remove"](
-    iconTheme
+    iconTheme,
   );
 }
 
@@ -415,6 +415,14 @@ const printsData = [
 ];
 
 const stickersData = [
+  {
+    src: "/assets/img/sticker-cut-1.webp",
+    alt: "sticker",
+    size: "9x9",
+    paintingName: "נחמדה",
+    price: "10₪",
+    cutout: true,
+  },
   {
     src: "/assets/img/sticker-900-7.png",
     alt: "print",
@@ -691,7 +699,7 @@ function populateGallery(data, sectionId) {
     const image = document.createElement("img");
     image.src = item.src;
     image.alt = `${item.alt || "מוצר"} ${item.paintingName}`;
-    image.className = "no-select";
+    image.className = `no-select ${item.cutout ? "gallery__image--cutout" : ""}`;
     image.loading = "lazy";
     image.addEventListener("click", () => openPopup(item));
 
@@ -756,6 +764,7 @@ function openPopup(item) {
   activePopupItem = item;
   popupImage.src = item.src;
   popupImage.alt = item.paintingName;
+  popupImage.classList.toggle("popup__image--cutout", Boolean(item.cutout));
   popupTitle.textContent = item.paintingName;
   popupMeta.textContent = [item.type, item.size, item.price]
     .filter(Boolean)
@@ -792,7 +801,7 @@ if (popupAddButton) {
     addToCart(
       activePopupItem.paintingName,
       parseInt(activePopupItem.price, 10),
-      activePopupItem.src
+      activePopupItem.src,
     );
     closeProductPopup();
   });
@@ -802,7 +811,7 @@ function addToCart(name, price, img) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   const existingIndex = cart.findIndex(
-    (item) => item.name === name && item.price === price
+    (item) => item.name === name && item.price === price,
   );
 
   if (existingIndex !== -1) {
@@ -829,7 +838,7 @@ document.querySelectorAll("[data-featured-add]").forEach((button) => {
     addToCart(
       button.dataset.name,
       parseInt(button.dataset.price, 10),
-      button.dataset.img
+      button.dataset.img,
     );
   });
 });
@@ -907,7 +916,9 @@ window.addEventListener("load", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const preview = document.getElementById("custom-print-preview");
-  const countInputs = document.querySelectorAll('input[name="character-count"]');
+  const countInputs = document.querySelectorAll(
+    'input[name="character-count"]',
+  );
   const characterCards = document.querySelectorAll("[data-character-card]");
   const printSubmit = document.getElementById("custom-print-submit");
   const comicThemeInput = document.getElementById("comic-theme");
@@ -1004,7 +1015,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const count = Number(getCharacterCount());
     const characters = [getCharacterState(0), getCharacterState(1)].slice(
       0,
-      count
+      count,
     );
 
     preview.innerHTML = "";
@@ -1050,19 +1061,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const count = Number(getCharacterCount());
     const characters = [getCharacterState(0), getCharacterState(1)].slice(
       0,
-      count
+      count,
     );
 
     const lines = [
       "היי, אני רוצה לבנות פרינט אישי",
       `מספר דמויות: ${count}`,
-      ...characters.map((character, index) =>
-        `דמות ${index + 1}: ${labels.gender[character.gender]}, תסרוקת ${labels.hairstyle[character.hairstyle]}, צבע שיער ${labels.hairColor[character.hairColor]}, מצב רוח ${labels.mood[character.mood]}, לבוש ${labels.outfit[character.outfit]}, בועה "${character.speech}"`
+      ...characters.map(
+        (character, index) =>
+          `דמות ${index + 1}: ${labels.gender[character.gender]}, תסרוקת ${labels.hairstyle[character.hairstyle]}, צבע שיער ${labels.hairColor[character.hairColor]}, מצב רוח ${labels.mood[character.mood]}, לבוש ${labels.outfit[character.outfit]}, בועה "${character.speech}"`,
       ),
     ];
 
     printSubmit.href = `https://wa.me/972542634686?text=${encodeURIComponent(
-      lines.join("\n")
+      lines.join("\n"),
     )}`;
   }
 
@@ -1073,7 +1085,7 @@ document.addEventListener("DOMContentLoaded", () => {
       : "היי, אני רוצה להזמין קומיקס אישי";
 
     comicThemeSubmit.href = `https://wa.me/972542634686?text=${encodeURIComponent(
-      text
+      text,
     )}`;
   }
 
@@ -1084,16 +1096,20 @@ document.addEventListener("DOMContentLoaded", () => {
     updateComicLink();
   }
 
-  countInputs.forEach((input) => input.addEventListener("change", syncCustomizer));
+  countInputs.forEach((input) =>
+    input.addEventListener("change", syncCustomizer),
+  );
   [0, 1].forEach((index) => {
-    ["gender", "hairstyle", "hair-color", "mood", "outfit", "speech"].forEach((field) => {
-      document
-        .getElementById(`${field}-${index}`)
-        ?.addEventListener("input", syncCustomizer);
-      document
-        .getElementById(`${field}-${index}`)
-        ?.addEventListener("change", syncCustomizer);
-    });
+    ["gender", "hairstyle", "hair-color", "mood", "outfit", "speech"].forEach(
+      (field) => {
+        document
+          .getElementById(`${field}-${index}`)
+          ?.addEventListener("input", syncCustomizer);
+        document
+          .getElementById(`${field}-${index}`)
+          ?.addEventListener("change", syncCustomizer);
+      },
+    );
   });
   comicThemeInput?.addEventListener("input", updateComicLink);
 

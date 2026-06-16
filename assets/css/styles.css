@@ -649,6 +649,18 @@ body.dark-theme {
     box-shadow 0.2s ease;
 }
 
+.gallery__content img.gallery__image--cutout {
+  background: transparent;
+  border: none;
+  padding: 0.75rem;
+  filter:
+    drop-shadow(2px 0 0 #fff)
+    drop-shadow(-2px 0 0 #fff)
+    drop-shadow(0 2px 0 #fff)
+    drop-shadow(0 -2px 0 #fff)
+    drop-shadow(0 10px 16px rgba(37, 37, 37, 0.12));
+}
+
 .gallery__content img:hover {
   transform: translateY(-2px);
   box-shadow: rgba(0, 0, 0, 0.12) 0 10px 24px;
@@ -1945,6 +1957,18 @@ body.dark-theme .custom-print__card--secondary {
   border-radius: 0.9rem;
   background: #fff;
   margin-inline: auto;
+}
+
+.popup__image--cutout {
+  background: transparent;
+  border: none;
+  padding: 1rem;
+  filter:
+    drop-shadow(2px 0 0 #fff)
+    drop-shadow(-2px 0 0 #fff)
+    drop-shadow(0 2px 0 #fff)
+    drop-shadow(0 -2px 0 #fff)
+    drop-shadow(0 14px 22px rgba(37, 37, 37, 0.14));
 }
 
 .popup__details {
