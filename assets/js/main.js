@@ -542,14 +542,6 @@ const stickersData = [
     price: "10₪",
   },
   {
-    src: "/assets/img/900-100.png",
-    alt: "sticker",
-    size: "10x10",
-    paintingName: "עסוקה",
-    price: "10₪",
-    soldOut: true,
-  },
-  {
     src: "/assets/img/900-104.png",
     alt: "sticker",
     size: "10x10",
@@ -571,24 +563,10 @@ const stickersData = [
     price: "10₪",
   },
   {
-    src: "/assets/img/600-computer.webp",
-    alt: "print",
-    size: "10x10",
-    paintingName: "עבודה מול מחשב",
-    price: "10₪",
-  },
-  {
     src: "/assets/img/600-tierd.webp",
     alt: "print",
     size: "10x10",
     paintingName: "נראית עייפה",
-    price: "10₪",
-  },
-  {
-    src: "/assets/img/600-mode.webp",
-    alt: "print",
-    size: "10x10",
-    paintingName: "מדהים איך קצת",
     price: "10₪",
   },
 ];
@@ -637,6 +615,13 @@ const magnetsData = [
     alt: "magnet",
     size: "10x10",
     paintingName: "בואי נפגש!",
+    price: "20₪",
+  },
+  {
+    src: "/assets/img/600-mode.webp",
+    alt: "magnet",
+    size: "10x10",
+    paintingName: "מדהים איך קצת",
     price: "20₪",
   },
   {
