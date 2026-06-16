@@ -833,7 +833,7 @@ function openPopup(item) {
     .join(" · ");
   popupAddButton.disabled = Boolean(item.soldOut);
   popupAddButton.textContent = item.soldOut ? "סולד אאוט" : "הוספה לעגלה";
-  popup.style.display = "block";
+  popup.style.display = "flex";
 
   // Close popup when clicking anywhere outside of it
   window.addEventListener("click", closePopupOnClick);

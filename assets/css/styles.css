@@ -1933,6 +1933,8 @@ body.dark-theme .custom-print__card--secondary {
   z-index: 999;
   padding: 1.25rem;
   overflow-y: auto;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .popup__card {
@@ -1942,7 +1944,7 @@ body.dark-theme .custom-print__card--secondary {
   align-items: center;
   gap: 0.7rem;
   width: min(96vw, 720px);
-  margin: 1rem auto;
+  margin: 1rem 0;
   padding: 0.75rem;
   border-radius: 1.25rem;
   background: var(--body-color);
