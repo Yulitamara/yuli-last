@@ -294,6 +294,23 @@
                 return `היי, שילמתי בביט על הזמנה מהחנות.\nסה"כ: ${total} ₪`;
             }
 
+            if (summary.kind === "personal-digital-illustration") {
+                return [
+                    "היי, שילמתי בביט על הזמנת ציור דיגיטלי.",
+                    `מספר הזמנה: ${summary.id || ""}`,
+                    `שם: ${summary.name}`,
+                    `מייל: ${summary.email}`,
+                    `טלפון: ${summary.phone}`,
+                    "",
+                    `פריט: ${summary.itemName}`,
+                    `אספקה: ${summary.delivery}`,
+                    summary.notes ? `מה לצייר: ${summary.notes}` : "",
+                    `סה"כ: ${summary.total} ₪`,
+                ]
+                    .filter(Boolean)
+                    .join("\n");
+            }
+
             const items = (summary.cart || [])
                 .map((item) => {
                     const quantity = item.quantity || 1;

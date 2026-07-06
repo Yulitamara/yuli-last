@@ -63,7 +63,13 @@ blurAfterClick(navClose);
 if (typeof Swiper !== "undefined") {
   let swiperProjects = new Swiper(".projects__container", {
     loop: true,
-    spaceBetween: 24,
+    loopAdditionalSlides: 4,
+    speed: 450,
+    grabCursor: true,
+    centeredSlides: true,
+    slideToClickedSlide: true,
+    slidesPerView: 1,
+    spaceBetween: 8,
 
     navigation: {
       nextEl: ".swiper-button-next",
@@ -71,13 +77,36 @@ if (typeof Swiper !== "undefined") {
     },
     pagination: {
       el: ".swiper-pagination",
+      clickable: true,
     },
     breakpoints: {
+      768: {
+        slidesPerView: 1.75,
+        spaceBetween: -44,
+      },
       1200: {
-        slidesPerView: 2,
-        spaceBetween: -56,
+        slidesPerView: 2.25,
+        spaceBetween: -64,
       },
     },
+  });
+
+  let projectHoverTimer;
+  const projectsContainer = document.querySelector(".projects__container");
+
+  projectsContainer?.addEventListener("pointerover", (event) => {
+    const slide = event.target.closest(".swiper-slide");
+
+    if (!slide || slide.classList.contains("swiper-slide-active")) return;
+
+    const slideIndex = Array.from(swiperProjects.slides).indexOf(slide);
+
+    if (slideIndex < 0) return;
+
+    window.clearTimeout(projectHoverTimer);
+    projectHoverTimer = window.setTimeout(() => {
+      swiperProjects.slideTo(slideIndex);
+    }, 120);
   });
 }
 

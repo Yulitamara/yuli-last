@@ -122,15 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const orderData = {
-      name,
-      phone,
-      cart,
-      shipping,
-      total,
-      createdAt: serverTimestamp(),
-    };
-
     try {
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -139,6 +130,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (orderStatus) {
         orderStatus.textContent = "ההזמנה נקלטת, מיד עוברים לתשלום.";
       }
+
+      const orderData = {
+        name,
+        phone,
+        cart,
+        shipping,
+        total,
+        createdAt: serverTimestamp(),
+      };
 
       await addDoc(collection(db, "orders"), orderData);
       localStorage.setItem("lastTotal", total);
