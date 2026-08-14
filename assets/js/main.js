@@ -758,8 +758,44 @@ const popupImage = document.getElementById("popup-image");
 const popupTitle = document.getElementById("popup-title");
 const popupMeta = document.getElementById("popup-meta");
 const popupAddButton = document.getElementById("popup-add");
+const popupVariants = document.getElementById("popup-variants");
 const closePopup = document.getElementById("close-popup");
 let activePopupItem = null;
+
+function getSelectedProductOption(container) {
+  const option = container?.querySelector("input[type='radio']:checked");
+  if (!option) return null;
+
+  return {
+    label: option.dataset.label || "",
+    price: parseInt(option.dataset.price || option.value, 10),
+  };
+}
+
+function addProductVariantToCart(name, option, img, triggerButton = null) {
+  if (!option || Number.isNaN(option.price)) return;
+
+  addToCart(name, option.price, img, triggerButton, option.label);
+}
+
+function updateFeaturedAddButton(product) {
+  const addButton = product?.querySelector("[data-featured-add]");
+  const options = product?.querySelector("[data-featured-options]");
+  const selectedOption = getSelectedProductOption(options);
+
+  if (!addButton || !selectedOption) return;
+
+  addButton.textContent = `הוספה לעגלה - ${selectedOption.price}₪`;
+}
+
+function updatePopupAddButton() {
+  const options = document.getElementById("popup-variant-options");
+  const selectedOption = getSelectedProductOption(options);
+
+  if (!popupAddButton || !selectedOption) return;
+
+  popupAddButton.textContent = `הוספה לעגלה - ${selectedOption.price}₪`;
+}
 
 function populateGallery(data, sectionId) {
   const section = galleryContent[sectionId];
@@ -850,8 +886,51 @@ function openPopup(item) {
   popupMeta.textContent = [item.type, item.size, item.price]
     .filter(Boolean)
     .join(" · ");
+  if (popupVariants) {
+    popupVariants.innerHTML = "";
+
+    if (item.options?.length) {
+      const options = document.createElement("div");
+      options.className = "featured-products__options popup__options";
+      options.id = "popup-variant-options";
+
+      item.options.forEach((optionData) => {
+        const label = document.createElement("label");
+        label.className = "featured-products__option";
+
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "popup-variant-option";
+        input.value = optionData.value || optionData.label;
+        input.dataset.price = optionData.price;
+        input.dataset.label = optionData.label;
+        input.checked = Boolean(optionData.checked);
+
+        const text = document.createElement("span");
+        const strong = document.createElement("strong");
+        text.append(optionData.label, " ");
+        strong.textContent = `${optionData.price}₪`;
+        text.appendChild(strong);
+
+        label.appendChild(input);
+        label.appendChild(text);
+        options.appendChild(label);
+      });
+
+      if (!options.querySelector("input:checked")) {
+        const firstOption = options.querySelector("input");
+        if (firstOption) firstOption.checked = true;
+      }
+
+      options.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("change", updatePopupAddButton);
+      });
+      popupVariants.appendChild(options);
+    }
+  }
   popupAddButton.disabled = Boolean(item.soldOut);
   popupAddButton.textContent = item.soldOut ? "סולד אאוט" : "הוספה לעגלה";
+  updatePopupAddButton();
   popup.style.display = "flex";
 
   // Close popup when clicking anywhere outside of it
@@ -879,6 +958,18 @@ if (popupAddButton) {
   popupAddButton.addEventListener("click", () => {
     if (!activePopupItem || activePopupItem.soldOut) return;
 
+    const popupVariantOptions = document.getElementById("popup-variant-options");
+    if (popupVariantOptions) {
+      addProductVariantToCart(
+        activePopupItem.paintingName,
+        getSelectedProductOption(popupVariantOptions),
+        activePopupItem.src,
+        popupAddButton,
+      );
+      closeProductPopup();
+      return;
+    }
+
     addToCart(
       activePopupItem.paintingName,
       parseInt(activePopupItem.price, 10),
@@ -904,17 +995,17 @@ function animateButton(button) {
   );
 }
 
-function addToCart(name, price, img, triggerButton = null) {
+function addToCart(name, price, img, triggerButton = null, variant = "") {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   const existingIndex = cart.findIndex(
-    (item) => item.name === name && item.price === price,
+    (item) => item.name === name && item.price === price && (item.variant || "") === variant,
   );
 
   if (existingIndex !== -1) {
     cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
   } else {
-    cart.push({ name, price, img, quantity: 1 });
+    cart.push({ name, variant, price, img, quantity: 1 });
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -925,6 +1016,20 @@ function addToCart(name, price, img, triggerButton = null) {
 
 document.querySelectorAll("[data-featured-add]").forEach((button) => {
   button.addEventListener("click", () => {
+    const product = button.closest("[data-featured-product]");
+    const variantOptions = product?.querySelector("[data-featured-options]");
+    const selectedOption = getSelectedProductOption(variantOptions);
+
+    if (selectedOption) {
+      addProductVariantToCart(
+        button.dataset.name,
+        selectedOption,
+        button.dataset.img,
+        button,
+      );
+      return;
+    }
+
     addToCart(
       button.dataset.name,
       parseInt(button.dataset.price, 10),
@@ -941,7 +1046,24 @@ document.querySelectorAll("[data-featured-product]").forEach((product) => {
       paintingName: product.dataset.name,
       size: product.dataset.size,
       type: product.dataset.type,
-      price: `${product.dataset.price}₪`,
+      price: product.dataset.unframedPrice
+        ? `עם מסגרת ${product.dataset.price}₪ · בלי מסגרת ${product.dataset.unframedPrice}₪`
+        : `${product.dataset.price}₪`,
+      options: product.dataset.unframedPrice
+        ? [
+            {
+              value: "framed",
+              label: "עם מסגרת",
+              price: product.dataset.price,
+              checked: true,
+            },
+            {
+              value: "unframed",
+              label: "בלי מסגרת",
+              price: product.dataset.unframedPrice,
+            },
+          ]
+        : null,
     });
   };
 
@@ -950,9 +1072,15 @@ document.querySelectorAll("[data-featured-product]").forEach((product) => {
   product.setAttribute("aria-label", `פתיחת פרטי מוצר ${product.dataset.name}`);
 
   product.addEventListener("click", (event) => {
-    if (event.target.closest("button")) return;
+    if (event.target.closest("button, input, label")) return;
     openFeaturedProduct();
   });
+
+  product.querySelectorAll("[data-featured-options] input").forEach((input) => {
+    input.addEventListener("change", () => updateFeaturedAddButton(product));
+  });
+
+  updateFeaturedAddButton(product);
 
   product.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;

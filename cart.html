@@ -67,6 +67,17 @@
         font-size: 0.9rem;
       }
 
+      .cart-item-variant {
+        width: max-content;
+        max-width: 100%;
+        padding: 0.18rem 0.55rem;
+        border-radius: 999px;
+        background: rgba(243, 131, 118, 0.1);
+        color: #e85e4f;
+        font-size: 0.82rem;
+        line-height: 1.4;
+      }
+
       .cart-summary {
         display: grid;
         gap: 0.55rem;
@@ -301,6 +312,11 @@
       body.dark-theme .cart-summary {
         background: rgba(255, 255, 255, 0.05);
         border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      body.dark-theme .cart-item-variant {
+        background: rgba(243, 131, 118, 0.16);
+        color: #ffb0a7;
       }
 
       body.dark-theme .user-info .form-element {

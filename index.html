@@ -95,14 +95,19 @@
       <section class="gallery section" id="gallery">
         <h2 class="section__title">תעזבו את החנות של יולי</h2>
 
-        <div class="featured-products container" aria-label="תמונות ממוסגרות">
+        <div class="featured-products container" aria-label="תמונות 50 על 50">
+          <div class="featured-products__header">
+            <h3>תמונות 50x50</h3>
+            <span>אפשר לבחור עם מסגרת או בלי</span>
+          </div>
           <div class="featured-products__grid">
             <article
               class="featured-products__item featured-products__item--new"
               data-featured-product
-              data-name="תמונה ממוסגרת 1"
-              data-type="תמונה ממוסגרת"
+              data-name="לא נחמדה"
+              data-type="תמונה 50x50"
               data-price="290"
+              data-unframed-price="179"
               data-size="50*50 ס״מ"
               data-img="/assets/img/framed-1.jpeg"
             >
@@ -112,18 +117,41 @@
                 loading="lazy"
               />
               <div class="featured-products__details">
-                <h4>תמונה ממוסגרת</h4>
+                <h4>לא נחמדה</h4>
                 <p>50*50 ס״מ</p>
-                <p class="featured-products__price">290₪</p>
+                <div class="featured-products__options" data-featured-options>
+                  <label class="featured-products__option">
+                    <input
+                      type="radio"
+                      name="framed-1-option"
+                      value="framed"
+                      data-price="290"
+                      data-label="עם מסגרת"
+                      checked
+                    />
+                    <span>עם מסגרת <strong>290₪</strong></span>
+                  </label>
+                  <label class="featured-products__option">
+                    <input
+                      type="radio"
+                      name="framed-1-option"
+                      value="unframed"
+                      data-price="179"
+                      data-label="בלי מסגרת"
+                    />
+                    <span>בלי מסגרת <strong>179₪</strong></span>
+                  </label>
+                </div>
                 <button
                   class="featured-products__button no-select"
                   type="button"
                   data-featured-add
-                  data-name="תמונה ממוסגרת 1"
+                  data-name="לא נחמדה"
                   data-price="290"
+                  data-unframed-price="179"
                   data-img="/assets/img/framed-1.jpeg"
                 >
-                  הוספה לעגלה
+                  הוספה לעגלה - 290₪
                 </button>
               </div>
             </article>
@@ -131,9 +159,10 @@
             <article
               class="featured-products__item featured-products__item--new"
               data-featured-product
-              data-name="תמונה ממוסגרת 2"
-              data-type="תמונה ממוסגרת"
+              data-name="מתה מבפנים"
+              data-type="תמונה 50x50"
               data-price="290"
+              data-unframed-price="179"
               data-size="50*50 ס״מ"
               data-img="/assets/img/framed-2.jpeg"
             >
@@ -143,18 +172,41 @@
                 loading="lazy"
               />
               <div class="featured-products__details">
-                <h4>תמונה ממוסגרת</h4>
+                <h4>מתה מבפנים</h4>
                 <p>50*50 ס״מ</p>
-                <p class="featured-products__price">290₪</p>
+                <div class="featured-products__options" data-featured-options>
+                  <label class="featured-products__option">
+                    <input
+                      type="radio"
+                      name="framed-2-option"
+                      value="framed"
+                      data-price="290"
+                      data-label="עם מסגרת"
+                      checked
+                    />
+                    <span>עם מסגרת <strong>290₪</strong></span>
+                  </label>
+                  <label class="featured-products__option">
+                    <input
+                      type="radio"
+                      name="framed-2-option"
+                      value="unframed"
+                      data-price="179"
+                      data-label="בלי מסגרת"
+                    />
+                    <span>בלי מסגרת <strong>179₪</strong></span>
+                  </label>
+                </div>
                 <button
                   class="featured-products__button no-select"
                   type="button"
                   data-featured-add
-                  data-name="תמונה ממוסגרת 2"
+                  data-name="מתה מבפנים"
                   data-price="290"
+                  data-unframed-price="179"
                   data-img="/assets/img/framed-2.jpeg"
                 >
-                  הוספה לעגלה
+                  הוספה לעגלה - 290₪
                 </button>
               </div>
             </article>
@@ -225,6 +277,7 @@
             <div class="popup__details">
               <h3 class="popup__title" id="popup-title"></h3>
               <p class="popup__meta" id="popup-meta"></p>
+              <div class="popup__variants" id="popup-variants"></div>
               <button
                 class="custom-print__submit popup__button no-select"
                 type="button"

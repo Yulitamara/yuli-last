@@ -206,6 +206,9 @@ function renderCart() {
   cart.forEach((item, index) => {
     const quantity = item.quantity || 1;
     const itemTotal = item.price * quantity;
+    const legacyNameParts = item.name.split(" - ");
+    const displayName = item.variant ? item.name : legacyNameParts[0];
+    const displayVariant = item.variant || legacyNameParts.slice(1).join(" - ");
     const priceText =
       quantity > 1
         ? `${item.price} ₪ ליחידה · ${itemTotal} ₪ יחד`
@@ -213,17 +216,18 @@ function renderCart() {
     const div = document.createElement("div");
     div.className = "cart-item";
     div.innerHTML = `
-            <img src="${item.img}" alt="${item.name}" loading="lazy">
+            <img src="${item.img}" alt="${displayName}" loading="lazy">
             <div class="cart-details">
-                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-name">${displayName}</div>
+                ${displayVariant ? `<div class="cart-item-variant">${displayVariant}</div>` : ""}
                 <div class="cart-item-price">${priceText}</div>
                 <div class="quantity-controls">
-                    <button type="button" data-quantity-decrease="${index}" aria-label="הפחתת כמות עבור ${item.name}">−</button>
+                    <button type="button" data-quantity-decrease="${index}" aria-label="הפחתת כמות עבור ${displayName}">−</button>
                     <span class="quantity-count">${quantity}</span>
-                    <button type="button" data-quantity-increase="${index}" aria-label="הוספת כמות עבור ${item.name}">+</button>
+                    <button type="button" data-quantity-increase="${index}" aria-label="הוספת כמות עבור ${displayName}">+</button>
                 </div>
             </div>
-            <button type="button" class="cart-remove" data-remove-item="${index}" aria-label="הסרת ${item.name} מהעגלה">
+            <button type="button" class="cart-remove" data-remove-item="${index}" aria-label="הסרת ${displayName} מהעגלה">
               <i class="ri-delete-bin-line" aria-hidden="true"></i>
             </button>
         `;
