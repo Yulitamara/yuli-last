@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="he">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -72,19 +72,36 @@
           </ul>
 
           <!-- close button -->
-          <div class="nav__close no-select" id="nav-close">
+          <button
+            class="nav__close no-select"
+            id="nav-close"
+            type="button"
+            aria-label="סגירת תפריט"
+          >
             <i class="ri-close-line"></i>
-          </div>
+          </button>
         </div>
 
         <div class="nav__buttons no-select">
           <!-- Theme change button -->
-          <i class="ri-moon-line change-theme" id="theme-button"></i>
+          <button
+            class="ri-moon-line change-theme"
+            id="theme-button"
+            type="button"
+            aria-label="החלפת מצב תצוגה"
+          ></button>
 
           <!-- Toggle button -->
-          <div class="nav__toggle" id="nav-toggle">
+          <button
+            class="nav__toggle"
+            id="nav-toggle"
+            type="button"
+            aria-label="פתיחת תפריט"
+            aria-controls="nav-menu"
+            aria-expanded="false"
+          >
             <i class="ri-menu-4-line"></i>
-          </div>
+          </button>
         </div>
       </nav>
     </header>
@@ -93,13 +110,15 @@
     <main class="main">
       <!--==================== Gallery ====================-->
       <section class="gallery section" id="gallery">
-        <h2 class="section__title">תעזבו את החנות של יולי</h2>
+        <div class="shop-intro container">
+          <h2 class="shop-intro__eyebrow">תעזבו את החנות של יולי</h2>
+        </div>
 
-        <div class="featured-products container" aria-label="תמונות 50 על 50">
-          <div class="featured-products__header">
-            <h3>תמונות 50x50</h3>
-            <span>אפשר לבחור עם מסגרת או בלי</span>
-          </div>
+        <div
+          class="featured-products container"
+          id="featured-products"
+          aria-label="תמונות 50 על 50"
+        >
           <div class="featured-products__grid">
             <article
               class="featured-products__item featured-products__item--new"
@@ -110,10 +129,12 @@
               data-unframed-price="179"
               data-size="50*50 ס״מ"
               data-img="/assets/img/framed-1.jpeg"
+              data-badge="חדש"
             >
+              <span class="featured-products__badge">חדש</span>
               <img
                 src="/assets/img/framed-1.jpeg"
-                alt="תמונה ממוסגרת 50 על 50"
+                alt="לא נחמדה - תמונה 50 על 50"
                 loading="lazy"
               />
               <div class="featured-products__details">
@@ -165,10 +186,12 @@
               data-unframed-price="179"
               data-size="50*50 ס״מ"
               data-img="/assets/img/framed-2.jpeg"
+              data-badge="חדש"
             >
+              <span class="featured-products__badge">חדש</span>
               <img
                 src="/assets/img/framed-2.jpeg"
-                alt="תמונה ממוסגרת 50 על 50"
+                alt="מתה מבפנים - תמונה 50 על 50"
                 loading="lazy"
               />
               <div class="featured-products__details">
@@ -213,7 +236,11 @@
           </div>
         </div>
 
-        <div class="filters">
+        <div class="shop-more container">
+          <h3>עוד בחנות</h3>
+        </div>
+
+        <div class="filters" aria-label="קטגוריות מוצרים">
           <button
             class="filter prints active no-select"
             type="button"
@@ -264,7 +291,12 @@
           <div class="gallery__content" id="magnets"></div>
         </div>
         <div class="popup" id="popup">
-          <div class="popup__card" role="dialog" aria-modal="true" aria-label="פרטי מוצר">
+          <div
+            class="popup__card"
+            role="dialog"
+            aria-modal="true"
+            aria-label="פרטי מוצר"
+          >
             <button
               class="close-popup no-select"
               id="close-popup"
@@ -297,6 +329,18 @@
           איור מקורי בסגנון שלי, לפי תמונה, סיטואציה, בדיחה פנימית או רגע קטן
           שבא לך לשמור. אפשר לקבל כקובץ, כהדפס, או ממוסגר ומוכן למתנה.
         </p>
+        <div class="personal__actions" dir="rtl">
+          <a
+            href="https://wa.me/972542634686/?text=היי,%20אני%20רוצה%20להזמין%20איור%20אישי"
+            target="_blank"
+            rel="noopener"
+            class="personal__button"
+          >
+            <i class="ri-whatsapp-line"></i>
+            להזמנת איור אישי
+          </a>
+          <span>שלחו תמונה, רעיון או בדיחה פנימית ונתאם יחד.</span>
+        </div>
 
         <div class="container">
           <div class="projects__container swiper">
@@ -383,8 +427,8 @@
           <div class="custom-print__card custom-print__card--secondary">
             <h2 class="section__title">תבנו את הפרינט שלכם</h2>
             <p class="custom-print__hint">
-              בחרו דמות אחת או שתיים, התאימו שיער, בגדים ובועות דיבור, או
-              שלחו לי רעיון לקומיקס אישי.
+              בחרו דמות אחת או שתיים, התאימו שיער, בגדים ובועות דיבור, או שלחו
+              לי רעיון לקומיקס אישי.
             </p>
             <a href="custom-print.html" class="custom-print__submit">
               מעבר לבניית הפרינט
@@ -395,26 +439,32 @@
 
       <!--==================== CONTACT ====================-->
       <section class="contact section" id="contact">
+        <h2 class="section__title">יצירת קשר</h2>
         <div class="contact__container container grid">
-          <div class="contact__content">
-            <div style="text-align: center; margin-bottom: 2rem">
+          <div class="contact__content contact__actions">
+            <div class="contact__action">
               <a
-                href="https://wa.me/972542634686/?text=היי,%20אני%20מעוניינת%20להזמין%20ציור"
+                href="https://wa.me/972542634686/?text=היי,%20אני%20רוצה%20להזמין%20משהו%20מהחנות"
                 target="_blank"
-                style="
-                  background-color: #25d366;
-                  color: white;
-                  padding: 1rem 2rem;
-                  border-radius: 2rem;
-                  font-size: 1.1rem;
-                  display: inline-block;
-                  text-decoration: none;
-                  font-weight: bold;
-                "
+                rel="noopener"
+                class="contact__button contact__button--shop"
               >
-                <i class="ri-whatsapp-line" style="margin-left: 0.5rem"></i>
-                שלחו לי הודעה בוואטסאפ
+                <i class="ri-shopping-bag-line"></i>
+                שאלה על הזמנה מהחנות
               </a>
+              <p>משלוחים, איסוף, מוצרים וכמויות.</p>
+            </div>
+            <div class="contact__action">
+              <a
+                href="https://wa.me/972542634686/?text=היי,%20אני%20רוצה%20להזמין%20איור%20אישי"
+                target="_blank"
+                rel="noopener"
+                class="contact__button contact__button--personal"
+              >
+                <i class="ri-gift-line"></i>
+                הזמנת איור אישי
+              </a>
+              <p>ציור לפי תמונה, רעיון או רגע קטן למתנה.</p>
             </div>
           </div>
           <!-- סגירת contact__content -->
@@ -428,7 +478,12 @@
     <footer class="footer">
       <div class="footer__container container">
         <div class="footer__img">
-          <img src="/assets/img/logo.png" alt="לוגו תעזבו את יולי" width="200" loading="lazy" />
+          <img
+            src="/assets/img/logo.png"
+            alt="לוגו תעזבו את יולי"
+            width="200"
+            loading="lazy"
+          />
         </div>
         <!-- <ul class="footer__list">
                 <li>
@@ -468,9 +523,7 @@
     <a href="#" class="scrollup no-select" id="scroll-up">
       <i class="ri-arrow-up-line"></i>
     </a>
-    <button id="toast" class="toast" type="button">
-      נוסף לעגלה בהצלחה 🎉
-    </button>
+    <button id="toast" class="toast" type="button">נוסף לעגלה בהצלחה 🎉</button>
 
     <!--=============== SCROLLREVEAL ===============-->
     <script src="assets/js/scrollreveal.min.js"></script>

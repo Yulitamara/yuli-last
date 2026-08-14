@@ -35,15 +35,101 @@ const cityShippingCosts = {
   "מודיעין-מכבים-רעות": 50,
 };
 
+const cityAliases = {
+  "tel aviv": "תל אביב",
+  telaviv: "תל אביב",
+  givatayim: "גבעתיים",
+  givataim: "גבעתיים",
+  "ramat gan": "רמת גן",
+  ramatgan: "רמת גן",
+  "bnei brak": "בני ברק",
+  "bene brak": "בני ברק",
+  bneibrak: "בני ברק",
+  holon: "חולון",
+  "bat yam": "בת ים",
+  batyam: "בת ים",
+  azor: "אזור",
+  "rishon lezion": "ראשון לציון",
+  "rishon le zion": "ראשון לציון",
+  "rishon letsiyon": "ראשון לציון",
+  rishon: "ראשון לציון",
+  "or yehuda": "אור יהודה",
+  "or yahuda": "אור יהודה",
+  "yehud monosson": "יהוד-מונוסון",
+  "yehud monson": "יהוד-מונוסון",
+  yehud: "יהוד-מונוסון",
+  "kiryat ono": "קרית אונו",
+  "qiryat ono": "קרית אונו",
+  "ganei tikva": "גני תקווה",
+  "ganei tikvah": "גני תקווה",
+  "gany tikva": "גני תקווה",
+  savyon: "סביון",
+  "petah tikva": "פתח תקווה",
+  "petach tikva": "פתח תקווה",
+  "petah tikvah": "פתח תקווה",
+  "petach tikvah": "פתח תקווה",
+  "ramat hasharon": "רמת השרון",
+  "ramat ha sharon": "רמת השרון",
+  herzliya: "הרצליה",
+  hertzliya: "הרצליה",
+  raanana: "רעננה",
+  ranana: "רעננה",
+  "hod hasharon": "הוד השרון",
+  "hod ha sharon": "הוד השרון",
+  "kfar saba": "כפר סבא",
+  "kfar sava": "כפר סבא",
+  "ness ziona": "נס ציונה",
+  "nes ziona": "נס ציונה",
+  "ness tsiona": "נס ציונה",
+  rehovot: "רחובות",
+  rechovot: "רחובות",
+  rehovoth: "רחובות",
+  ramla: "רמלה",
+  ramle: "רמלה",
+  lod: "לוד",
+  lud: "לוד",
+  shoham: "שוהם",
+  "modiin": "מודיעין-מכבים-רעות",
+  "modi in": "מודיעין-מכבים-רעות",
+  "modiin maccabim reut": "מודיעין-מכבים-רעות",
+  "modiin macabim reut": "מודיעין-מכבים-רעות",
+  "modiin makabim reut": "מודיעין-מכבים-רעות",
+};
+
 function normalizeText(value = "") {
   return value.trim().replace(/\s+/g, " ");
 }
 
+function normalizeCitySearch(value = "") {
+  return normalizeText(value)
+    .toLowerCase()
+    .replace(/[.'’]/g, "")
+    .replace(/[-_]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function findMatchingCity(city) {
   const normalizedCity = normalizeText(city);
+  const normalizedCitySearch = normalizeCitySearch(city);
 
   if (!normalizedCity) {
     return null;
+  }
+
+  if (cityAliases[normalizedCitySearch]) {
+    return cityAliases[normalizedCitySearch];
+  }
+
+  const alias = Object.keys(cityAliases).find(
+    (aliasName) =>
+      normalizedCitySearch === aliasName ||
+      normalizedCitySearch.includes(aliasName) ||
+      aliasName.includes(normalizedCitySearch)
+  );
+
+  if (alias) {
+    return cityAliases[alias];
   }
 
   return Object.keys(cityShippingCosts).find((city) =>

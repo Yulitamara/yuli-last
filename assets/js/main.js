@@ -8,6 +8,7 @@ const navMenu = document.getElementById("nav-menu"),
 if (navToggle) {
   navToggle.addEventListener("click", () => {
     navMenu.classList.add("show-menu");
+    navToggle.setAttribute("aria-expanded", "true");
   });
 }
 
@@ -16,6 +17,7 @@ if (navToggle) {
 if (navClose) {
   navClose.addEventListener("click", () => {
     navMenu.classList.remove("show-menu");
+    navToggle?.setAttribute("aria-expanded", "false");
   });
 }
 
@@ -28,6 +30,7 @@ document.addEventListener("click", (event) => {
 
   if (!clickedInsideMenu && !clickedToggle) {
     navMenu.classList.remove("show-menu");
+    navToggle.setAttribute("aria-expanded", "false");
   }
 });
 /*=============== REMOVE MENU MOBILE ===============*/
@@ -48,6 +51,7 @@ const blurAfterClick = (element) => {
 const linkAction = (event) => {
   const navMenu = document.getElementById("nav-menu");
   navMenu.classList.remove("show-menu");
+  navToggle?.setAttribute("aria-expanded", "false");
   event.currentTarget.blur();
 };
 
@@ -213,10 +217,10 @@ const selectedIcon = localStorage.getItem("selected-icon");
 const getCurrentTheme = () =>
   document.body.classList.contains(darkTheme) ? "dark" : "light";
 const getCurrentIcon = () =>
-  themeButton.classList.contains(iconTheme) ? "ri-moon-line" : "ri-sun-line";
+  themeButton?.classList.contains(iconTheme) ? "ri-moon-line" : "ri-sun-line";
 
 // We validate id the user previously chose a topic
-if (selectedTheme) {
+if (selectedTheme && themeButton) {
   // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
   document.body.classList[selectedTheme === "dark" ? "add" : "remove"](
     darkTheme,
@@ -227,7 +231,7 @@ if (selectedTheme) {
 }
 
 // Activate / deactivate the theme manually with the button
-themeButton.addEventListener("click", () => {
+themeButton?.addEventListener("click", () => {
   // Add or remove the dark / icon theme
   document.body.classList.toggle(darkTheme);
   themeButton.classList.toggle(iconTheme);
@@ -273,6 +277,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var filterElements = document.querySelectorAll(".filter");
   filterElements.forEach(function (filterElement) {
+    filterElement.setAttribute(
+      "aria-pressed",
+      filterElement.classList.contains("active") ? "true" : "false",
+    );
+
     filterElement.addEventListener("click", function () {
       var filter = this.getAttribute("data-filter");
 
@@ -284,9 +293,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       filterElements.forEach(function (filterElem) {
         filterElem.classList.remove("active");
+        filterElem.setAttribute("aria-pressed", "false");
       });
 
       this.classList.add("active");
+      this.setAttribute("aria-pressed", "true");
 
       document.getElementById(filter).style.display = "flex";
     });
@@ -932,14 +943,45 @@ function openPopup(item) {
   popupAddButton.textContent = item.soldOut ? "סולד אאוט" : "הוספה לעגלה";
   updatePopupAddButton();
   popup.style.display = "flex";
+  closePopup?.focus();
 
   // Close popup when clicking anywhere outside of it
   window.addEventListener("click", closePopupOnClick);
+  window.addEventListener("keydown", closePopupOnKeydown);
 }
 
 function closePopupOnClick(e) {
   if (!popup || !popupImage) return;
   if (e.target === popup) closeProductPopup();
+}
+
+function closePopupOnKeydown(e) {
+  if (e.key === "Escape") {
+    closeProductPopup();
+    return;
+  }
+
+  if (e.key !== "Tab" || !popup) return;
+
+  const focusableElements = popup.querySelectorAll(
+    "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+  );
+  const visibleFocusableElements = Array.from(focusableElements).filter(
+    (element) => !element.disabled && element.offsetParent !== null,
+  );
+
+  if (!visibleFocusableElements.length) return;
+
+  const firstElement = visibleFocusableElements[0];
+  const lastElement = visibleFocusableElements[visibleFocusableElements.length - 1];
+
+  if (e.shiftKey && document.activeElement === firstElement) {
+    e.preventDefault();
+    lastElement.focus();
+  } else if (!e.shiftKey && document.activeElement === lastElement) {
+    e.preventDefault();
+    firstElement.focus();
+  }
 }
 
 function closeProductPopup() {
@@ -948,6 +990,7 @@ function closeProductPopup() {
   popup.style.display = "none";
   activePopupItem = null;
   window.removeEventListener("click", closePopupOnClick);
+  window.removeEventListener("keydown", closePopupOnKeydown);
 }
 
 if (closePopup) {
@@ -1041,6 +1084,9 @@ document.querySelectorAll("[data-featured-add]").forEach((button) => {
 
 document.querySelectorAll("[data-featured-product]").forEach((product) => {
   const openFeaturedProduct = () => {
+    const selectedOption = getSelectedProductOption(
+      product.querySelector("[data-featured-options]"),
+    );
     openPopup({
       src: product.dataset.img,
       paintingName: product.dataset.name,
@@ -1055,12 +1101,13 @@ document.querySelectorAll("[data-featured-product]").forEach((product) => {
               value: "framed",
               label: "עם מסגרת",
               price: product.dataset.price,
-              checked: true,
+              checked: selectedOption?.label !== "בלי מסגרת",
             },
             {
               value: "unframed",
               label: "בלי מסגרת",
               price: product.dataset.unframedPrice,
+              checked: selectedOption?.label === "בלי מסגרת",
             },
           ]
         : null,
