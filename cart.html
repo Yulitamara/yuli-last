@@ -343,11 +343,52 @@
       .address-grid {
         display: grid;
         gap: 0.75rem;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
       }
 
       .address-grid .address-full {
         grid-column: 1 / -1;
+      }
+
+      .address-grid .form-element,
+      #city-input {
+        margin-bottom: 0;
+      }
+
+      .city-suggestions {
+        max-height: 12rem;
+        overflow-y: auto;
+        margin-top: 0.35rem;
+        border: 1px solid #f38376;
+        border-radius: 0.75rem;
+        background: var(--body-color);
+      }
+
+      .city-suggestions [role="option"] {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0.45rem 0.75rem;
+        color: var(--title-color);
+        cursor: pointer;
+      }
+
+      .city-suggestions [aria-selected="true"],
+      .city-suggestions [role="option"]:hover {
+        background: rgba(243, 131, 118, 0.18);
+      }
+
+      .user-info .form-error {
+        margin: 0.3rem 0 0;
+        color: #ad3125;
+      }
+
+      body.dark-theme .user-info .form-error {
+        color: #ff9a8e;
+      }
+
+      .user-info .form-element[aria-invalid="true"] {
+        border-color: #e85e4f;
       }
 
       .delivery-address .instructions {
@@ -440,6 +481,18 @@
       }
 
       @media screen and (max-width: 576px) {
+        .payment-form {
+          padding-inline: 1rem;
+        }
+
+        .payment-form .form-element {
+          font-size: 1rem;
+        }
+
+        .payment-form input {
+          min-height: 44px;
+        }
+
         .cart-item {
           grid-template-columns: 72px 1fr;
           gap: 0.75rem;
@@ -537,14 +590,15 @@
 
       <div id="cart-items"></div>
 
-      <div
+      <form
         id="cart-shipping-section"
         class="cart-shipping-info payment-form"
         style="margin-top: 2rem"
+        novalidate
       >
         <p class="instructions">
-          אחרי קבלת ההזמנה ניצור קשר לתיאום המשלוח. בדרך כלל משלוח או איסוף
-          מתואמים בהודעה אחרי התשלום.
+          אחרי קבלת ההזמנה ניצור קשר לתיאום המשלוח. משלוח או איסוף מתואמים
+          בהודעה אחרי התשלום.
         </p>
 
         <div class="user-info">
@@ -554,6 +608,7 @@
             id="user-name"
             class="form-element"
             placeholder="הקלד/י את שמך"
+            autocomplete="name"
             required
           />
 
@@ -563,80 +618,80 @@
             id="user-phone"
             class="form-element"
             placeholder="הקלד/י את מספר הטלפון"
+            autocomplete="tel"
             required
           />
 
           <div id="delivery-address-section" class="delivery-address">
-            <label for="street-input">כתובת למשלוח:</label>
-            <div class="address-grid">
-              <input
-                type="text"
-                id="street-input"
-                class="form-element address-full"
-                placeholder="רחוב"
-                autocomplete="address-line1"
-              />
-              <input
-                type="text"
-                id="house-number-input"
-                class="form-element"
-                placeholder="מספר בית"
-                inputmode="numeric"
-              />
-              <input
-                type="text"
-                id="apartment-input"
-                class="form-element"
-                placeholder="דירה"
-                autocomplete="address-line2"
-              />
+            <label for="city-input">כתובת למשלוח:</label>
+            <div>
               <input
                 type="text"
                 id="city-input"
-                class="form-element address-full"
+                class="form-element"
                 placeholder="עיר"
-                list="city-options"
-                autocomplete="address-level2"
+                aria-label="עיר"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded="false"
+                aria-controls="city-options"
+                aria-describedby="city-help"
+                autocomplete="off"
+                required
               />
+              <ul
+                id="city-options"
+                class="city-suggestions"
+                role="listbox"
+                aria-label="ערים למשלוח"
+                hidden
+              ></ul>
             </div>
-            <datalist id="city-options">
-              <option value="תל אביב"></option>
-              <option value="גבעתיים"></option>
-              <option value="רמת גן"></option>
-              <option value="בני ברק"></option>
-              <option value="חולון"></option>
-              <option value="בת ים"></option>
-              <option value="אזור"></option>
-              <option value="ראשון לציון"></option>
-              <option value="אור יהודה"></option>
-              <option value="יהוד-מונוסון"></option>
-              <option value="קרית אונו"></option>
-              <option value="גני תקווה"></option>
-              <option value="סביון"></option>
-              <option value="פתח תקווה"></option>
-              <option value="רמת השרון"></option>
-              <option value="הרצליה"></option>
-              <option value="רעננה"></option>
-              <option value="הוד השרון"></option>
-              <option value="כפר סבא"></option>
-              <option value="נס ציונה"></option>
-              <option value="רחובות"></option>
-              <option value="רמלה"></option>
-              <option value="לוד"></option>
-              <option value="שוהם"></option>
-              <option value="מודיעין-מכבים-רעות"></option>
-            </datalist>
-            <p class="instructions" style="margin-top: -0.5rem">
-              התחילו להקליד את שם העיר ובחרו מהרשימה כדי לחשב את המשלוח.
+            <p id="city-help" class="instructions">
+              הקלידו שם עיר או בחרו מהרשימה כדי לחשב את המשלוח.
             </p>
+            <p id="shipping-cost" aria-live="polite">
+              עלות המשלוח תופיע אחרי הזנת העיר.
+            </p>
+            <div class="address-grid">
+              <div class="address-full">
+                <input
+                  type="text"
+                  id="street-input"
+                  class="form-element"
+                  placeholder="רחוב"
+                  aria-label="רחוב"
+                  autocomplete="address-line1"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  id="house-number-input"
+                  class="form-element"
+                  placeholder="מספר בית"
+                  aria-label="מספר בית"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  id="apartment-input"
+                  class="form-element"
+                  placeholder="דירה"
+                  aria-label="דירה"
+                  autocomplete="address-line2"
+                />
+              </div>
+            </div>
             <p class="instructions">
               נבדוק את הכתובת סופית מולכם לפני תיאום המשלוח.
             </p>
 
             <label for="delivery-notes-input">הערות למשלוח:</label>
             <textarea id="delivery-notes-input" class="form-element"></textarea>
-
-            <p id="shipping-cost">עלות משלוח: 0 ש"ח</p>
           </div>
 
           <div class="cart-summary" aria-label="סיכום הזמנה">
@@ -646,7 +701,7 @@
             </div>
             <div class="cart-summary__row">
               <span>משלוח</span>
-              <strong><span id="shipping-total">0</span> ₪</strong>
+              <strong id="shipping-total">—</strong>
             </div>
             <div class="cart-summary__row cart-summary__row--total">
               <span>סה"כ לתשלום</span>
@@ -655,7 +710,7 @@
           </div>
 
           <div class="cart-actions">
-            <button id="submit-order" class="paybox-button">
+            <button id="submit-order" class="paybox-button" type="submit">
               המשך לתשלום בביט
             </button>
             <p id="order-status" class="order-status" aria-live="polite"></p>
@@ -669,7 +724,7 @@
             </a>
           </div>
         </div>
-      </div>
+      </form>
 
       <!--========== SCROLL UP ==========-->
       <a href="#" class="scrollup no-select" id="scroll-up">

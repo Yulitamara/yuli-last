@@ -336,6 +336,7 @@
                 items,
                 "",
                 addressLine ? `כתובת למשלוח: ${addressLine}` : "",
+                address?.notes ? `הערות למשלוח: ${address.notes}` : "",
                 summary.shipping?.cost ? `משלוח: ${summary.shipping.cost} ₪` : "",
                 `סה"כ: ${summary.total} ₪`,
             ]

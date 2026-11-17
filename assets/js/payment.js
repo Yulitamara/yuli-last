@@ -2,6 +2,7 @@ const streetInput = document.getElementById("street-input");
 const houseNumberInput = document.getElementById("house-number-input");
 const apartmentInput = document.getElementById("apartment-input");
 const cityInput = document.getElementById("city-input");
+const cityOptions = document.getElementById("city-options");
 const deliveryNotesInput = document.getElementById("delivery-notes-input");
 const shippingCostDisplay = document.getElementById("shipping-cost");
 const shippingSection = document.getElementById("cart-shipping-section");
@@ -36,7 +37,16 @@ const cityShippingCosts = {
 };
 
 const cityAliases = {
+  "תל אביב יפו": "תל אביב",
+  "תא": "תל אביב",
+  "יהוד": "יהוד-מונוסון",
+  "קריית אונו": "קרית אונו",
+  "פתח תקוה": "פתח תקווה",
+  "מודיעין": "מודיעין-מכבים-רעות",
+  "מודיעין מכבים רעות": "מודיעין-מכבים-רעות",
   "tel aviv": "תל אביב",
+  "tel aviv yafo": "תל אביב",
+  "tel aviv jaffa": "תל אביב",
   telaviv: "תל אביב",
   givatayim: "גבעתיים",
   givataim: "גבעתיים",
@@ -103,152 +113,184 @@ function normalizeText(value = "") {
 function normalizeCitySearch(value = "") {
   return normalizeText(value)
     .toLowerCase()
-    .replace(/[.'’]/g, "")
-    .replace(/[-_]/g, " ")
+    .replace(/[.'’"׳״]/g, "")
+    .replace(/[-_־–—]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function findMatchingCity(city) {
-  const normalizedCity = normalizeText(city);
-  const normalizedCitySearch = normalizeCitySearch(city);
+const citySearchKeys = new Map(
+  [
+    ...Object.keys(cityShippingCosts).map((city) => [city, city]),
+    ...Object.entries(cityAliases),
+  ].map(([name, city]) => [normalizeCitySearch(name), city]),
+);
 
-  if (!normalizedCity) {
-    return null;
+function getCityMatches(value) {
+  const query = normalizeCitySearch(value);
+  if (!query) return [];
+
+  const matches = new Set();
+  for (const [name, city] of citySearchKeys) {
+    if (name.startsWith(query)) matches.add(city);
   }
-
-  if (cityAliases[normalizedCitySearch]) {
-    return cityAliases[normalizedCitySearch];
-  }
-
-  const alias = Object.keys(cityAliases).find(
-    (aliasName) =>
-      normalizedCitySearch === aliasName ||
-      normalizedCitySearch.includes(aliasName) ||
-      aliasName.includes(normalizedCitySearch)
-  );
-
-  if (alias) {
-    return cityAliases[alias];
-  }
-
-  return Object.keys(cityShippingCosts).find((city) =>
-    normalizedCity === city || normalizedCity.includes(city) || city.includes(normalizedCity)
-  );
+  return [...matches];
 }
 
-const updateShippingCost = () => {
-  if (!cityInput || !shippingCostDisplay) return;
+let activeCityOption = -1;
 
-  const street = normalizeText(streetInput?.value);
-  const houseNumber = normalizeText(houseNumberInput?.value);
-  const apartment = normalizeText(apartmentInput?.value);
+function closeCityOptions() {
+  cityOptions.hidden = true;
+  cityInput.setAttribute("aria-expanded", "false");
+  cityInput.removeAttribute("aria-activedescendant");
+  activeCityOption = -1;
+}
+
+function showCityOptions() {
+  closeCityOptions();
+  if (citySearchKeys.has(normalizeCitySearch(cityInput.value))) return;
+
+  const matches = getCityMatches(cityInput.value);
+  const options = matches.map((city, index) => {
+    const option = document.createElement("li");
+    option.id = `shipping-city-${index}`;
+    option.setAttribute("role", "option");
+    option.setAttribute("aria-selected", "false");
+    option.textContent = city;
+    return option;
+  });
+  cityOptions.replaceChildren(...options);
+  if (options.length) {
+    cityOptions.hidden = false;
+    cityInput.setAttribute("aria-expanded", "true");
+  }
+}
+
+function selectCity(city) {
+  cityInput.value = city;
+  closeCityOptions();
+  cityInput.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+cityInput?.addEventListener("focus", showCityOptions);
+cityInput?.addEventListener("input", showCityOptions);
+cityInput?.addEventListener("blur", closeCityOptions);
+
+cityOptions?.addEventListener("mousedown", (event) => {
+  // Keep focus on the field until the clicked suggestion is selected.
+  event.preventDefault();
+});
+cityOptions?.addEventListener("click", (event) => {
+  const option = event.target.closest('[role="option"]');
+  if (option) selectCity(option.textContent);
+});
+
+cityInput?.addEventListener("keydown", (event) => {
+  if (event.isComposing) return;
+
+  if (event.key === "Escape") {
+    closeCityOptions();
+    return;
+  }
+
+  const moving = event.key === "ArrowDown" || event.key === "ArrowUp";
+  if (moving && cityOptions.hidden) showCityOptions();
+  if (cityOptions.hidden) return;
+
+  const options = [...cityOptions.children];
+  if (moving) {
+    event.preventDefault();
+    const last = options.length - 1;
+    if (event.key === "ArrowDown") {
+      activeCityOption = Math.min(activeCityOption + 1, last);
+    } else {
+      activeCityOption = activeCityOption < 0 ? last : Math.max(activeCityOption - 1, 0);
+    }
+    options.forEach((option, index) => {
+      option.setAttribute("aria-selected", String(index === activeCityOption));
+    });
+    const option = options[activeCityOption];
+    cityInput.setAttribute("aria-activedescendant", option.id);
+    option.scrollIntoView({ block: "nearest" });
+  } else if (event.key === "Enter" && activeCityOption >= 0) {
+    event.preventDefault();
+    selectCity(options[activeCityOption].textContent);
+  }
+});
+
+function updateShippingCost() {
   const cityValue = normalizeText(cityInput.value);
-  const notes = normalizeText(deliveryNotesInput?.value);
-  const city = findMatchingCity(cityValue);
+  const city = citySearchKeys.get(normalizeCitySearch(cityValue)) || null;
+  shippingCost = city ? cityShippingCosts[city] : 0;
 
+  let message = "עלות המשלוח תופיע אחרי הזנת העיר.";
   if (city) {
-    shippingCost = cityShippingCosts[city];
-    shippingCostDisplay.textContent = `עלות משלוח: ${shippingCost} ש"ח`;
-    localStorage.setItem(
-      "shipping",
-      JSON.stringify({
-        method: "shipping",
-        address: {
-          street,
-          houseNumber,
-          apartment,
-          city: cityValue,
-          notes,
-        },
-        city,
-        cost: shippingCost,
-      })
-    );
+    message = `עלות משלוח: ${shippingCost} ₪`;
+  } else if (getCityMatches(cityValue).length) {
+    message = "בחרו עיר מהרשימה או השלימו את שם העיר.";
   } else if (cityValue) {
-    shippingCost = 0;
-    shippingCostDisplay.textContent =
-      "העיר לא זוהתה ברשימת המשלוחים האוטומטיים, ניצור קשר לגבי העלות";
-    localStorage.setItem(
-      "shipping",
-      JSON.stringify({
-        method: "shipping",
-        address: {
-          street,
-          houseNumber,
-          apartment,
-          city: cityValue,
-          notes,
-        },
-        city: null,
-        cost: 0,
-      })
-    );
+    message = "לעיר הזו אין תעריף באתר. אפשר לתאם משלוח בוואטסאפ.";
+  }
+
+  if (shippingCostDisplay.textContent !== message) {
+    shippingCostDisplay.textContent = message;
+  }
+
+  const address = {
+    street: normalizeText(streetInput.value),
+    houseNumber: normalizeText(houseNumberInput.value),
+    apartment: normalizeText(apartmentInput.value),
+    city: city || cityValue,
+    notes: normalizeText(deliveryNotesInput.value),
+  };
+  const shipping = { method: "shipping", address, city, cost: shippingCost };
+  if (Object.values(address).some(Boolean)) {
+    localStorage.setItem("shipping", JSON.stringify(shipping));
   } else {
-    shippingCost = 0;
-    shippingCostDisplay.textContent = 'עלות משלוח: 0 ש"ח';
     localStorage.removeItem("shipping");
   }
-  renderCart();
+  renderCartTotals();
+  return shipping;
+}
+
+const addressInputs = {
+  street: streetInput,
+  houseNumber: houseNumberInput,
+  apartment: apartmentInput,
+  city: cityInput,
+  notes: deliveryNotesInput,
 };
 
-[streetInput, houseNumberInput, apartmentInput, cityInput, deliveryNotesInput].forEach((input) => {
+Object.values(addressInputs).forEach((input) => {
   input?.addEventListener("change", updateShippingCost);
   input?.addEventListener("input", updateShippingCost);
 });
 
 function initializeShipping() {
-  const savedShipping = JSON.parse(localStorage.getItem("shipping")) || null;
-
-  if (!savedShipping || savedShipping.method === "pickup") {
-    if (savedShipping?.method === "pickup") {
-      localStorage.removeItem("shipping");
-    }
-    if (streetInput) streetInput.value = "";
-    if (houseNumberInput) houseNumberInput.value = "";
-    if (apartmentInput) apartmentInput.value = "";
-    if (cityInput) cityInput.value = "";
-    if (deliveryNotesInput) deliveryNotesInput.value = "";
-    if (shippingCostDisplay) {
-      shippingCostDisplay.textContent = 'עלות משלוח: 0 ש"ח';
-    }
-    shippingCost = 0;
-    return;
+  const saved = JSON.parse(localStorage.getItem("shipping"));
+  const address = saved?.method === "shipping" ? saved.address : null;
+  for (const [key, input] of Object.entries(addressInputs)) {
+    if (input) input.value = address?.[key] || "";
   }
+  if (cityInput) updateShippingCost();
+}
 
-  shippingCost = savedShipping.cost || 0;
-
-  if (savedShipping.address) {
-    if (streetInput) {
-      streetInput.value = savedShipping.address.street || "";
-    }
-    if (houseNumberInput) {
-      houseNumberInput.value = savedShipping.address.houseNumber || "";
-    }
-    if (apartmentInput) {
-      apartmentInput.value = savedShipping.address.apartment || "";
-    }
-    if (cityInput) {
-      cityInput.value = savedShipping.address.city || "";
-    }
-    if (deliveryNotesInput) {
-      deliveryNotesInput.value = savedShipping.address.notes || "";
-    }
-  }
-
-  if (shippingCostDisplay) {
-    shippingCostDisplay.textContent = savedShipping.city
-      ? `עלות משלוח: ${shippingCost} ש"ח`
-      : "לא זיהינו עיר במרכז מהכתובת, ניצור איתך קשר לגבי עלות משלוח";
-  }
+function renderCartTotals(cart = JSON.parse(localStorage.getItem("cart")) || []) {
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0,
+  );
+  const delivery = cart.length ? shippingCost : 0;
+  const total = subtotal + delivery;
+  document.getElementById("subtotal").textContent = subtotal;
+  document.getElementById("shipping-total").textContent = delivery
+    ? `${delivery} ₪`
+    : "—";
+  document.getElementById("total").textContent = total;
 }
 
 function renderCart() {
   const container = document.getElementById("cart-items");
-  const totalElement = document.getElementById("total");
-  const subtotalElement = document.getElementById("subtotal");
-  const shippingTotalElement = document.getElementById("shipping-total");
-  const bitAmount = document.getElementById("bit-amount");
 
   if (!container) {
     return;
@@ -256,7 +298,7 @@ function renderCart() {
 
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   container.innerHTML = "";
-  let total = 0;
+  renderCartTotals(cart);
 
   if (cart.length === 0) {
     container.innerHTML = `
@@ -270,18 +312,6 @@ function renderCart() {
       shippingSection.style.display = "none";
     }
 
-    if (totalElement) {
-      totalElement.innerText = "0";
-    }
-    if (subtotalElement) {
-      subtotalElement.innerText = "0";
-    }
-    if (shippingTotalElement) {
-      shippingTotalElement.innerText = "0";
-    }
-    if (bitAmount) {
-      bitAmount.innerText = "0 ₪";
-    }
     return;
   }
 
@@ -318,7 +348,6 @@ function renderCart() {
             </button>
         `;
     container.appendChild(div);
-    total += itemTotal;
   });
 
   container.querySelectorAll("[data-quantity-decrease]").forEach((button) => {
@@ -338,21 +367,6 @@ function renderCart() {
       removeFromCart(Number(button.dataset.removeItem));
     });
   });
-
-  if (subtotalElement) {
-    subtotalElement.innerText = total;
-  }
-  if (shippingTotalElement) {
-    shippingTotalElement.innerText = shippingCost;
-  }
-
-  total += shippingCost;
-  if (totalElement) {
-    totalElement.innerText = total;
-  }
-  if (bitAmount) {
-    bitAmount.innerText = total + " ₪";
-  }
 }
 
 // function changeQuantity(index, delta) {
