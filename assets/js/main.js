@@ -753,12 +753,12 @@ const galleryContent = {
 const popup = document.getElementById("popup");
 const popupImage = document.getElementById("popup-image");
 const popupTitle = document.getElementById("popup-title");
-const popupMeta = document.getElementById("popup-meta");
+const popupDescription = document.getElementById("popup-description");
+const popupPrice = document.getElementById("popup-price");
 const popupAddButton = document.getElementById("popup-add");
 const popupVariants = document.getElementById("popup-variants");
 const closePopup = document.getElementById("close-popup");
 let activePopupItem = null;
-let popupTrigger = null;
 
 function getSelectedProductOption(container) {
   const option = container?.querySelector("input[type='radio']:checked");
@@ -786,16 +786,7 @@ function updateFeaturedAddButton(product) {
   addButton.textContent = `הוספה לעגלה - ${selectedOption.price}₪`;
 }
 
-function updatePopupAddButton() {
-  const options = document.getElementById("popup-variant-options");
-  const selectedOption = getSelectedProductOption(options);
-
-  if (!popupAddButton || !selectedOption) return;
-
-  popupAddButton.textContent = `הוספה לעגלה - ${selectedOption.price}₪`;
-}
-
-function populateGallery(data, sectionId) {
+function populateGallery(data, sectionId, type) {
   const section = galleryContent[sectionId];
   if (!section) return;
 
@@ -815,11 +806,12 @@ function populateGallery(data, sectionId) {
     const imageButton = document.createElement("button");
     imageButton.className = "gallery__image-button";
     imageButton.type = "button";
+    imageButton.setAttribute("aria-haspopup", "dialog");
     imageButton.setAttribute(
       "aria-label",
       `פתיחת פרטי מוצר: ${item.paintingName}`,
     );
-    imageButton.addEventListener("click", () => openPopup(item));
+    imageButton.addEventListener("click", () => openPopup(item, type, imageButton));
     imageButton.appendChild(image);
 
     const titleWrapper = document.createElement("div");
@@ -867,26 +859,26 @@ function populateGallery(data, sectionId) {
   });
 }
 
-populateGallery(printsData, "prints");
-populateGallery(stickersData, "stickers");
-populateGallery(cardsData, "cards");
-populateGallery(bagsData, "bags");
-populateGallery(magnetsData, "magnets");
+populateGallery(printsData, "prints", "הדפס");
+populateGallery(stickersData, "stickers", "מדבקה");
+populateGallery(cardsData, "cards", "גלויה");
+populateGallery(bagsData, "bags", "תיק בד");
+populateGallery(magnetsData, "magnets", "מגנט");
 
-function openPopup(item) {
-  if (!popup || !popupImage || !popupTitle || !popupMeta || !popupAddButton) {
-    return;
-  }
+function openPopup(item, type, trigger) {
+  if (!popup || popup.open) return;
 
   activePopupItem = item;
-  popupTrigger = document.activeElement;
   popupImage.src = item.src;
   popupImage.alt = item.paintingName;
   popupImage.classList.toggle("popup__image--cutout", Boolean(item.cutout));
   popupTitle.textContent = item.paintingName;
-  popupMeta.textContent = [item.type, item.size, item.price]
-    .filter(Boolean)
-    .join(" · ");
+  const dimensions = item.size?.match(/^(\d+)x(\d+)$/);
+  popupDescription.textContent = dimensions
+    ? `${type} ${dimensions[1]} ס״מ על ${dimensions[2]} ס״מ`
+    : [type, item.size].filter(Boolean).join(" ");
+  popupPrice.hidden = Boolean(item.options?.length);
+  popupPrice.textContent = item.price.replace(/\s*₪$/, " ₪");
   if (popupVariants) {
     popupVariants.innerHTML = "";
 
@@ -894,6 +886,8 @@ function openPopup(item) {
       const options = document.createElement("div");
       options.className = "featured-products__options popup__options";
       options.id = "popup-variant-options";
+      options.setAttribute("role", "group");
+      options.setAttribute("aria-label", "אפשרויות מסגור");
 
       item.options.forEach((optionData) => {
         const label = document.createElement("label");
@@ -923,77 +917,39 @@ function openPopup(item) {
         if (firstOption) firstOption.checked = true;
       }
 
-      options.querySelectorAll("input").forEach((input) => {
-        input.addEventListener("change", updatePopupAddButton);
-      });
       popupVariants.appendChild(options);
     }
   }
   popupAddButton.disabled = Boolean(item.soldOut);
   popupAddButton.textContent = item.soldOut ? "סולד אאוט" : "הוספה לעגלה";
-  updatePopupAddButton();
-  document.documentElement.classList.add("product-popup-open");
-  popup.style.display = "flex";
-  closePopup?.focus({ preventScroll: true });
-
-  // Close popup when clicking anywhere outside of it
-  window.addEventListener("click", closePopupOnClick);
-  window.addEventListener("keydown", closePopupOnKeydown);
+  trigger.focus({ preventScroll: true });
+  popup.showModal();
 }
 
-function closePopupOnClick(e) {
-  if (!popup || !popupImage) return;
-  if (e.target === popup) closeProductPopup();
-}
+popup?.addEventListener("click", (event) => {
+  if (event.target === popup) popup.close();
+});
+popup?.addEventListener("close", () => {
+  if (!popup.open) activePopupItem = null;
+});
+popup?.addEventListener("keydown", (event) => {
+  if (event.key !== "Tab") return;
 
-function closePopupOnKeydown(e) {
-  if (e.key === "Escape") {
-    closeProductPopup();
-    return;
-  }
-
-  if (e.key !== "Tab" || !popup) return;
-
-  const focusableElements = popup.querySelectorAll(
-    "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+  const controls = popup.querySelectorAll(
+    "button:not(:disabled), input[type='radio']:checked:not(:disabled)",
   );
-  const visibleFocusableElements = Array.from(focusableElements).filter(
-    (element) => !element.disabled && element.offsetParent !== null,
-  );
-
-  if (!visibleFocusableElements.length) return;
-
-  const firstElement = visibleFocusableElements[0];
-  const lastElement = visibleFocusableElements[visibleFocusableElements.length - 1];
-
-  if (e.shiftKey && document.activeElement === firstElement) {
-    e.preventDefault();
-    lastElement.focus();
-  } else if (!e.shiftKey && document.activeElement === lastElement) {
-    e.preventDefault();
-    firstElement.focus();
-  }
-}
-
-function closeProductPopup() {
-  if (!popup) return;
-
-  popup.style.display = "none";
-  document.documentElement.classList.remove("product-popup-open");
-  activePopupItem = null;
-  window.removeEventListener("click", closePopupOnClick);
-  window.removeEventListener("keydown", closePopupOnKeydown);
-  popupTrigger?.focus();
-  popupTrigger = null;
-}
-
-if (closePopup) {
-  closePopup.addEventListener("click", closeProductPopup);
-}
+  const first = controls[0];
+  const last = controls[controls.length - 1];
+  const from = event.shiftKey ? first : last;
+  if (document.activeElement !== from) return;
+  event.preventDefault();
+  (event.shiftKey ? last : first).focus();
+});
+closePopup?.addEventListener("click", () => popup.close());
 
 if (popupAddButton) {
   popupAddButton.addEventListener("click", () => {
-    if (!activePopupItem || activePopupItem.soldOut) return;
+    if (!popup.open || !activePopupItem || activePopupItem.soldOut) return;
 
     const popupVariantOptions = document.getElementById("popup-variant-options");
     if (popupVariantOptions) {
@@ -1003,7 +959,7 @@ if (popupAddButton) {
         activePopupItem.src,
         popupAddButton,
       );
-      closeProductPopup();
+      popup.close();
       return;
     }
 
@@ -1013,7 +969,7 @@ if (popupAddButton) {
       activePopupItem.src,
       popupAddButton,
     );
-    closeProductPopup();
+    popup.close();
   });
 }
 
@@ -1077,6 +1033,7 @@ document.querySelectorAll("[data-featured-add]").forEach((button) => {
 });
 
 document.querySelectorAll("[data-featured-product]").forEach((product) => {
+  const imageButton = product.querySelector(".gallery__image-button");
   const openFeaturedProduct = () => {
     const selectedOption = getSelectedProductOption(
       product.querySelector("[data-featured-options]"),
@@ -1085,10 +1042,7 @@ document.querySelectorAll("[data-featured-product]").forEach((product) => {
       src: product.dataset.img,
       paintingName: product.dataset.name,
       size: product.dataset.size,
-      type: product.dataset.type,
-      price: product.dataset.unframedPrice
-        ? `עם מסגרת ${product.dataset.price}₪ · בלי מסגרת ${product.dataset.unframedPrice}₪`
-        : `${product.dataset.price}₪`,
+      price: `${product.dataset.price}₪`,
       options: product.dataset.unframedPrice
         ? [
             {
@@ -1105,13 +1059,10 @@ document.querySelectorAll("[data-featured-product]").forEach((product) => {
             },
           ]
         : null,
-    });
+    }, product.dataset.type, imageButton);
   };
 
-  product.tabIndex = 0;
-  product.setAttribute("role", "button");
-  product.setAttribute("aria-label", `פתיחת פרטי מוצר ${product.dataset.name}`);
-
+  imageButton.addEventListener("click", openFeaturedProduct);
   product.addEventListener("click", (event) => {
     if (event.target.closest("button, input, label")) return;
     openFeaturedProduct();
@@ -1123,11 +1074,6 @@ document.querySelectorAll("[data-featured-product]").forEach((product) => {
 
   updateFeaturedAddButton(product);
 
-  product.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    event.preventDefault();
-    openFeaturedProduct();
-  });
 });
 
 function updateCartCount(animate = false) {
