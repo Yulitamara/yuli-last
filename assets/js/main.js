@@ -932,8 +932,9 @@ function openPopup(item) {
   popupAddButton.disabled = Boolean(item.soldOut);
   popupAddButton.textContent = item.soldOut ? "סולד אאוט" : "הוספה לעגלה";
   updatePopupAddButton();
+  document.documentElement.classList.add("product-popup-open");
   popup.style.display = "flex";
-  closePopup?.focus();
+  closePopup?.focus({ preventScroll: true });
 
   // Close popup when clicking anywhere outside of it
   window.addEventListener("click", closePopupOnClick);
@@ -978,6 +979,7 @@ function closeProductPopup() {
   if (!popup) return;
 
   popup.style.display = "none";
+  document.documentElement.classList.remove("product-popup-open");
   activePopupItem = null;
   window.removeEventListener("click", closePopupOnClick);
   window.removeEventListener("keydown", closePopupOnKeydown);
