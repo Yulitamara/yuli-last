@@ -270,36 +270,22 @@ window.addEventListener("scroll", scrollHeader);
 
 // GALLERY
 document.addEventListener("DOMContentLoaded", function () {
-  const printsSection = document.getElementById("prints");
-  if (!printsSection) return;
+  const filters = document.querySelectorAll(".filters [data-filter]");
+  const panels = document.querySelectorAll(".gallery__content");
 
-  printsSection.style.display = "flex";
+  filters.forEach((filter) => {
+    filter.setAttribute("aria-pressed", filter.classList.contains("active"));
 
-  var filterElements = document.querySelectorAll(".filter");
-  filterElements.forEach(function (filterElement) {
-    filterElement.setAttribute(
-      "aria-pressed",
-      filterElement.classList.contains("active") ? "true" : "false",
-    );
-
-    filterElement.addEventListener("click", function () {
-      var filter = this.getAttribute("data-filter");
-
-      var galleryContentElements =
-        document.querySelectorAll(".gallery__content");
-      galleryContentElements.forEach(function (galleryContentElement) {
-        galleryContentElement.style.display = "none";
+    filter.addEventListener("click", () => {
+      panels.forEach((panel) => {
+        panel.classList.toggle("active", panel.id === filter.dataset.filter);
       });
 
-      filterElements.forEach(function (filterElem) {
-        filterElem.classList.remove("active");
-        filterElem.setAttribute("aria-pressed", "false");
+      filters.forEach((option) => {
+        const selected = option === filter;
+        option.classList.toggle("active", selected);
+        option.setAttribute("aria-pressed", selected);
       });
-
-      this.classList.add("active");
-      this.setAttribute("aria-pressed", "true");
-
-      document.getElementById(filter).style.display = "flex";
     });
   });
 });
@@ -772,6 +758,7 @@ const popupAddButton = document.getElementById("popup-add");
 const popupVariants = document.getElementById("popup-variants");
 const closePopup = document.getElementById("close-popup");
 let activePopupItem = null;
+let popupTrigger = null;
 
 function getSelectedProductOption(container) {
   const option = container?.querySelector("input[type='radio']:checked");
@@ -824,7 +811,16 @@ function populateGallery(data, sectionId) {
     image.alt = `${item.alt || "מוצר"} ${item.paintingName}`;
     image.className = `no-select ${item.cutout ? "gallery__image--cutout" : ""}`;
     image.loading = "lazy";
-    image.addEventListener("click", () => openPopup(item));
+
+    const imageButton = document.createElement("button");
+    imageButton.className = "gallery__image-button";
+    imageButton.type = "button";
+    imageButton.setAttribute(
+      "aria-label",
+      `פתיחת פרטי מוצר: ${item.paintingName}`,
+    );
+    imageButton.addEventListener("click", () => openPopup(item));
+    imageButton.appendChild(image);
 
     const titleWrapper = document.createElement("div");
     titleWrapper.className = "img-title";
@@ -833,20 +829,21 @@ function populateGallery(data, sectionId) {
     size.className = "size";
     size.textContent = item.size;
 
-    const nameWrapper = document.createElement("span");
-    nameWrapper.className = "name";
-
     const paintingName = document.createElement("span");
     paintingName.className = "painting-name";
     paintingName.textContent = item.paintingName;
 
-    nameWrapper.appendChild(paintingName);
+    const price = document.createElement("span");
+    price.className = "price";
+    price.textContent = item.price;
+
+    titleWrapper.append(paintingName, price, size);
 
     if (item.soldOut) {
       const soldOutLabel = document.createElement("span");
       soldOutLabel.className = "img-btn sold-out";
       soldOutLabel.textContent = "סולד אאוט";
-      nameWrapper.appendChild(soldOutLabel);
+      titleWrapper.appendChild(soldOutLabel);
     } else {
       const addButton = document.createElement("button");
       addButton.className = "img-btn no-select";
@@ -860,18 +857,10 @@ function populateGallery(data, sectionId) {
           event.currentTarget,
         );
       });
-      nameWrapper.appendChild(addButton);
+      titleWrapper.appendChild(addButton);
     }
 
-    const price = document.createElement("span");
-    price.className = "price";
-    price.textContent = item.price;
-
-    titleWrapper.appendChild(size);
-    titleWrapper.appendChild(nameWrapper);
-    titleWrapper.appendChild(price);
-
-    contentItem.appendChild(image);
+    contentItem.appendChild(imageButton);
     contentItem.appendChild(titleWrapper);
 
     section.appendChild(contentItem);
@@ -890,6 +879,7 @@ function openPopup(item) {
   }
 
   activePopupItem = item;
+  popupTrigger = document.activeElement;
   popupImage.src = item.src;
   popupImage.alt = item.paintingName;
   popupImage.classList.toggle("popup__image--cutout", Boolean(item.cutout));
@@ -991,6 +981,8 @@ function closeProductPopup() {
   activePopupItem = null;
   window.removeEventListener("click", closePopupOnClick);
   window.removeEventListener("keydown", closePopupOnKeydown);
+  popupTrigger?.focus();
+  popupTrigger = null;
 }
 
 if (closePopup) {

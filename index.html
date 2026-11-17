@@ -111,14 +111,81 @@
       <!--==================== Gallery ====================-->
       <section class="gallery section" id="gallery">
         <div class="shop-intro container">
-          <h2 class="shop-intro__eyebrow">תעזבו את החנות של יולי</h2>
+          <h2 class="shop-intro__title">
+            <img
+              src="assets/img/handwritten-logo.png"
+              alt="תעזבו את החנות של יולי"
+              width="1440"
+              height="2560"
+            />
+          </h2>
         </div>
 
-        <div
+        <div class="filters" role="group" aria-label="קטגוריות מוצרים">
+          <button
+            class="filter prints active no-select"
+            type="button"
+            data-filter="prints"
+          >
+            <i class="ri-image-line"></i>
+            הדפסים
+          </button>
+          <button
+            class="filter stickers no-select"
+            type="button"
+            data-filter="stickers"
+          >
+            <i class="ri-price-tag-3-line"></i>
+            מדבקות
+          </button>
+          <button
+            class="filter cards no-select"
+            type="button"
+            data-filter="cards"
+          >
+            <i class="ri-mail-line"></i>
+            גלויות
+          </button>
+          <button
+            class="filter magnets no-select"
+            type="button"
+            data-filter="magnets"
+          >
+            <i class="ri-pushpin-line"></i>
+            מגנטים
+          </button>
+          <button
+            class="filter bags no-select"
+            type="button"
+            data-filter="bags"
+          >
+            <i class="ri-shopping-bag-line"></i>
+            <nobr> תיקי בד </nobr>
+          </button>
+        </div>
+
+        <a class="gallery__featured-link" href="#featured-products">
+          הדפסי 50×50
+          <i class="ri-arrow-down-line" aria-hidden="true"></i>
+        </a>
+
+        <div class="gallery__catalog container section__border">
+          <div class="gallery__content active" id="prints"></div>
+          <div class="gallery__content" id="stickers"></div>
+          <div class="gallery__content" id="cards"></div>
+          <div class="gallery__content" id="bags"></div>
+          <div class="gallery__content" id="magnets"></div>
+        </div>
+
+        <section
           class="featured-products container"
           id="featured-products"
-          aria-label="תמונות 50 על 50"
+          aria-labelledby="featured-products-title"
+          tabindex="-1"
         >
+          <div class="featured-products__header">
+            <h3 id="featured-products-title">הדפסים בגודל 50×50</h3>
+          </div>
           <div class="featured-products__grid">
             <article
               class="featured-products__item featured-products__item--new"
@@ -129,9 +196,7 @@
               data-unframed-price="179"
               data-size="50*50 ס״מ"
               data-img="/assets/img/framed-1.jpeg"
-              data-badge="חדש"
             >
-              <span class="featured-products__badge">חדש</span>
               <img
                 src="/assets/img/framed-1.jpeg"
                 alt="לא נחמדה - תמונה 50 על 50"
@@ -186,9 +251,7 @@
               data-unframed-price="179"
               data-size="50*50 ס״מ"
               data-img="/assets/img/framed-2.jpeg"
-              data-badge="חדש"
             >
-              <span class="featured-products__badge">חדש</span>
               <img
                 src="/assets/img/framed-2.jpeg"
                 alt="מתה מבפנים - תמונה 50 על 50"
@@ -234,62 +297,8 @@
               </div>
             </article>
           </div>
-        </div>
+        </section>
 
-        <div class="shop-more container">
-          <h3>עוד בחנות</h3>
-        </div>
-
-        <div class="filters" aria-label="קטגוריות מוצרים">
-          <button
-            class="filter prints active no-select"
-            type="button"
-            data-filter="prints"
-          >
-            <i class="ri-image-line"></i>
-            הדפסים
-          </button>
-          <button
-            class="filter stickers no-select"
-            type="button"
-            data-filter="stickers"
-          >
-            <i class="ri-price-tag-3-line"></i>
-            מדבקות
-          </button>
-          <button
-            class="filter cards no-select"
-            type="button"
-            data-filter="cards"
-          >
-            <i class="ri-mail-line"></i>
-            גלויות
-          </button>
-          <button
-            class="filter magnets no-select"
-            type="button"
-            data-filter="magnets"
-          >
-            <i class="ri-pushpin-line"></i>
-            מגנטים
-          </button>
-          <button
-            class="filter bags no-select"
-            type="button"
-            data-filter="bags"
-          >
-            <i class="ri-shopping-bag-line"></i>
-            <nobr> תיקי בד </nobr>
-          </button>
-        </div>
-
-        <div class="container section__border">
-          <div class="gallery__content" id="prints"></div>
-          <div class="gallery__content" id="stickers"></div>
-          <div class="gallery__content" id="cards"></div>
-          <div class="gallery__content" id="bags"></div>
-          <div class="gallery__content" id="magnets"></div>
-        </div>
         <div class="popup" id="popup">
           <div
             class="popup__card"
@@ -323,35 +332,40 @@
       </section>
 
       <!--==================== PROJECTS ====================-->
-      <section class="projects section" id="personal" dir="ltr">
+      <section class="projects section" id="personal">
         <h2 class="section__title">איור אישי לפי תמונה או רעיון</h2>
-        <p class="personal__description" dir="rtl">
-          איור מקורי בסגנון שלי, לפי תמונה, סיטואציה, בדיחה פנימית או רגע קטן
-          שבא לך לשמור. אפשר לקבל כקובץ, כהדפס, או ממוסגר ומוכן למתנה.
-        </p>
-        <div class="personal__actions" dir="rtl">
-          <a
-            href="https://wa.me/972542634686/?text=היי,%20אני%20רוצה%20להזמין%20איור%20אישי"
-            target="_blank"
-            rel="noopener"
-            class="personal__button"
-          >
-            <i class="ri-whatsapp-line"></i>
-            להזמנת איור אישי
-          </a>
-          <span>שלחו תמונה, רעיון או בדיחה פנימית ונתאם יחד.</span>
+        <div class="personal__intro container">
+          <img
+            src="assets/img/personal-1000.png"
+            alt="איור אישי של אישה והכלב שלה לצד התצלום המקורי"
+            class="personal__example"
+            width="1536"
+            height="2048"
+            loading="lazy"
+          />
+          <div>
+            <p class="personal__description">
+              איור מקורי בסגנון שלי, לפי תמונה, סיטואציה, בדיחה פנימית או רגע קטן
+              שבא לך לשמור. אפשר לקבל כקובץ, כהדפס, או ממוסגר ומוכן למתנה.
+            </p>
+            <div class="personal__actions">
+              <a
+                href="https://wa.me/972542634686/?text=היי,%20אני%20רוצה%20להזמין%20איור%20אישי"
+                target="_blank"
+                rel="noopener"
+                class="personal__button"
+              >
+                <i class="ri-whatsapp-line" aria-hidden="true"></i>
+                להזמנת איור אישי
+              </a>
+              <span>שלחו תמונה, רעיון או בדיחה פנימית ונתאם יחד.</span>
+            </div>
+          </div>
         </div>
 
-        <div class="container">
+        <div class="container" dir="ltr">
           <div class="projects__container swiper">
             <div class="swiper-wrapper">
-              <div class="projects__content swiper-slide">
-                <img
-                  src="assets/img/personal-1000.png"
-                  alt="דוגמה לציור אישי בהזמנה"
-                  class="projects__img"
-                />
-              </div>
               <div class="projects__content swiper-slide">
                 <img
                   src="assets/img/personal-100.png"
